@@ -50,7 +50,9 @@
   },
   "scripts": {
     "test": "karma start",
-    "test:e2e": "protractor protractor.conf.js"
+    "test:e2e": "protractor protractor.conf.js",
+    "start": "gulp serve",
+    "build": "gulp webpack"
   },
   "keywords": [
     "angular",
