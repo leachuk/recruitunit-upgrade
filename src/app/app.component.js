@@ -1,4 +1,5 @@
 import './app.less';
+import './test.css';
 
 export class TodoAppController {
   /**
@@ -38,7 +39,7 @@ export default {
   template: `
     <section class="todoapp">
       <section class="header">
-        <h1>todos</h1>
+        <h1 class="test">todos</h1>
         <header class="header-input">
           <todo-text-input
             placeholder="What needs to get done?"

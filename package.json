@@ -52,7 +52,8 @@
     "test": "karma start",
     "test:e2e": "protractor protractor.conf.js",
     "start": "gulp serve",
-    "build": "gulp webpack"
+    "build": "gulp webpack",
+    "serve": "gulp serve"
   },
   "keywords": [
     "angular",

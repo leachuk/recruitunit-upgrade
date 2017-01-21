@@ -1,16 +1,17 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: 'sourcemap',
+  devtool: 'source-map',
   entry: {},
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
        { test: /\.html$/, loader: 'raw' },
        { test: /\.less$/, loader: 'style!css!less' },
-       { test: /\.css$/, loader: 'style!css' }
+       { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') }
     ]
   },
   plugins: [
@@ -30,6 +31,8 @@ module.exports = {
       minChunks: function (module, count) {
         return module.resource && module.resource.indexOf(path.resolve(__dirname, 'client')) === -1;
       }
-    })
+    }),
+
+    new ExtractTextPlugin('styles.css')
   ]
 };
