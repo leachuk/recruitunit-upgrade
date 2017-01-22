@@ -40,6 +40,7 @@ export default {
     <section class="todoapp">
       <section class="header">
         <h1 class="test">todos</h1>
+        <sample-component></sample-component>
         <header class="header-input">
           <todo-text-input
             placeholder="What needs to get done?"
