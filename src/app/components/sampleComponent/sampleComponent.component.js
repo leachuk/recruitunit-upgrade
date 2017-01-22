@@ -12,6 +12,6 @@ export default {
     controller: SampleComponentController,
     controllerAs: 'sampleComponent',
     template: `
-        <p>{{sampleComponent.name}}</p>
+        <div><p>{{sampleComponent.name}}<button ng-click="sampleComponent.changeName()">[change]</button></p></div>
     `
 }
