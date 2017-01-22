@@ -10,8 +10,23 @@
     <meta name="description" content="TodoMVC by @Fesor">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body ng-strict-di ng-cloak>
+  <body ng-strict-di ng-cloak layout="column">
+  <md-toolbar layout="row" class="md-toolbar-tools">
+      <h1>Angular Material - Starter App 1</h1>
+  </md-toolbar>
+  <div flex layout="row">
 
+      <!-- Container #3 -->
+      <md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
+          Sidenav
+      </md-sidenav>
+
+      <!-- Container #4 -->
+      <md-content flex id="content">
+          Content
+      </md-content>
+
+  </div>
     <app>
       Loading...
     </app>
