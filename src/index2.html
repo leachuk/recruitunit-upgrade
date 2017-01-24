@@ -9,15 +9,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="description" content="TodoMVC by @Fesor">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <link rel="stylesheet" href="./dist/angular-material.css" />
   </head>
   <body ng-strict-di ng-cloak layout="column">
   <md-toolbar layout="row" class="md-toolbar-tools">
-      <h1>Angular Material - Starter App 1</h1>
+    <md-button class="md-icon-button" aria-label="Settings">
+      <md-icon ng-click="app.toggleSideNav()" md-svg-icon="navigation:menu"></md-icon>
+    </md-button>
+    <h1>Angular Material - Starter App 1</h1>
   </md-toolbar>
   <div flex layout="row">
 
       <!-- Container #3 -->
-      <md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
+      <md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp" flex="20">
           Sidenav
       </md-sidenav>
 
