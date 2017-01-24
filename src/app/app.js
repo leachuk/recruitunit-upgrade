@@ -3,6 +3,7 @@ import angularMoment from 'angular-moment';
 import 'angular-animate';
 import 'angular-aria';
 import 'angular-material';
+import 'angular-material/angular-material.css';
 
 import Components from './components/components';
 import services from './services/services';
