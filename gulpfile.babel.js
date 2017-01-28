@@ -11,6 +11,7 @@ import serve    from 'browser-sync';
 import webpackDevMiddelware from 'webpack-dev-middleware';
 import webpachHotMiddelware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
+import historyApiFallback   from 'connect-history-api-fallback';
 
 let root = 'src';
 
@@ -81,7 +82,8 @@ gulp.task('serve', () => {
         },
         publicPath: config.output.publicPath
       }),
-      webpachHotMiddelware(compiler)
+      webpachHotMiddelware(compiler),
+      historyApiFallback()
     ]
   });
 });

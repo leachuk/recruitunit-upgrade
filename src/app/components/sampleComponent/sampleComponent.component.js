@@ -1,5 +1,6 @@
 class SampleComponentController {
   constructor(moment) {
+    'ngInject';
     this.moment = moment;
     this.name = 'World';
   }

@@ -33,22 +33,19 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
   // 'app.user.comparisonRuleController',
   // 'recruitunit.util'
 ]).controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
-.config(['$stateProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($stateProvider, $locationProvider, $httpProvider, $mdIconProvider){
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdIconProvider){
   $locationProvider.html5Mode(true);
 
-  var rootState = {
-    name: 'root',
-    url: '/',
-    redirectTo: '/home'
-  }
-
-  var homeState = {
-    name: 'home',
-    url: '/home',
-    template: '<h3>hello world!</h3>'
-  }
-  $stateProvider.state(rootState);
-  $stateProvider.state(homeState);
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      template: '<h3>hello world!</h3>'
+    })
+    .state('user', {
+      url: '/user',
+      template: '<h3>hello user!</h3>'
+    })
+  $urlRouterProvider.otherwise('/foo');
 
   $mdIconProvider
     .iconSet('action', './assets/svg/action-icons.svg', 24)

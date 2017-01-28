@@ -74,7 +74,10 @@
       </md-content>
     </md-sidenav>
 
-    <div ng-viewport flex></div>
+    <a ui-sref="root" ui-sref-active="active">Root</a>
+    <a ui-sref="home" ui-sref-active="active">Home</a>
+
+    <ui-view flex>foo...</ui-view>
   </div>
 </md-content>
 
