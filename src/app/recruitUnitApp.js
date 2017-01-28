@@ -4,40 +4,52 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css';
 
-import 'angular-new-router';
+import 'angular-ui-router';
 import 'angular-jwt';
 import 'ng-lodash';
-import angularMoment from 'angular-moment';
+import 'angular-moment';
 import 'angular-resource';
 import 'angular-cookies';
 import 'loom-api-angular';
 
 import Components from './components/components';
+import HomeComponent from './components/home/home';
 
 import '../css/global.css';
 
 var recruitUnitApp = angular.module('recruitUnitApp', [
+  'ui.router',
   'ngMaterial',
   'ngResource',
   'ngCookies',
-  'ngNewRouter',
   'loom.api',
   'ngLodash',
   'angularMoment',
   'angular-jwt',
-  'app.homeController',
-  Components.name
+  HomeComponent.name
   // 'app.user.userLandingController',
   // 'app.user.formSubmitController',
   // 'app.user.formReadController',
   // 'app.user.comparisonRuleController',
   // 'recruitunit.util'
-]).controller('AppController', ['$router', '$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //'recruitUnitUtil',
-.config(['$componentLoaderProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($componentLoaderProvider, $locationProvider, $httpProvider, $mdIconProvider){
-  $componentLoaderProvider.setTemplateMapping(function (name) {
-    return 'src/angular/components/' + name + '/' + name + '.html';
-  });
+]).controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
+.config(['$stateProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($stateProvider, $locationProvider, $httpProvider, $mdIconProvider){
   $locationProvider.html5Mode(true);
+
+  var rootState = {
+    name: 'root',
+    url: '/',
+    redirectTo: '/home'
+  }
+
+  var homeState = {
+    name: 'home',
+    url: '/home',
+    template: '<h3>hello world!</h3>'
+  }
+  $stateProvider.state(rootState);
+  $stateProvider.state(homeState);
+
   $mdIconProvider
     .iconSet('action', './assets/svg/action-icons.svg', 24)
     .iconSet('content', './assets/svg/content-icons.svg', 24)
@@ -47,7 +59,7 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($router, $mdComponentRegistry, loomApi, recruitUnitUtil, jwtHelper) {
+function AppController($mdComponentRegistry, loomApi, recruitUnitUtil, jwtHelper) {
   var sideNav;
   this.user = {
     email: "",
@@ -61,21 +73,23 @@ function AppController($router, $mdComponentRegistry, loomApi, recruitUnitUtil, 
     //console.log(mainSideNav.isOpen());
   });
   //$mdSidenav('left').open();
-  $router.config([
-    { path: '/', redirectTo: '/home' },
-    { path: '/home', component: 'home' },
-    { path: '/user/:email', component: 'userLanding' },
-    { path: '/user/:email/comparisonrules', component: 'comparisonRule' },
-    { path: '/user/:guid/form', component: 'formSubmit' },
-    { path: '/user/:email/form/:id', component: 'formRead' }
-  ]);
+  //todo: refactor to angular-ui-router
+
+  // $router.config([
+  //   { path: '/', redirectTo: '/home' },
+  //   { path: '/home', component: HomeComponent },
+  //   { path: '/user/:email', component: 'userLanding' },
+  //   { path: '/user/:email/comparisonrules', component: 'comparisonRule' },
+  //   { path: '/user/:guid/form', component: 'formSubmit' },
+  //   { path: '/user/:email/form/:id', component: 'formRead' }
+  // ]);
 
   AppController.prototype.initApp = function() {
-    this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
-    this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
-    if (this.user.isLoggedIn){
-      this.user.email = recruitUnitUtil.Util.getLocalUser().email;
-    }
+    // this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
+    // this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
+    // if (this.user.isLoggedIn){
+    //   this.user.email = recruitUnitUtil.Util.getLocalUser().email;
+    // }
   }
 
   AppController.prototype.test = function() {
