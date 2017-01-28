@@ -9,25 +9,30 @@ import 'angular-jwt';
 import 'ng-lodash';
 import angularMoment from 'angular-moment';
 import 'angular-resource';
+import 'angular-cookies';
 import 'loom-api-angular';
+
+import Components from './components/components';
 
 import '../css/global.css';
 
 var recruitUnitApp = angular.module('recruitUnitApp', [
   'ngMaterial',
   'ngResource',
+  'ngCookies',
   'ngNewRouter',
   'loom.api',
   'ngLodash',
   'angularMoment',
   'angular-jwt',
   'app.homeController',
-  'app.user.userLandingController',
-  'app.user.formSubmitController',
-  'app.user.formReadController',
-  'app.user.comparisonRuleController',
-  'recruitunit.util'
-]).controller('AppController', ['$router', '$mdComponentRegistry', 'loomApi', 'recruitUnitUtil', 'jwtHelper', AppController])
+  Components.name
+  // 'app.user.userLandingController',
+  // 'app.user.formSubmitController',
+  // 'app.user.formReadController',
+  // 'app.user.comparisonRuleController',
+  // 'recruitunit.util'
+]).controller('AppController', ['$router', '$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //'recruitUnitUtil',
 .config(['$componentLoaderProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($componentLoaderProvider, $locationProvider, $httpProvider, $mdIconProvider){
   $componentLoaderProvider.setTemplateMapping(function (name) {
     return 'src/angular/components/' + name + '/' + name + '.html';
