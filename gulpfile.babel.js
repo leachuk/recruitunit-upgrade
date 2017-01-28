@@ -31,7 +31,7 @@ let paths = {
     resolveToApp('**/*.html'),
     path.join(root, 'index.html')
   ],
-  entry: path.join(__dirname, root, 'app/app.js'),
+  entry: path.join(__dirname, root, 'app/recruitUnitApp.js'),
   output: root,
   blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**')
 };
