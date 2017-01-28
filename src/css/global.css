@@ -1,0 +1,374 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size:1em;
+  height:100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+/*Top Menubar*/
+form.recruitunit-login md-input-container {
+  margin-top: 35px;
+}
+
+/*Heading Banner*/
+.heading {
+  background-color: #8CACCE;
+  color: #282450;
+}
+.heading .md-display-3 {
+  line-height: 5px;
+}
+.heading .md-body-1 {
+  padding-left: 2px;
+}
+
+/*Signup Background*/
+.blue-grey-background {
+  background-color: #B0C3CF;
+  background-image: url(/assets/signup-background-colour.png);
+  background-repeat: round;
+}
+
+.recruitunit-homepage div.row-label {
+  margin-bottom: 1em;
+}
+
+
+/* Feature Banner*/
+.features-banner {
+  background-color: #dcecf7;
+  color: #344884;
+}
+.features-banner .md-display-3 {
+  line-height: 5px;
+}
+.features-banner .md-body-1 {
+  padding-left: 2px;
+}
+
+/*Feature Background and Tiles*/
+.features-padding {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+.features-padding md-grid-tile p{
+  padding: 5px;
+}
+.blue { background: #baddfe;}
+
+.background-rotated-y { /* flip all elements in the y axis */
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+.background-rotated-y p { /* flip p element back again so text is no longer reversed */
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+/* Custom Dialogs */
+.demo-md-panel {
+  min-height: 500px;
+}
+
+.demo-dialog-example {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+  0 13px 19px 2px rgba(0, 0, 0, 0.14),
+  0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 500px;
+}
+
+.demo-dialog-content {
+  padding: 0 15px;
+  width: 100%;
+}
+
+.demo-dialog-content img {
+  height: 300px;
+  margin: auto;
+}
+
+.demo-dialog-button {
+  width: 100%;
+}
+
+.demo-menu-example {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+  0 13px 19px 2px rgba(0, 0, 0, 0.14),
+  0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 256px;
+}
+
+.demo-menu-item {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  padding: 0 16px;
+  position: relative;
+  transition: background 0.15s linear;
+  width: auto;
+}
+
+.demo-menu-item:hover,
+.demo-menu-item:focus {
+  background-color: rgb(238, 238, 238);
+}
+
+.demo-menu-item.selected {
+  color: rgb(16, 108, 200);
+}
+
+/* Toolbar area */
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px;
+}
+
+md-toolbar h1 {
+  margin: auto;
+}
+
+/* Sidenav area */
+
+md-sidenav md-list .md-button {
+  color: inherit;
+  font-weight: 500;
+  text-align: left;
+  width: 95%;
+}
+md-list .md-button.selected {
+  color: #03a9f4;
+}
+
+md-sidenav  md-list {
+  padding: 0px 0px 8px 0px;
+}
+
+
+/* Primary content area */
+
+#content {
+  overflow: hidden;
+}
+
+#content  {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+}
+
+#content .md-button.share {
+  background-color: transparent;
+  border: none;
+  width: 48px;
+  height: 48px;
+  margin: 8px auto 16px 0;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+}
+
+#content md-icon.avatar {
+  margin-top: 10px;
+}
+
+#content .md-button.share > md-icon {
+  fill:black;
+  width:36px;
+  height:36px;
+}
+
+md-button.menuBtn > md-icon {
+  fill:white;
+  width:24px;
+  height:24px;
+}
+
+#content .md-button.share:active > md-icon {
+  background-color: #dadada;
+  border-radius: 75%;
+  padding:4px;
+  transition: all 100ms ease-out 30ms;
+}
+
+#content img {
+  display: block;
+  height: auto;
+  max-width: 500px;
+}
+
+/* Homepage Card */
+md-card-title .md-card-h1{
+  position: relative;
+  top: -40px;
+  left: 10px;
+  color: #f9f9f9;
+}
+
+md-card.recruitunit md-card-title{
+  padding: 0;
+  margin: 24px 16px 16px;
+  overflow: hidden;
+  max-height: 255px;
+}
+
+md-card.recruitunit div.cardheading-fab{
+  position: relative;
+  left: 60px;
+  top: 25px;
+}
+
+.totals-table {
+  font-size: 2em;
+}
+.totals-table .totals-heading {
+  color: #FFFFFF;
+}
+.totals-table .totals-result {
+  color: #2D2D2D;
+}
+.totals-table .row {
+  margin: 5px 5px 0px 0px;
+  padding: 20px 0px 20px 5px;
+}
+.totals-table .total{
+  background-color: #c4c4c4;
+}
+.totals-table .pass{
+  background-color: #008800;
+}
+.totals-table .fail{
+  background-color: #aa0000;
+}
+
+.totals-list p.job-description{
+  line-height: 1.10em !important;
+  color: #464646 !important;
+  font-size: 1.10em !important;
+}
+.totals-list .result-icon {
+  margin-right: 20px;
+}
+.totals-list .icon-pass {
+  color: #17FF00;
+}
+.totals-list .icon-fail.partial-pass {
+  color: #BBBBBB;
+}
+.totals-list .icon-fail {
+  color: #FF0000;
+}
+
+/* Utils */
+
+.content-wrapper {
+  position: relative;
+}
+
+/* Typography support coming in 0.8.0 */
+
+md-toolbar h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+}
+
+md-toolbar.md-hue-3.md-warn .fail {
+  color: #B71C1C;
+}
+md-toolbar .pass {
+  color: #00C853;
+}
+
+.avatar {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0px;
+  vertical-align: middle;
+  zoom:0.70;
+  transform: translateZ(0);
+  -webkit-transform: scale(0.70);
+  -moz-transform:scale(0.70);
+}
+
+
+md-bottom-sheet  md-icon {
+  margin-right:20px;
+}
+
+span.name {
+  font-weight: bold;
+  font-size:1.1em;
+  padding-left:5px;
+}
+
+.move-up {
+  width: 100%;
+  position: relative;
+  top: 150px;
+}
+
+.summary h4{
+  font-size: 5.0em;
+  margin: 0px;
+}
+
+md-content > div > form > div > div > span {
+  margin-bottom: 16px;
+}
+
+form md-chips {
+  top: -15px;
+  position: relative;
+}
+
+md-content form span.disabled {
+  text-decoration: line-through;
+  color: #C2C2C2;
+}
+
+md-chips.chipsDisabled .md-chip {
+  background: #DBDBDB;
+  color: #EEEEEE;
+}
+
+/* comparison list overrides */
+md-list-item.md-no-proxy.md-button, md-list-item .md-no-style.md-button{
+  padding-left: 0px;
+  padding-top: 10px;
+}
+
+/* formReadDialog form overrides */
+.readjobfromrecruiter  .md-select-value .md-select-icon,
+.submitjobfromrecruiter .md-select-value .md-select-icon{
+  display: none;
+}
+
+p.trim {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;                   /* IE6 needs any width */
+  overflow: hidden;              /* "overflow" value must be different from  visible"*/
+  -o-text-overflow: ellipsis;    /* Opera < 11*/
+  text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+}

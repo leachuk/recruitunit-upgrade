@@ -1,5 +1,3 @@
-import './todoTextInput.less';
-
 class TodoTextInputController {
   constructor() {
     this.text = this.value || '';

@@ -1,6 +1,3 @@
-import './app.less';
-import './test.css';
-
 export class TodoAppController {
   /**
    * @param {TodoList} todoList

@@ -5,9 +5,10 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css';
 
+import '../css/global.css';
+
 import Components from './components/components';
 import services from './services/services';
-import 'normalize.css';
 
 import AppComponent from './app.component';
 
