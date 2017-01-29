@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import homeComponent from './homeComponent.component'
+import homeComponent from './HomeController'
 
 export default angular
   .module('app.homeController', [])

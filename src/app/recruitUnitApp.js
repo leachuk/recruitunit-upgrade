@@ -4,7 +4,8 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css';
 
-import 'angular-ui-router';
+//import 'angular-ui-router';
+import 'angular-new-router';
 import 'angular-jwt';
 import 'ng-lodash';
 import 'angular-moment';
@@ -18,7 +19,7 @@ import HomeComponent from './components/home/home';
 import '../css/global.css';
 
 var recruitUnitApp = angular.module('recruitUnitApp', [
-  'ui.router',
+  'ngNewRouter',
   'ngMaterial',
   'ngResource',
   'ngCookies',
@@ -32,23 +33,13 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
   // 'app.user.formReadController',
   // 'app.user.comparisonRuleController',
   // 'recruitunit.util'
-]).controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
-.config(['$stateProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($stateProvider, $locationProvider, $httpProvider, $mdIconProvider){
+]).controller('AppController', ['$router', '$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
+.config(['$componentLoaderProvider', '$locationProvider', '$httpProvider', '$mdIconProvider', function($componentLoaderProvider, $locationProvider, $httpProvider, $mdIconProvider){
+  $componentLoaderProvider.setTemplateMapping(function (name) {
+    return 'app/components/' + name + '/' + name + '.html';
+  });
+
   $locationProvider.html5Mode(true);
-
-  var rootState = {
-    name: 'root',
-    url: '/',
-    redirectTo: '/home'
-  }
-
-  var homeState = {
-    name: 'home',
-    url: '/home',
-    template: '<h3>hello world!</h3>'
-  }
-  $stateProvider.state(rootState);
-  $stateProvider.state(homeState);
 
   $mdIconProvider
     .iconSet('action', './assets/svg/action-icons.svg', 24)
@@ -59,7 +50,7 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, loomApi, recruitUnitUtil, jwtHelper) {
+function AppController($router, $mdComponentRegistry, loomApi, recruitUnitUtil, jwtHelper) {
   var sideNav;
   this.user = {
     email: "",
@@ -75,14 +66,14 @@ function AppController($mdComponentRegistry, loomApi, recruitUnitUtil, jwtHelper
   //$mdSidenav('left').open();
   //todo: refactor to angular-ui-router
 
-  // $router.config([
-  //   { path: '/', redirectTo: '/home' },
-  //   { path: '/home', component: HomeComponent },
-  //   { path: '/user/:email', component: 'userLanding' },
-  //   { path: '/user/:email/comparisonrules', component: 'comparisonRule' },
-  //   { path: '/user/:guid/form', component: 'formSubmit' },
-  //   { path: '/user/:email/form/:id', component: 'formRead' }
-  // ]);
+  $router.config([
+    { path: '/', redirectTo: '/home' },
+    { path: '/home', component: 'home' },
+    { path: '/user/:email', component: 'userLanding' },
+    { path: '/user/:email/comparisonrules', component: 'comparisonRule' },
+    { path: '/user/:guid/form', component: 'formSubmit' },
+    { path: '/user/:email/form/:id', component: 'formRead' }
+  ]);
 
   AppController.prototype.initApp = function() {
     // this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
