@@ -15,9 +15,11 @@ import 'loom-api-angular';
 import Components from './components/components';
 import HomeComponent from './components/home/home';
 
+import RootComponent from './root.component';
+
 import '../css/global.css';
 
-var recruitUnitApp = angular.module('recruitUnitApp', [
+angular.module('recruitUnitApp', [
   'ngComponentRouter',
   'ngMaterial',
   'ngResource',
@@ -33,6 +35,7 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
   // 'recruitunit.util'
 ])
 .value('$routerRootComponent', 'recruitUnitApp')
+.component('app', RootComponent)
 .controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
 
