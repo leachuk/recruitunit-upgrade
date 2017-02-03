@@ -25,8 +25,7 @@ var recruitUnitApp = angular.module('recruitUnitApp', [
   'loom.api',
   'ngLodash',
   'angularMoment',
-  'angular-jwt',
-  HomeComponent.name
+  'angular-jwt'
   // 'app.user.userLandingController',
   // 'app.user.formSubmitController',
   // 'app.user.formReadController',
