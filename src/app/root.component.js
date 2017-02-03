@@ -1,8 +1,13 @@
+import routerTemplate from './router.html';
 
 let rootComponent = {
   restrict: 'E',
   bindings: {},
-  template:`<h1>Root Component</h1>`
+  template: routerTemplate,
+  $routeConfig: [
+    { path: '/home', component: 'home', name: 'Home', useAsDefault: true },
+    { path: '/user', component: 'userlanding', name: 'UserLanding' }
+  ]
 };
 
 export default rootComponent;

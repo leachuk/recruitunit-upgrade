@@ -4,4 +4,4 @@ import homeComponent from './HomeController'
 
 export default angular
   .module('app.homeController', [])
-  .component('homeComponent', homeComponent)
+  .component('home', homeComponent)

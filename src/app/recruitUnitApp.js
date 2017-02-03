@@ -27,14 +27,15 @@ angular.module('recruitUnitApp', [
   'loom.api',
   'ngLodash',
   'angularMoment',
-  'angular-jwt'
+  'angular-jwt',
+  HomeComponent.name
   // 'app.user.userLandingController',
   // 'app.user.formSubmitController',
   // 'app.user.formReadController',
   // 'app.user.comparisonRuleController',
   // 'recruitunit.util'
 ])
-.value('$routerRootComponent', 'recruitUnitApp')
+.value('$routerRootComponent', 'app')
 .component('app', RootComponent)
 .controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
