@@ -10,7 +10,7 @@ import 'angular-moment';
 import 'angular-resource';
 import 'angular-cookies';
 
-//import 'loom-api-angular';
+import 'loom-api-angular';
 
 import Components from './components/components';
 import HomeComponent from './components/home/home';
@@ -24,7 +24,7 @@ angular.module('recruitUnitApp', [
   'ngMaterial',
   'ngResource',
   'ngCookies',
-  //'loom.api',
+  'loom.api',
   'ngLodash',
   'angularMoment',
   'angular-jwt',
@@ -37,7 +37,7 @@ angular.module('recruitUnitApp', [
 ])
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
-.controller('AppController', ['$mdComponentRegistry', 'jwtHelper', AppController]) //todo, add back 'recruitUnitUtil', 'loomApi',
+.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController])//'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
 
   $locationProvider.html5Mode(true);
@@ -51,7 +51,7 @@ angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, recruitUnitUtil, jwtHelper) { //loomApi,
+function AppController($mdComponentRegistry, loomApi, jwtHelper) { //recruitUnitUtil,
   var sideNav;
   this.user = {
     email: "",
@@ -61,8 +61,7 @@ function AppController($mdComponentRegistry, recruitUnitUtil, jwtHelper) { //loo
   
   $mdComponentRegistry.when('sidenav-main').then(function(mainSideNav){
     sideNav = mainSideNav;
-    //mainSideNav.open();
-    //console.log(mainSideNav.isOpen());
+
   });
   //$mdSidenav('left').open();
   //todo: refactor to angular-ui-router

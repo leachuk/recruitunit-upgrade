@@ -1,3 +1,5 @@
+import template from './home.html';
+
 class HomeController {
   constructor() {
     this.name = 'Home';
@@ -11,9 +13,5 @@ class HomeController {
 export default {
   controller: HomeController,
   controllerAs: 'homeComponent',
-  template: `
-      <div><p>{{homeComponent.name}}
-      <button ng-click="homeComponent.changeName()">[change]</button>
-      </p></div>
-  `
+  template: template
 }

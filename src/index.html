@@ -13,7 +13,7 @@
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
 </head>
 
-<body ng-app="recruitUnitApp" ng-controller="AppController as app" layout="column" ng-init="app.initApp()">
+<body ng-app="recruitUnitApp" ng-controller="AppController as app" layout="column" ng-init="app.initApp()" ng-cloak>
 <md-toolbar>
   <div class="md-toolbar-tools">
     <md-button class="md-icon-button" aria-label="Settings">
@@ -74,7 +74,8 @@
       </md-content>
     </md-sidenav>
 
-    <ng-outlet flex></ng-outlet>
+    <app flex>Loading...</app>
+
   </div>
 </md-content>
 
