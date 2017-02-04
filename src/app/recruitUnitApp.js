@@ -64,6 +64,11 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   console.log("In AppController");
   console.log(recruitUnitUtil.Constants.APP_HOST);
 
+  //testing service object
+  recruitUnitUtil.Util.setTitle("whoo");
+  console.log(recruitUnitUtil.Util.getLocalUser());
+  recruitUnitUtil.Util.isUserAuthenticated("foo", "bar");
+
   //should fail
   //recruitUnitUtil.Constants.APP_HOST = "bar";
   //console.log(recruitUnitUtil.Constants.APP_HOST); //correctly fails. Todo: install babel plugin to catch this error

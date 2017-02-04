@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import recruitUnitUtil from './recruitunit.util.es6';
+import recruitUnitUtil from './RecruitUnitUtil';
 
 export default angular
   .module('app.services', [])
