@@ -74,6 +74,7 @@ gulp.task('serve', () => {
     open: false,
     server: {baseDir: root},
     middleware: [
+      historyApiFallback(),
       webpackDevMiddelware(compiler, {
         stats: {
           colors: colorsSupported,
@@ -82,8 +83,7 @@ gulp.task('serve', () => {
         },
         publicPath: config.output.publicPath
       }),
-      webpachHotMiddelware(compiler),
-      historyApiFallback()
+      webpachHotMiddelware(compiler)
     ]
   });
 });
