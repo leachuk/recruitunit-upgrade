@@ -11,6 +11,7 @@ import 'angular-resource';
 import 'angular-cookies';
 
 import 'loom-api-angular';
+import Services from './services/services';
 
 import Components from './components/components';
 import HomeComponent from './components/home/home';
@@ -28,7 +29,8 @@ angular.module('recruitUnitApp', [
   'ngLodash',
   'angularMoment',
   'angular-jwt',
-  HomeComponent.name
+  HomeComponent.name,
+  Services.name
   // 'app.user.userLandingController',
   // 'app.user.formSubmitController',
   // 'app.user.formReadController',
@@ -37,7 +39,7 @@ angular.module('recruitUnitApp', [
 ])
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
-.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', AppController])//'recruitUnitUtil',
+.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', 'recruitUnitUtil', AppController])//'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
 
   $locationProvider.html5Mode(true);
@@ -51,13 +53,20 @@ angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, loomApi, jwtHelper) { //recruitUnitUtil,
+function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil) { //recruitUnitUtil,
   var sideNav;
   this.user = {
     email: "",
     password: ""
   };
   this.submitmessage = "";
+
+  console.log("In AppController");
+  console.log(recruitUnitUtil.Constants.APP_HOST);
+
+  //should fail
+  //recruitUnitUtil.Constants.APP_HOST = "bar";
+  //console.log(recruitUnitUtil.Constants.APP_HOST); //correctly fails. Todo: install babel plugin to catch this error
   
   $mdComponentRegistry.when('sidenav-main').then(function(mainSideNav){
     sideNav = mainSideNav;

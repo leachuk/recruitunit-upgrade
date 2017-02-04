@@ -1,9 +1,9 @@
 import angular from 'angular';
 
-import todoList from './todoList';
+import recruitUnitUtil from './recruitunit.util.es6';
 
 export default angular
   .module('app.services', [])
   .service({
-    todoList
+    recruitUnitUtil
   });

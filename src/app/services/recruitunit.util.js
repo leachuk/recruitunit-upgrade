@@ -15,8 +15,7 @@ angular.module('recruitunit.util',[])
         'RECRUITER_ROLE': 'recruiter',
         'PATH_HOME': '/home',
         'PATH_USER': '/user/',
-        'PATH_COMPARISONRULESFORM': '/comparisonrules',
-        'FOO': this.foo
+        'PATH_COMPARISONRULESFORM': '/comparisonrules'
     };
 
     service.Util.setTitle = function(title){
