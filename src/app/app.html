@@ -1,0 +1,7 @@
+<!-- Place all UI elements intended to be present across all routes in this file -->
+<div class="app" ng-controller="AppController as app" ng-init="app.initApp()">
+  <h1>App Header [{{$ctrl.name}}]</h1>
+  <h2>MainController 'app' [{{app.name}}]</h2>
+  <!--<div ui-view></div>-->
+  <ng-outlet></ng-outlet>
+</div>

@@ -1,1 +1,66 @@
-<ng-outlet flex></ng-outlet>
+<div ng-controller="AppController as app" layout="column" ng-init="app.initApp()">
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Settings">
+      <md-icon ng-click="app.toggleSideNav()" md-svg-icon="navigation:menu"></md-icon>
+    </md-button>
+
+    <div ng-if="app.user.isLoggedIn" ng-cloak layout="row" layout-align="end center" flex>{{app.user.email}}<md-button ng-click="app.signOutUser()">Logout</md-button></div>
+    <div ng-if="!app.user.isLoggedIn" ng-cloak layout="row" layout-align="end center" flex>
+      <form ng-submit="app.signInUser()" class="recruitunit-login" layout="row" layout-align="end center" flex>
+        <div>
+          <md-input-container flex>
+            <label>Email</label>
+            <input ng-model="app.user.email"
+                   type="text">
+          </md-input-container>
+        </div>
+        <div>
+          <md-input-container flex>
+            <label>Password</label>
+            <input ng-model="app.user.password"
+                   type="password">
+          </md-input-container>
+        </div>
+        <div>
+          <md-button type="submit">Login</md-button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <div layout="row" layout-align="end center" ng-if="app.submitmessage" ng-cloak>
+    <div>{{app.submitmessage}}</div>
+  </div>
+</md-toolbar>
+<md-content flex>
+  <div layout="vertical" flex>
+    <md-sidenav
+        md-component-id="sidenav-main"
+        md-is-locked-open="false"
+        md-whiteframe="4">
+      <md-content layout-padding>
+        <section layout="column" layout-align="center start">
+          <md-list>
+            <md-button ng-href="/user/{{app.user.email}}" ng-click="app.toggleSideNav()" class="md-primary">
+              <md-icon md-svg-icon="action:home"></md-icon>
+              Home
+            </md-button>
+            <md-button ng-href="/user/{{app.user.email}}/comparisonrules" ng-click="app.toggleSideNav()" ng-if="app.user.isDeveloper" class="md-primary">
+              <md-icon md-svg-icon="av:playlist_add_check"></md-icon>
+              Configure Test Rules
+            </md-button>
+            <md-button ng-href="/#" ng-click="app.toggleSideNav()" class="md-primary">
+              <md-icon md-svg-icon="action:settings"></md-icon>
+              Settings
+            </md-button>
+          </md-list>
+        </section>
+      </md-content>
+    </md-sidenav>
+
+    <ng-outlet flex></ng-outlet>
+
+  </div>
+</md-content>
+</div>
