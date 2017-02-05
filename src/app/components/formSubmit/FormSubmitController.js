@@ -32,7 +32,7 @@
 
     if(!this.isDeveloper) {
       loomApi.User.getUserFromGuid($routeParams.guid, authToken).then(angular.bind(this, function (result) {
-        this.user = result;
+        globals.user = result;
       }));
     }
     this.payFrequencyOptions = [
@@ -80,7 +80,7 @@
       if (result == false) {
         recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
       } else if (result.success) {
-        this.userName = tokenUsername;
+        globals.userName = tokenUsername;
         return true;
       }
     }));

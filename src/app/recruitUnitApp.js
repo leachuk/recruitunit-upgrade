@@ -39,7 +39,7 @@ angular.module('recruitUnitApp', [
 ])
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
-.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', 'recruitUnitUtil', AppController])//'recruitUnitUtil',
+.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', AppController])//'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
 
   $locationProvider.html5Mode(true);
@@ -53,21 +53,17 @@ angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil) { //recruitUnitUtil,
+function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil, globals) { //recruitUnitUtil,
   var sideNav;
-  this.user = {
+
+  globals.user = {
     email: "",
     password: ""
   };
+
   this.submitmessage = "";
 
   console.log("In AppController");
-  console.log(recruitUnitUtil.Constants.APP_HOST);
-
-  //testing service object
-  recruitUnitUtil.Util.setTitle("whoo");
-  console.log(recruitUnitUtil.Util.getLocalUser());
-  recruitUnitUtil.Util.isUserAuthenticated("foo", "bar");
 
   //should fail
   //recruitUnitUtil.Constants.APP_HOST = "bar";
@@ -90,10 +86,10 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   // ]);
 
   AppController.prototype.initApp = function() {
-    // this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
-    // this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
-    // if (this.user.isLoggedIn){
-    //   this.user.email = recruitUnitUtil.Util.getLocalUser().email;
+    // globals.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
+    // globals.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
+    // if (globals.user.isLoggedIn){
+    //   globals.user.email = recruitUnitUtil.Util.getLocalUser().email;
     // }
   }
 
@@ -108,21 +104,21 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   //login existing user
   AppController.prototype.signInUser = function(){
     console.log("in signInUser");
-    console.log(this.user);
+    console.log(globals.user);
 
-    loomApi.User.signInUser(this.user.email, this.user.password).then(angular.bind(this,function(result, status, headers, config) {
+    loomApi.User.signInUser(globals.user.email, globals.user.password).then(angular.bind(this,function(result, status, headers, config) {
       console.log(result);
       console.log(status);
       console.log(headers);
       console.log(config);
 
       if (result.success) {
-        recruitUnitUtil.Util.persistUserAuth(result.token, this.user.email);
+        recruitUnitUtil.Util.persistUserAuth(result.token, globals.user.email);
         this.initApp();
-        this.user.password = "";
+        globals.user.password = "";
         this.submitmessage = "";
 
-        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + this.user.email);
+        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + globals.user.email);
       } else {
         recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
       }
