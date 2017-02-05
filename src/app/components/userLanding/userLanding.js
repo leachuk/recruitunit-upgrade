@@ -1,7 +1,8 @@
 import angular from 'angular';
 
-import userLandingComponent from './UserLandingController'
+import UserLandingController from './UserLandingController';
+import DialogController from './RequireComparisonFormDialogController';
 
 export default angular
   .module('app.user.userLandingController', [])
-  .component('userLanding', userLandingComponent)
+  .component('userLanding', UserLandingController);

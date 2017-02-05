@@ -6,7 +6,7 @@ let rootComponent = {
   template: routerTemplate,
   $routeConfig: [
     { path: '/home', component: 'home', name: 'Home', useAsDefault: true },
-    { path: '/user', component: 'userlanding', name: 'UserLanding' }
+    { path: '/user/:email', component: 'userLanding', name: 'UserLanding'}
   ]
 };
 
