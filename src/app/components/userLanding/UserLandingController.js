@@ -1,10 +1,10 @@
 import template from './userLanding.html';
 import unitTestFormTemplate from './unitTestFormDialog.html';
 
-import DialogController from './RequireComparisonFormDialogController';
+
 
 class UserLandingController {
-  constructor() {
+  constructor($mdPanel) {
     "ngInject";
     console.log("in UserLandingController");
 
@@ -21,13 +21,13 @@ class UserLandingController {
     this.myContentListPassCount = 0;
     this.myContentListFailCount = 0;
     this.userFormUrl = "";
-    this.isDeveloper = false;
+    //this.isDeveloper = false;
 
     this.comparisonFormTemplate = "src/angular/components/userLanding/requireComparisonFormDialog.html";
     this.enableContactMeTemplate = "src/angular/components/userLanding/enableContactMeDialog.html";
     this.disableContactMeTemplate = "src/angular/components/userLanding/disableContactMeDialog.html";
-    this.unitTestFormTemplate = "src/angular/components/userLanding/unitTestFormDialog.html";
-    //this._mdPanel = $mdPanel;
+    //this.unitTestFormTemplate = "src/angular/components/userLanding/unitTestFormDialog.html";
+    this._mdPanel = $mdPanel;
     this.openFrom = 'button';
     this.closeTo = 'button';
   }
@@ -39,6 +39,8 @@ class UserLandingController {
 
   toggleUnitTestFormDialog($event, unitTestFormUrl) {
     console.log("in toggleUnitTestFormDialog");
+    console.log($event);
+    console.log(unitTestFormUrl);
 
     var panelPosition = this._mdPanel.newPanelPosition()
         .absolute()
@@ -58,7 +60,7 @@ class UserLandingController {
       bindToController: true,
       position: panelPosition,
       animation: panelAnimation,
-      template: unitTestFormTemplatee,
+      template: unitTestFormTemplate,
       hasBackdrop: true,
       panelClass: 'demo-dialog-example',
       zIndex: 150,
@@ -69,10 +71,73 @@ class UserLandingController {
 
     this._mdPanel.open(config);
   }
-
-
 }
 
+class DialogController {
+  constructor(mdPanelRef, loomApi, recruitUnitUtil) {
+    "ngInject";
+    this._mdPanelRef = mdPanelRef;
+    this.loomApi = loomApi;
+    this.recruitUnitUtil = recruitUnitUtil;
+  }
+
+  toggleContactMe(docId, repeatScope) {
+    console.log("confirmContactMe docId:" + docId);
+
+    var panelRef = this._mdPanelRef;
+    var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
+
+    this.loomApi.Article.toggleDevEmailDisplay(docId, localToken).then(angular.bind(this,function(result){
+      console.log("toggleDevEmailDisplay result:");
+      console.log(result);
+      repeatScope.item.document.displayDevEmail = result.displayDevEmail;
+    }));
+
+    panelRef.close()
+  }
+
+  copyUnitTestFormUrl(testFormUrl) {
+    console.log("copyUnitTestFormUrl testFormUrl:" + testFormUrl);
+
+    var panelRef = this._mdPanelRef;
+
+    // Copies a string to the clipboard. Must be called from within an
+    // event handler such as click. May return false if it failed, but
+    // this is not always possible. Browser support for Chrome 43+,
+    // Firefox 42+, Safari 10+, Edge and IE 10+.
+    // IE: The clipboard feature may be disabled by an administrator. By
+    // default a prompt is shown the first time the clipboard is
+    // used (per session).
+    var text = testFormUrl;
+    if (window.clipboardData && window.clipboardData.setData) {
+      // IE specific code path to prevent textarea being shown while dialog is visible.
+      return clipboardData.setData("Text", text);
+
+    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+      var textarea = document.createElement("textarea");
+      textarea.textContent = text;
+      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+      } catch (ex) {
+        console.warn("Copy to clipboard failed.", ex);
+        return false;
+      } finally {
+        document.body.removeChild(textarea);
+        panelRef.close()
+      }
+    }
+  }
+
+  closePanel() {
+    console.log("close panel");
+    var panelRef = this._mdPanelRef;
+
+    panelRef.close()
+  }
+}
 
 export default {
   controller: UserLandingController,

@@ -11,6 +11,6 @@ class RequireComparisonFormDialogController {
 
 export default {
   controller: RequireComparisonFormDialogController,
-  controllerAs: 'requireComparisonLanding',
+  controllerAs: 'requireComparisonFormDialog',
   template: template
 }

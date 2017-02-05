@@ -5,4 +5,5 @@ import DialogController from './RequireComparisonFormDialogController';
 
 export default angular
   .module('app.user.userLandingController', [])
-  .component('userLanding', UserLandingController);
+  .component('userLanding', UserLandingController)
+  .component('requireComparisonForm', DialogController);
