@@ -15,7 +15,7 @@ class HomeController {
 
   createNewUser(){
     console.log("in createNewUser");
-    console.log(this.user);
+    console.log(this.user);//from the home.html form
 
     if(createUser.checkValidity()){ //createUser is form name
       //limitation of angular resource. Any parameters are placed on the url in the request, even for POST.
