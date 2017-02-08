@@ -1,16 +1,15 @@
 import template from './userLanding.html';
+import formReadDialogTemplate from '../formRead/formReadDialog.html';
+import comparisonFormTemplate from './requireComparisonFormDialog.html';
+import enableContactMeTemplate from './enableContactMeDialog.html';
 import unitTestFormTemplate from './unitTestFormDialog.html';
 
+
 class UserLandingController {
-  constructor($mdPanel,loomApi,recruitUnitUtil,jwtHelper) {
+  constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper) {
     "ngInject";
     console.log("in UserLandingController");
-    //todo: import these via npm and add to app module, so they can be injected: lodash,moment,$mdDialog,$location
 
-    //temp
-    this.isDeveloper = true;
-
-    //not temp!
     this.username = "";
     this.userguid = "";
     this.roles = "";
@@ -20,12 +19,8 @@ class UserLandingController {
     this.myContentListPassCount = 0;
     this.myContentListFailCount = 0;
     this.userFormUrl = "";
-    //this.isDeveloper = false;
+    this.isDeveloper = false;
 
-    this.comparisonFormTemplate = "src/angular/components/userLanding/requireComparisonFormDialog.html";
-    this.enableContactMeTemplate = "src/angular/components/userLanding/enableContactMeDialog.html";
-    this.disableContactMeTemplate = "src/angular/components/userLanding/disableContactMeDialog.html";
-    //this.unitTestFormTemplate = "src/angular/components/userLanding/unitTestFormDialog.html";
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
     this.closeTo = 'button';
@@ -41,6 +36,7 @@ class UserLandingController {
       }
     }
   }
+
   $routerOnActivate(next, previous){
     this.useremail = next.params.email;
     console.log("route param email:" + this.useremail);
@@ -61,7 +57,7 @@ class UserLandingController {
         ]
       },
       bindToController: true,
-      templateUrl: 'src/angular/components/formRead/formReadDialog.html',
+      template: formReadDialogTemplate,
       parent: angular.element(document.body),
       targetEvent: $event,
       clickOutsideToClose: true,
@@ -149,7 +145,7 @@ class UserLandingController {
       },
       position: panelPosition,
       animation: panelAnimation,
-      templateUrl: this.comparisonFormTemplate,
+      template: comparisonFormTemplate,
       hasBackdrop: true,
       panelClass: 'demo-dialog-example',
       zIndex: 150,
@@ -186,7 +182,7 @@ class UserLandingController {
       bindToController: true,
       position: panelPosition,
       animation: panelAnimation,
-      templateUrl: this.enableContactMeTemplate,
+      template: enableContactMeTemplate,
       hasBackdrop: true,
       panelClass: 'demo-dialog-example',
       zIndex: 150,
