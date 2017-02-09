@@ -18,7 +18,7 @@ class UserLandingController {
     this.myContentListPassCount = 0;
     this.myContentListFailCount = 0;
     this.userFormUrl = "";
-    this.isDeveloper = true;
+    this.isDeveloper = false;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
@@ -274,8 +274,7 @@ export default {
 
       }));
     } else {
-      //recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
-      return true;
+      recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
     }
   }
 }
