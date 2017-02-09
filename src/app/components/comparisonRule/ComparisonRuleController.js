@@ -1,3 +1,22 @@
+import template from './comparisonRule.html';
+
+class ComparisonRuleController(){
+  constructor(){
+
+  }
+
+  foo(){
+
+  }
+}
+
+export default {
+  controller: ComparisonRuleController,
+  controllerAs: 'comparisonRule',
+  template: template
+}
+
+
 (function() {
   'use strict';
 
