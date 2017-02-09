@@ -4,7 +4,6 @@ import comparisonFormTemplate from './requireComparisonFormDialog.html';
 import enableContactMeTemplate from './enableContactMeDialog.html';
 import unitTestFormTemplate from './unitTestFormDialog.html';
 
-
 class UserLandingController {
   constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper) {
     "ngInject";
@@ -19,7 +18,7 @@ class UserLandingController {
     this.myContentListPassCount = 0;
     this.myContentListFailCount = 0;
     this.userFormUrl = "";
-    this.isDeveloper = false;
+    this.isDeveloper = true;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
@@ -129,7 +128,6 @@ class UserLandingController {
     var panelPosition = this._mdPanel.newPanelPosition()
       .absolute()
       .center();
-
     var panelAnimation = this._mdPanel.newPanelAnimation();
     panelAnimation.openFrom({top: 0, left: 0});
     panelAnimation.closeTo({top: document.documentElement.clientHeight, left: 0});
@@ -137,7 +135,7 @@ class UserLandingController {
 
     var config = {
       attachTo: angular.element(document.body),
-      controller: 'RequireComparisonFormDialogController',
+      controller: 'genericDialogController',
       controllerAs: 'requireComparisonFormDialog',
       locals: {
         'useremail': this.useremail,
@@ -170,7 +168,7 @@ class UserLandingController {
 
     var config = {
       attachTo: angular.element(document.body),
-      controller: DialogController,
+      controller: 'genericDialogController',
       controllerAs: 'contactMeDialog',
       locals: {
         'docId': id,
@@ -209,7 +207,7 @@ class UserLandingController {
 
     var config = {
       attachTo: angular.element(document.body),
-      controller: DialogController,
+      controller: 'genericDialogController',
       controllerAs: 'unitTestFormDialog',
       locals: {
         'testFormUrl': unitTestFormUrl
@@ -227,72 +225,6 @@ class UserLandingController {
     }
 
     this._mdPanel.open(config);
-  }
-}
-
-class DialogController {
-  constructor(mdPanelRef, loomApi, recruitUnitUtil) {
-    "ngInject";
-    this._mdPanelRef = mdPanelRef;
-    this.loomApi = loomApi;
-    this.recruitUnitUtil = recruitUnitUtil;
-  }
-
-  toggleContactMe(docId, repeatScope) {
-    console.log("confirmContactMe docId:" + docId);
-
-    var panelRef = this._mdPanelRef;
-    var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
-
-    this.loomApi.Article.toggleDevEmailDisplay(docId, localToken).then(angular.bind(this,function(result){
-      console.log("toggleDevEmailDisplay result:");
-      console.log(result);
-      repeatScope.item.document.displayDevEmail = result.displayDevEmail;
-    }));
-
-    panelRef.close()
-  }
-
-  copyUnitTestFormUrl(testFormUrl) {
-    console.log("copyUnitTestFormUrl testFormUrl:" + testFormUrl);
-
-    var panelRef = this._mdPanelRef;
-
-    // Copies a string to the clipboard. Must be called from within an
-    // event handler such as click. May return false if it failed, but
-    // this is not always possible. Browser support for Chrome 43+,
-    // Firefox 42+, Safari 10+, Edge and IE 10+.
-    // IE: The clipboard feature may be disabled by an administrator. By
-    // default a prompt is shown the first time the clipboard is
-    // used (per session).
-    var text = testFormUrl;
-    if (window.clipboardData && window.clipboardData.setData) {
-      // IE specific code path to prevent textarea being shown while dialog is visible.
-      return clipboardData.setData("Text", text);
-
-    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-      var textarea = document.createElement("textarea");
-      textarea.textContent = text;
-      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-      } catch (ex) {
-        console.warn("Copy to clipboard failed.", ex);
-        return false;
-      } finally {
-        document.body.removeChild(textarea);
-        panelRef.close()
-      }
-    }
-  }
-
-  closePanel() {
-    console.log("close panel");
-    var panelRef = this._mdPanelRef;
-
-    panelRef.close()
   }
 }
 
@@ -342,7 +274,8 @@ export default {
 
       }));
     } else {
-      recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
+      //recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
+      return true;
     }
   }
 }

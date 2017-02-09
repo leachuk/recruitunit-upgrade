@@ -1,9 +1,9 @@
 import angular from 'angular';
 
 import UserLandingController from './UserLandingController';
-import DialogController from './RequireComparisonFormDialogController';
+import DialogController from './GenericDialogController';
 
 export default angular
   .module('app.user.userLandingController', [])
   .component('userLanding', UserLandingController)
-  .component('requireComparisonForm', DialogController);
+  .controller('genericDialogController', DialogController);

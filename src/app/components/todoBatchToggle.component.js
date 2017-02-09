@@ -1,4 +1,4 @@
-
+x
 export class BatchTogglerController {
 
   /**
