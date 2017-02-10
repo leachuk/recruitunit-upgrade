@@ -1,41 +1,8 @@
 import template from './comparisonRule.html';
 
-class ComparisonRuleController(){
-  constructor(){
-
-  }
-
-  foo(){
-
-  }
-}
-
-export default {
-  controller: ComparisonRuleController,
-  controllerAs: 'comparisonRule',
-  template: template
-}
-
-
-(function() {
-  'use strict';
-
-  angular
-    .module('app.user.comparisonRuleController')
-    .controller('ComparisonRuleController', Controller);
-
-  Controller.$inject = [
-    '$routeParams',
-    '$http',
-    '$cookies',
-    '$mdDialog',
-    '$location',
-    '$window',
-    'loomApi',
-    'recruitUnitUtil'
-  ];
-
-  function Controller($routeParams, $http, $cookies, $mdDialog, $location, $window, loomApi, recruitUnitUtil) {
+class ComparisonRuleController {
+  constructor(loomApi, recruitUnitUtil){
+    "ngInject";
     console.log("ComparisonRuleController instantiated");
 
     recruitUnitUtil.Util.setTitle("Manage Comparison Rules");
@@ -75,90 +42,98 @@ export default {
       },
       "published": true
     };
-
-    this.toggleRoleType = function(value){
-      var roleTypeValue = this.article.roleType.value;
-      var idx = roleTypeValue.indexOf(value);
-      if (idx > -1) {
-        roleTypeValue.splice(idx, 1);
-      }
-      else {
-        roleTypeValue.push(value);
-      };
-    }
-
-    this.existsRoleType = function(value){
-      var roleTypeValue = this.article.roleType.value;
-      return roleTypeValue.indexOf(value) > -1;
-    }
-
-    this.disableRoleType = function(){
-      this.article.roleType.disabled = !this.article.roleType.disabled;
-    }
-    this.disablePayBracketLower = function(){
-      this.article.payBracketLower.disabled = !this.article.payBracketLower.disabled;
-    }
-    this.disableSkills = function(){
-      this.article.skills.disabled = !this.article.skills.disabled;
-    }
-    this.disableLocationDescription = function(){
-      this.article.locationDescription.disabled = !this.article.locationDescription.disabled;
-    }
-
-    this.submitComparisonRuleDocument = function(){
-      console.log("in submitComparisonRuleDocument");
-
-      if(comparisonRuleForm.checkValidity()){ //comparisonRuleForm is form name
-        console.log("model:");
-        console.log(this.article);
-
-        var authToken = recruitUnitUtil.Util.getLocalUser().token;
-        var authEmail = recruitUnitUtil.Util.getLocalUser().email;
-        var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-        var modelType = "server/models/RecruitUnit.ComparisonTest.js";
-        if (this.article.hasOwnProperty("id")){//there is an existing comparisontest form, so update.
-          delete this.article._rev;
-          loomApi.Article.updateArticle(this.article.id, modelId, modelType, this.article, authToken).then(angular.bind(this, function (result) {
-            console.log("Update result:");
-            console.log(result);
-            result.success ? recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail) : this.submitmessage = "Error. " + result.message;
-          }));
-        }else {
-          loomApi.Article.createArticle(this.article, modelId, modelType, authToken).then(angular.bind(this,function(result){
-            console.log("Save result:");
-            console.log(result);
-            result.success
-                ? (this.submitmessage = "Success",
-                  this.article = result.data,
-                  loomApi.User.updateUser(authEmail, {"isComparisonFormEnabled": true}, authToken).then(angular.bind(this,function(updateUserResult){
-                    if (updateUserResult.success){
-                      recruitUnitUtil.Util.deleteUserAuth();
-                      recruitUnitUtil.Util.persistUserAuth(updateUserResult.token, authEmail);
-                      recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail);
-                    }
-                  }))
-                  )
-                :
-                  this.submitmessage = "Error. " + result.message;
-          }));
-        }
-      }
-    }
-
-    this.cancelComparisonRuleDocument = function(){
-      window.history.back();
-    }
-
   }
 
-  Controller.prototype.canActivate = function(loomApi, $routeParams, recruitUnitUtil, jwtHelper) {
+  toggleRoleType(value){
+    var roleTypeValue = this.article.roleType.value;
+    var idx = roleTypeValue.indexOf(value);
+    if (idx > -1) {
+      roleTypeValue.splice(idx, 1);
+    }
+    else {
+      roleTypeValue.push(value);
+    };
+  }
+
+  existsRoleType(value){
+    var roleTypeValue = this.article.roleType.value;
+    return roleTypeValue.indexOf(value) > -1;
+  }
+
+  disableRoleType(){
+    this.article.roleType.disabled = !this.article.roleType.disabled;
+  }
+
+  disablePayBracketLower(){
+    this.article.payBracketLower.disabled = !this.article.payBracketLower.disabled;
+  }
+
+  disableSkills(){
+    this.article.skills.disabled = !this.article.skills.disabled;
+  }
+  disableLocationDescription(){
+    this.article.locationDescription.disabled = !this.article.locationDescription.disabled;
+  }
+
+  submitComparisonRuleDocument(){
+    console.log("in submitComparisonRuleDocument");
+
+    if(comparisonRuleForm.checkValidity()){ //comparisonRuleForm is form name
+      console.log("model:");
+      console.log(this.article);
+
+      var authToken = recruitUnitUtil.Util.getLocalUser().token;
+      var authEmail = recruitUnitUtil.Util.getLocalUser().email;
+      var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
+      var modelType = "server/models/RecruitUnit.ComparisonTest.js";
+      if (this.article.hasOwnProperty("id")){//there is an existing comparisontest form, so update.
+        delete this.article._rev;
+        loomApi.Article.updateArticle(this.article.id, modelId, modelType, this.article, authToken).then(angular.bind(this, function (result) {
+          console.log("Update result:");
+          console.log(result);
+          result.success ? recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail) : this.submitmessage = "Error. " + result.message;
+        }));
+      }else {
+        loomApi.Article.createArticle(this.article, modelId, modelType, authToken).then(angular.bind(this,function(result){
+          console.log("Save result:");
+          console.log(result);
+          result.success
+            ? (this.submitmessage = "Success",
+              this.article = result.data,
+              loomApi.User.updateUser(authEmail, {"isComparisonFormEnabled": true}, authToken).then(angular.bind(this,function(updateUserResult){
+                if (updateUserResult.success){
+                  recruitUnitUtil.Util.deleteUserAuth();
+                  recruitUnitUtil.Util.persistUserAuth(updateUserResult.token, authEmail);
+                  recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail);
+                }
+              }))
+          )
+            :
+            this.submitmessage = "Error. " + result.message;
+        }));
+      }
+    }
+  }
+
+  cancelComparisonRuleDocument(){
+    window.history.back();
+  }
+
+}
+
+export default {
+  controller: ComparisonRuleController,
+  controllerAs: 'comparisonRule',
+  template: template,
+  $canActivate: function($nextInstruction, loomApi, recruitUnitUtil, jwtHelper){
+    "ngInject";
     console.log("in ComparisonRuleController canActivate");
 
     if (recruitUnitUtil.Util.isLocalUserAvailable()) {
       var decodedToken = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
       var tokenUsername = decodedToken.username;
       this.isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
-      var requestedUsername = $routeParams.email;
+      var requestedUsername = $nextInstruction.params.email;
 
       var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
       var model = "server/models/RecruitUnit.ComparisonTest.js";
@@ -189,6 +164,6 @@ export default {
     } else {
       recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
     }
-  }
 
-})();
+  }
+}
