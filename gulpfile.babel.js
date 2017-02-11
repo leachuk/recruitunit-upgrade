@@ -76,7 +76,7 @@ gulp.task('serve', () => {
     middleware: [
       historyApiFallback({
         rewrites: [
-          { from: /\/user\/developer2@gmail.com/, to: '/index.html'}
+          { from: /^\/[a-z]+\/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]\/?[a-z].+/, to: '/index.html'}
         ]
       }),
       webpackDevMiddelware(compiler, {
