@@ -9,6 +9,9 @@ class UserLandingController {
     "ngInject";
     console.log("in UserLandingController");
     this.moment = moment;
+    this.$mdDialog = $mdDialog;
+    this.recruitUnitUtil = recruitUnitUtil;
+    this.loomApi = loomApi;
 
     this.username = globals.username;
     this.userguid = globals.userguid;
@@ -17,7 +20,7 @@ class UserLandingController {
     this.myContentListArray = globals.myContentListArray;
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
-    this.isDeveloper = false;
+    this.isDeveloper = globals.isDeveloper;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
@@ -25,11 +28,11 @@ class UserLandingController {
 
     //check if the user has a comparison test form and is a developer. Show alert dialog if not
     //todo: might need to move this to the canActivate?
-    if (recruitUnitUtil.Util.getLocalUser().token !== null) {
-      var decodedToken = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
+    if (this.recruitUnitUtil.Util.getLocalUser().token !== null) {
+      var decodedToken = jwtHelper.decodeToken(this.recruitUnitUtil.Util.getLocalUser().token);
       if (decodedToken.isComparisonFormEnabled) {
         console.log("User has a comparison form enabled");
-      } else if (decodedToken.roles.indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1) {
+      } else if (decodedToken.roles.indexOf(this.recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1) {
         this.showPanel();
       }
     }
@@ -43,7 +46,7 @@ class UserLandingController {
   showFormDetailDialog($event, id, isPass, isPartialPass){
     console.log("in showFormDetailDialog");
     console.log("form id:" + id);
-    $mdDialog.show({
+    this.$mdDialog.show({
       controller: 'FormReadController',
       controllerAs: 'formRead',
       locals: {
@@ -68,8 +71,8 @@ class UserLandingController {
     //todo: ensure the update can only change the users own document
     var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
     var jobItemModel = "server/models/RecruitUnit.Job.All.js";
-    var localToken = recruitUnitUtil.Util.getLocalUser().token;
-    loomApi.Article.updateArticle(docId, controllerId, jobItemModel, {"published": false}, localToken).then(angular.bind(this, function (result) {
+    var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
+    this.loomApi.Article.updateArticle(docId, controllerId, jobItemModel, {"published": false}, localToken).then(angular.bind(this, function (result) {
       console.log("Delete result:");
       console.log(result);
       if (result.success) {
@@ -89,9 +92,9 @@ class UserLandingController {
 
   searchUser(searchJson){
     var comparisonRulesDocId = "";
-    var localToken = recruitUnitUtil.Util.getLocalUser().token;
+    var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
 
-    loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
+    this.loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
       console.log("getUserTestResults:");
       console.log(listMyTestContentResult);
       if (typeof listMyTestContentResult !== 'undefined') {
@@ -105,14 +108,14 @@ class UserLandingController {
   }
 
   navigateToUserRules(useremail){
-    recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + useremail + recruitUnitUtil.Constants.PATH_COMPARISONRULESFORM);
+    this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + useremail + this.recruitUnitUtil.Constants.PATH_COMPARISONRULESFORM);
   }
 
   getDeveloperEmailAddress(docId, isDeveloper, displayDevEmail){
     if (!isDeveloper && displayDevEmail) {
-      var localToken = recruitUnitUtil.Util.getLocalUser().token;
+      var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
 
-      return loomApi.User.getDevEmailFromDocId(docId, localToken).then(angular.bind(this, function (result) {
+      return this.loomApi.User.getDevEmailFromDocId(docId, localToken).then(angular.bind(this, function (result) {
         return typeof result.email !== "undefined" ? result.email : result.message;
       }));
     }
@@ -254,6 +257,7 @@ export default {
           globals.userFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + globals.userGuid + "/form";
 
           if (tokenRoles.indexOf("recruiter") != -1){
+            globals.isDeveloper = false;
             var searchJson = {
               "authorEmail": tokenUsername
             };
