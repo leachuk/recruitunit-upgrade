@@ -51,7 +51,7 @@ angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil, globals) { //recruitUnitUtil,
+function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil, globals) {
   var sideNav;
 
   globals.user = {
@@ -71,24 +71,14 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
     sideNav = mainSideNav;
 
   });
-  //$mdSidenav('left').open();
-  //todo: refactor to angular-ui-router
 
-  // $router.config([
-  //   { path: '/', redirectTo: '/home' },
-  //   { path: '/home', component: 'home' },
-  //   { path: '/user/:email', component: 'userLanding' },
-  //   { path: '/user/:email/comparisonrules', component: 'comparisonRule' },
-  //   { path: '/user/:guid/form', component: 'formSubmit' },
-  //   { path: '/user/:email/form/:id', component: 'formRead' }
-  // ]);
 
   AppController.prototype.initApp = function() {
-    // globals.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
-    // globals.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
-    // if (globals.user.isLoggedIn){
-    //   globals.user.email = recruitUnitUtil.Util.getLocalUser().email;
-    // }
+    globals.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
+    globals.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
+    if (globals.user.isLoggedIn){
+      globals.user.email = recruitUnitUtil.Util.getLocalUser().email;
+    }
   }
 
   AppController.prototype.test = function() {
@@ -102,21 +92,21 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   //login existing user
   AppController.prototype.signInUser = function(){
     console.log("in signInUser");
-    console.log(globals.user);
+    console.log(this.user);
 
-    loomApi.User.signInUser(globals.user.email, globals.user.password).then(angular.bind(this,function(result, status, headers, config) {
+    loomApi.User.signInUser(this.user.email, this.user.password).then(angular.bind(this,function(result, status, headers, config) {
       console.log(result);
       console.log(status);
       console.log(headers);
       console.log(config);
 
       if (result.success) {
-        recruitUnitUtil.Util.persistUserAuth(result.token, globals.user.email);
+        recruitUnitUtil.Util.persistUserAuth(result.token, this.user.email);
         this.initApp();
         globals.user.password = "";
         this.submitmessage = "";
 
-        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + globals.user.email);
+        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + this.user.email);
       } else {
         recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
       }
