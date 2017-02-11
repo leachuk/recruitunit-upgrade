@@ -5,19 +5,18 @@ import enableContactMeTemplate from './enableContactMeDialog.html';
 import unitTestFormTemplate from './unitTestFormDialog.html';
 
 class UserLandingController {
-  constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper) {
+  constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper, globals) {
     "ngInject";
     console.log("in UserLandingController");
+    this.moment = moment;
 
-    this.username = "";
-    this.userguid = "";
-    this.roles = "";
-    this.id = "";
-    this.status = "";
-    this.myContentListArray = [];
-    this.myContentListPassCount = 0;
-    this.myContentListFailCount = 0;
-    this.userFormUrl = "";
+    this.username = globals.username;
+    this.userguid = globals.userguid;
+    this.roles = globals.roles;
+    this.id = globals.id;
+    this.myContentListArray = globals.myContentListArray;
+    this.myContentListPassCount = globals.myContentListPassCount;
+    this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = false;
 
     this._mdPanel = $mdPanel;
@@ -61,10 +60,6 @@ class UserLandingController {
       targetEvent: $event,
       clickOutsideToClose: true,
       fullscreen: false
-    }).then(function (answer) {
-      //this.status = 'You said the information was "' + answer + '".';
-    }, function () {
-      //this.status = 'You cancelled the dialog.';
     });
   }
 
@@ -84,7 +79,7 @@ class UserLandingController {
   }
 
   formatUnixDateToNow(unixTime){
-    return moment.unix(unixTime).from();
+    return this.moment.unix(unixTime).from();
   }
 
   viewItem(id){
@@ -232,7 +227,7 @@ export default {
   controller: UserLandingController,
   controllerAs: 'userLanding',
   template: template,
-  $canActivate: function($nextInstruction, recruitUnitUtil, jwtHelper){
+  $canActivate: function($nextInstruction, recruitUnitUtil, jwtHelper, loomApi, globals, lodash){
     "ngInject";
     console.log("in UserLandingController canActivate");
 
@@ -252,23 +247,45 @@ export default {
           recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + tokenUsername);
         } else if (result.success) {
           //set user details returned from the jwt
-          this.roles = result.data.roles;
-          this.id = result.data.id;
-          this.username = result.data.displayName;
-          this.userGuid = result.data.userGuid;
-          this.userFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + this.userGuid + "/form";
+          globals.roles = result.data.roles;
+          globals.id = result.data.id;
+          globals.username = result.data.displayName;
+          globals.userGuid = result.data.userGuid;
+          globals.userFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + globals.userGuid + "/form";
 
           if (tokenRoles.indexOf("recruiter") != -1){
             var searchJson = {
               "authorEmail": tokenUsername
             };
-            return this.searchUser(searchJson);
+            var localToken = recruitUnitUtil.Util.getLocalUser().token;
+            return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
+              console.log("getUserTestResults:");
+              console.log(listMyTestContentResult);
+              if (typeof listMyTestContentResult !== 'undefined') {
+                globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+                globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
+                globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
+
+                return true; //return canActivate state once results are available
+              }
+            }));
           } else if (tokenRoles.indexOf("developer") != -1){
-            this.isDeveloper = true;
+            globals.isDeveloper = true;
             var searchJson = {
-              "submitTo": this.userGuid
+              "submitTo": globals.userGuid
             };
-            return this.searchUser(searchJson);
+            var localToken = recruitUnitUtil.Util.getLocalUser().token;
+            return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
+              console.log("getUserTestResults:");
+              console.log(listMyTestContentResult);
+              if (typeof listMyTestContentResult !== 'undefined') {
+                globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+                globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
+                globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
+
+                return true; //return canActivate state once results are available
+              }
+            }));
           }
         }
 

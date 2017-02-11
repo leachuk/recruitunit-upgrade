@@ -74,7 +74,11 @@ gulp.task('serve', () => {
     open: false,
     server: {baseDir: root},
     middleware: [
-      historyApiFallback(),
+      historyApiFallback({
+        rewrites: [
+          { from: /\/user\/developer2@gmail.com/, to: '/index.html'}
+        ]
+      }),
       webpackDevMiddelware(compiler, {
         stats: {
           colors: colorsSupported,
