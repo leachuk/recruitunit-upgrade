@@ -1,17 +1,19 @@
 import template from './formSubmit.html';
 
 class FormSubmitController {
-  controller($location, loomApi, recruitUnitUtil, jwtHelper, globals){
+  constructor($location, loomApi, recruitUnitUtil, jwtHelper, globals){
     "ngInject";
     console.log("FormSubmitController instantiated");
-    recruitUnitUtil.Util.setTitle("Submit Form Page");
 
-    var authToken = recruitUnitUtil.Util.getLocalUser().token;
-    var token = jwtHelper.decodeToken(authToken);
-    var tokenUsername = token.username;
-    var tokenRoles = token.roles;
+    this.$location = $location;
+    this.loomApi = loomApi;
+    this.recruitUnitUtil = recruitUnitUtil;
+    this.jwtHelper = jwtHelper;
+    this.globals = globals;
 
-    this.authenticatedUser = recruitUnitUtil.Util.getLocalUser();
+    this.recruitUnitUtil.Util.setTitle("Submit Form Page");
+
+    this.authenticatedUser = this.recruitUnitUtil.Util.getLocalUser();
 
     this.payFrequencyOptions = [
       {id: "Permanent", value: "annual salary"},
@@ -28,31 +30,39 @@ class FormSubmitController {
       "authorEmail" : this.authenticatedUser.email,
       "published" : true
     };
+
+
   }
 
   $routerOnActivate(next, previous){
     this.submitTo = next.params.guid;
-    this.isDeveloper = tokenRoles.indexOf(recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
+
+    this.authToken = this.recruitUnitUtil.Util.getLocalUser().token;
+    this.token = this.jwtHelper.decodeToken(this.authToken);
+    this.tokenUsername = this.token.username;
+    this.tokenRoles = this.token.roles;
+    this.isDeveloper = this.tokenRoles.indexOf(this.recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
+
     if(!this.isDeveloper) {
-      loomApi.User.getUserFromGuid(this.submitTo, authToken).then(angular.bind(this, function (result) {
-        globals.user = result;
+      this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
+        this.globals.user = result;
       }));
     }
   }
 
   submitJobToCandidate(){
     console.log("in submitJobToCandidate");
-    var authToken = recruitUnitUtil.Util.getLocalUser().token;
+    this.authToken = this.recruitUnitUtil.Util.getLocalUser().token;
 
-    if(submitJobFromRecruiter.checkValidity() && typeof authToken != 'undefined'){ //submitJobFromRecruiter is form name
+    if(submitJobFromRecruiter.checkValidity() && typeof this.authToken != 'undefined'){ //submitJobFromRecruiter is form name
       console.log("model:");
       console.log(this.article);
 
-      loomApi.Article.createJobSubmission(this.article, authToken).then(angular.bind(this,function(saveResult){
+      this.loomApi.Article.createJobSubmission(this.article, this.authToken).then(angular.bind(this,function(saveResult){
         console.log("result:");
         console.log(saveResult);
 
-        saveResult.success ? $location.path("/user/" + this.authenticatedUser.email) : this.submitmessage = "Error. " + saveResult.message;
+        saveResult.success ? this.$location.path("/user/" + this.authenticatedUser.email) : this.submitmessage = "Error. " + saveResult.message;
       }));
     }
   }
@@ -63,6 +73,7 @@ export default{
   controllerAs: 'formSubmit',
   template: template,
   $canActivate: function(recruitUnitUtil, jwtHelper, globals) {
+    "ngInject";
     var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token); //todo: handle no token
     var userRoles = token.roles;
     var tokenUsername = token.username;
