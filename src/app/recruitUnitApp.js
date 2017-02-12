@@ -54,7 +54,7 @@ angular.module('recruitUnitApp', [
 function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil, globals) {
   var sideNav;
 
-  globals.user = {
+  this.user = {
     email: "",
     password: ""
   };
@@ -74,10 +74,10 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
 
 
   AppController.prototype.initApp = function() {
-    globals.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
-    globals.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
-    if (globals.user.isLoggedIn){
-      globals.user.email = recruitUnitUtil.Util.getLocalUser().email;
+    this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
+    this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
+    if (this.user.isLoggedIn){
+      this.user.email = recruitUnitUtil.Util.getLocalUser().email;
     }
   }
 
