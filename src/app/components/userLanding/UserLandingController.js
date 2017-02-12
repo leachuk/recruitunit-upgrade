@@ -21,6 +21,7 @@ class UserLandingController {
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = globals.isDeveloper;
+    this.userFormUrl = globals.userFormUrl;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
