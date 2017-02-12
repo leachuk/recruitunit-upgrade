@@ -47,7 +47,7 @@ class UserLandingController {
     console.log("in showFormDetailDialog");
     console.log("form id:" + id);
     this.$mdDialog.show({
-      controller: 'FormReadController',
+      controller: 'formReadController',
       controllerAs: 'formRead',
       locals: {
         'jobDetailFormId': id,

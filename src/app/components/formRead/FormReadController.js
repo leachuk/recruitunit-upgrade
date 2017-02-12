@@ -3,6 +3,10 @@ import template from "./formRead.html";
 class Controller{
   constructor($cookies, $mdDialog, loomApi){
     "ngInject";
+    this.$cookies = $cookies;
+    this.$mdDialog = $mdDialog;
+    this.loomApi = loomApi;
+
     console.log("FormReadController instantiated");
     console.log("jobDetailFormId passed in from dialog controller:" + this.jobDetailFormId);
 
@@ -15,8 +19,7 @@ class Controller{
     var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
     var model = "server/models/RecruitUnit.Job.All.js";
     var token = window.localStorage.getItem("writeon.authtoken");//handle no token
-
-    loomApi.Article.getArticle(this.formId, modelId, model, token).then(angular.bind(this, function(result){
+    this.loomApi.Article.getArticle(this.jobDetailFormId, modelId, model, token).then(angular.bind(this, function(result){
       console.log("get article:");
       console.log(result);
       this.article = result;
@@ -24,21 +27,21 @@ class Controller{
   }
 
   $routerOnActivate(next, previous){
-    this.formId = next.params.id == null ? this.jobDetailFormId : next.params.id;
+    this.jobDetailFormId = next.params.id; //this is only activated when the route is directly navigated to. Not run from dialo opening.
   }
 
   //make this a reusable service
   checkAuth(username, password){ //ToDo: does this need refactoring to use local storage rather than cookie?
-    var authCookie = $cookies.get("writeon.authtoken"); //put cookie name into config var
-    return typeof authCookie != 'undefined' ? authCookie : loomApi.User.signInUser(username, password).then(angular.bind(this, function(result){
-      $cookies.put("writeon.authtoken", result.token);
+    var authCookie = this.$cookies.get("writeon.authtoken"); //put cookie name into config var
+    return typeof authCookie != 'undefined' ? authCookie : this.loomApi.User.signInUser(username, password).then(angular.bind(this, function(result){
+      this.$cookies.put("writeon.authtoken", result.token);
       this.authToken = result.token; //required angular.bind to enable setting of scope variable within promise
     }));
   };
 
   cancelDialog(){
     console.log("cancelDialog");
-    $mdDialog.hide();
+    this.$mdDialog.hide();
   }
 }
 
