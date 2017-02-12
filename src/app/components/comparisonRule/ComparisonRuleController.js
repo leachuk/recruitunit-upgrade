@@ -1,22 +1,25 @@
 import template from './comparisonRule.html';
 
 class ComparisonRuleController {
-  constructor(loomApi, recruitUnitUtil){
+  constructor(loomApi, recruitUnitUtil, jwtHelper, globals){
     "ngInject";
     console.log("ComparisonRuleController instantiated");
+    this.loomApi = loomApi;
+    this.recruitUnitUtil = recruitUnitUtil;
+    this.jwtHelper = jwtHelper;
+    this.globals = globals;
 
     recruitUnitUtil.Util.setTitle("Manage Comparison Rules");
 
-    this.article = {"skills": []}; //Need to initialise for md-chips, otherwise an exception is thrown
-
     var localUser = recruitUnitUtil.Util.getLocalUser();
-    var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-    var model = "server/models/RecruitUnit.ComparisonTest.js";
-    var token = window.localStorage.getItem("writeon.authtoken");//handle no token
+    // var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
+    // var model = "server/models/RecruitUnit.ComparisonTest.js";
+    // var token = window.localStorage.getItem("writeon.authtoken");//handle no token
+    //
+    // var searchJson = {};
+    // searchJson.authorEmail = localUser.email;
 
-    var searchJson = {};
-    searchJson.authorEmail = localUser.email;
-
+    //this.article = {"skills": []}; //Need to initialise for md-chips, otherwise an exception is thrown
     this.article = { //initialise comparison rules article model
       "roleType": {
         "value": ["contract", "permanent"],
@@ -42,6 +45,38 @@ class ComparisonRuleController {
       },
       "published": true
     };
+
+  }
+
+  $routerOnActivate(next, previous){
+    var decodedToken = this.jwtHelper.decodeToken(this.recruitUnitUtil.Util.getLocalUser().token);
+    var tokenUsername = decodedToken.username;
+    var isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
+    var requestedUsername = next.params.email;
+
+    var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
+    var model = "server/models/RecruitUnit.ComparisonTest.js";
+    var searchJson = {};
+    searchJson.authorEmail = requestedUsername;
+
+    this.recruitUnitUtil.Util.isUserAuthenticated(tokenUsername, this.recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (result) {
+      if (result == false) {
+        this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_HOME);// todo: get path from constant;
+        this.recruitUnitUtil.Util.deleteUserAuth();
+      } else if (tokenUsername != requestedUsername) {
+        this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + tokenUsername);
+      } else if (result.success) {
+        if (isComparisonFormEnabled) { //update the default form if it exists
+          this.loomApi.Article.search(controllerId, model, searchJson, this.recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (searchResult) {
+            console.log("get search:");
+            console.log(searchResult);
+            if (searchResult.length > 0) {
+              this.article = searchResult[0];
+            }
+          }));
+        }
+      }
+    }));
   }
 
   toggleRoleType(value){
@@ -125,42 +160,12 @@ export default {
   controller: ComparisonRuleController,
   controllerAs: 'comparisonRule',
   template: template,
-  $canActivate: function($nextInstruction, loomApi, recruitUnitUtil, jwtHelper){
+  $canActivate: function($nextInstruction, recruitUnitUtil){
     "ngInject";
     console.log("in ComparisonRuleController canActivate");
 
     if (recruitUnitUtil.Util.isLocalUserAvailable()) {
-      var decodedToken = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
-      var tokenUsername = decodedToken.username;
-      this.isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
-      var requestedUsername = $nextInstruction.params.email;
-
-      var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-      var model = "server/models/RecruitUnit.ComparisonTest.js";
-      var searchJson = {};
-      searchJson.authorEmail = requestedUsername;
-
-      return recruitUnitUtil.Util.isUserAuthenticated(tokenUsername, recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (result) {
-        if (result == false) {
-          recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);// todo: get path from constant;
-          recruitUnitUtil.Util.deleteUserAuth();
-        } else if (tokenUsername != requestedUsername) {
-          recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + tokenUsername);
-        } else if (result.success) {
-          if (this.isComparisonFormEnabled) { //update the default form if it exists
-            loomApi.Article.search(controllerId, model, searchJson, recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (searchResult) {
-              console.log("get search:");
-              console.log(searchResult);
-              if (searchResult.length > 0) {
-                this.article = searchResult[0];
-              }
-              //this.article = searchResult;
-            }));
-          }
-
-          return true;
-        }
-      }));
+      return true;
     } else {
       recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
     }
