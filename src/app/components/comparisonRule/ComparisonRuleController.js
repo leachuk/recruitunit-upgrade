@@ -12,14 +12,6 @@ class ComparisonRuleController {
     recruitUnitUtil.Util.setTitle("Manage Comparison Rules");
 
     var localUser = recruitUnitUtil.Util.getLocalUser();
-    // var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-    // var model = "server/models/RecruitUnit.ComparisonTest.js";
-    // var token = window.localStorage.getItem("writeon.authtoken");//handle no token
-    //
-    // var searchJson = {};
-    // searchJson.authorEmail = localUser.email;
-
-    //this.article = {"skills": []}; //Need to initialise for md-chips, otherwise an exception is thrown
     this.article = { //initialise comparison rules article model
       "roleType": {
         "value": ["contract", "permanent"],
@@ -45,7 +37,6 @@ class ComparisonRuleController {
       },
       "published": true
     };
-
   }
 
   $routerOnActivate(next, previous){
@@ -117,29 +108,29 @@ class ComparisonRuleController {
       console.log("model:");
       console.log(this.article);
 
-      var authToken = recruitUnitUtil.Util.getLocalUser().token;
-      var authEmail = recruitUnitUtil.Util.getLocalUser().email;
+      var authToken = this.recruitUnitUtil.Util.getLocalUser().token;
+      var authEmail = this.recruitUnitUtil.Util.getLocalUser().email;
       var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
       var modelType = "server/models/RecruitUnit.ComparisonTest.js";
       if (this.article.hasOwnProperty("id")){//there is an existing comparisontest form, so update.
         delete this.article._rev;
-        loomApi.Article.updateArticle(this.article.id, modelId, modelType, this.article, authToken).then(angular.bind(this, function (result) {
+        this.loomApi.Article.updateArticle(this.article.id, modelId, modelType, this.article, authToken).then(angular.bind(this, function (result) {
           console.log("Update result:");
           console.log(result);
-          result.success ? recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail) : this.submitmessage = "Error. " + result.message;
+          result.success ? this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + authEmail) : this.submitmessage = "Error. " + result.message;
         }));
       }else {
-        loomApi.Article.createArticle(this.article, modelId, modelType, authToken).then(angular.bind(this,function(result){
+        this.loomApi.Article.createArticle(this.article, modelId, modelType, authToken).then(angular.bind(this,function(result){
           console.log("Save result:");
           console.log(result);
           result.success
             ? (this.submitmessage = "Success",
               this.article = result.data,
-              loomApi.User.updateUser(authEmail, {"isComparisonFormEnabled": true}, authToken).then(angular.bind(this,function(updateUserResult){
+              this.loomApi.User.updateUser(authEmail, {"isComparisonFormEnabled": true}, authToken).then(angular.bind(this,function(updateUserResult){
                 if (updateUserResult.success){
-                  recruitUnitUtil.Util.deleteUserAuth();
-                  recruitUnitUtil.Util.persistUserAuth(updateUserResult.token, authEmail);
-                  recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail);
+                  this.recruitUnitUtil.Util.deleteUserAuth();
+                  this.recruitUnitUtil.Util.persistUserAuth(updateUserResult.token, authEmail);
+                  this.recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail);
                 }
               }))
           )
