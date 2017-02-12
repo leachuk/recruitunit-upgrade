@@ -26,7 +26,7 @@ class FormSubmitController {
       "payBracketUpper": null,
       "locationDescription": "",
       "skills": [],
-      "submitTo" : this.submitTo,
+      "submitTo" : "",
       "authorEmail" : this.authenticatedUser.email,
       "published" : true
     };
@@ -45,7 +45,7 @@ class FormSubmitController {
 
     if(!this.isDeveloper) {
       this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
-        this.globals.user = result;
+        this.user = result;
       }));
     }
   }
@@ -55,6 +55,8 @@ class FormSubmitController {
     this.authToken = this.recruitUnitUtil.Util.getLocalUser().token;
 
     if(submitJobFromRecruiter.checkValidity() && typeof this.authToken != 'undefined'){ //submitJobFromRecruiter is form name
+      this.article.submitTo = this.submitTo;
+
       console.log("model:");
       console.log(this.article);
 
