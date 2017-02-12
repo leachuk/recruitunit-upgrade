@@ -94,8 +94,8 @@ class RecruitUnitUtil {
 
 RecruitUnitUtil.consts = Object.freeze({
   'APP_PROTOCOL': "http://",
-  'APP_HOST': '127.0.0.1',
-  'APP_PORT': '8080',
+  'APP_HOST': 'localhost',
+  'APP_PORT': '3000',
   'DEVELOPER_ROLE': 'developer',
   'RECRUITER_ROLE': 'recruiter',
   'PATH_HOME': '/home',
