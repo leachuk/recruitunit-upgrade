@@ -75,60 +75,23 @@ form.recruitunit-login md-input-container {
 }
 
 /* Custom Dialogs */
-.demo-md-panel {
-  min-height: 500px;
-}
-
-.demo-dialog-example {
+.generic-dialog {
   background: white;
   border-radius: 4px;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
   0 13px 19px 2px rgba(0, 0, 0, 0.14),
   0 5px 24px 4px rgba(0, 0, 0, 0.12);
-  width: 500px;
+  /*width: 500px;*/
 }
 
-.demo-dialog-content {
+.app-dialog-content {
   padding: 0 15px;
   width: 100%;
 }
 
-.demo-dialog-content img {
+.app-dialog-content img {
   height: 300px;
   margin: auto;
-}
-
-.demo-dialog-button {
-  width: 100%;
-}
-
-.demo-menu-example {
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
-  0 13px 19px 2px rgba(0, 0, 0, 0.14),
-  0 5px 24px 4px rgba(0, 0, 0, 0.12);
-  width: 256px;
-}
-
-.demo-menu-item {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  height: 48px;
-  padding: 0 16px;
-  position: relative;
-  transition: background 0.15s linear;
-  width: auto;
-}
-
-.demo-menu-item:hover,
-.demo-menu-item:focus {
-  background-color: rgb(238, 238, 238);
-}
-
-.demo-menu-item.selected {
-  color: rgb(16, 108, 200);
 }
 
 /* Toolbar area */
@@ -142,6 +105,10 @@ form.recruitunit-login md-input-container {
 
 md-toolbar h1 {
   margin: auto;
+}
+
+md-toolbar .username-xs {
+  font-size: 0.7em;
 }
 
 /* Sidenav area */
@@ -221,11 +188,22 @@ md-card-title .md-card-h1{
   color: #f9f9f9;
 }
 
-md-card.recruitunit md-card-title{
+md-card.recruitunit md-card-title.card-md{
   padding: 0;
-  margin: 24px 16px 16px;
+  margin: 16px 16px 0px;
+  /*overflow: hidden;*/
+  /*max-height: 255px;*/
+}
+md-card.recruitunit md-card-title.card-xs{
+  padding: 0;
   overflow: hidden;
-  max-height: 255px;
+  max-height: 100px;
+}
+md-card.recruitunit md-card-title-text.text-sm{
+  margin-bottom: -32px;
+}
+md-card.recruitunit md-card-title-text.text-md{
+  margin-bottom: -16px;
 }
 
 md-card.recruitunit div.cardheading-fab{
@@ -234,21 +212,29 @@ md-card.recruitunit div.cardheading-fab{
   top: 25px;
 }
 
-.totals-table {
+.totals-font-lg {
   font-size: 2em;
 }
+.totals-font-xs {
+  font-size: 1em;
+}
+
 .totals-table .totals-heading {
   color: #FFFFFF;
 }
 .totals-table .totals-result {
   color: #2D2D2D;
 }
-.totals-table .row {
+.totals-table-padding .row {
   margin: 5px 5px 0px 0px;
   padding: 20px 0px 20px 5px;
 }
-.totals-table .total{
-  background-color: #c4c4c4;
+.totals-table .total {
+  background-color: #4597ff;
+}
+.totals-table .total-sm {
+  background-color: #4597ff;
+  max-height: 20px;
 }
 .totals-table .pass{
   background-color: #008800;
@@ -260,10 +246,12 @@ md-card.recruitunit div.cardheading-fab{
 .totals-list p.job-description{
   line-height: 1.10em !important;
   color: #464646 !important;
-  font-size: 1.10em !important;
 }
-.totals-list .result-icon {
-  margin-right: 20px;
+.totals-list .text-sm {
+  font-size: 0.7em !important;
+}
+.totals-list .text-lg {
+  font-size: 1.10em !important;
 }
 .totals-list .icon-pass {
   color: #17FF00;
@@ -273,6 +261,14 @@ md-card.recruitunit div.cardheading-fab{
 }
 .totals-list .icon-fail {
   color: #FF0000;
+}
+
+.totals-list .enable-email-display {
+  background-color: #feffa8;
+}
+
+.totals-list .md-button {
+  min-width: 0px;
 }
 
 /* Utils */
@@ -337,11 +333,6 @@ md-content > div > form > div > div > span {
   margin-bottom: 16px;
 }
 
-form md-chips {
-  top: -15px;
-  position: relative;
-}
-
 md-content form span.disabled {
   text-decoration: line-through;
   color: #C2C2C2;
@@ -364,11 +355,12 @@ md-list-item.md-no-proxy.md-button, md-list-item .md-no-style.md-button{
   display: none;
 }
 
-p.trim {
-  display: inline-block;
-  white-space: nowrap;
-  width: 100%;                   /* IE6 needs any width */
-  overflow: hidden;              /* "overflow" value must be different from  visible"*/
-  -o-text-overflow: ellipsis;    /* Opera < 11*/
-  text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+fieldset.standard {
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 30px;
+}
+
+fieldset md-chips {
+  width: 100%;
 }
