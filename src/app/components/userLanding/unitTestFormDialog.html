@@ -5,17 +5,17 @@
         </div>
     </md-toolbar>
 
-    <div class="demo-dialog-content">
+    <div class="app-dialog-content">
         <p>Pass this URL to your recruiter so they can submit your RecruitUnit test form.</p>
         <p style="font-weight:bold;">{{unitTestFormDialog.testFormUrl}}</p>
         <p>This will enable you to painlessly check if the potential job they submit matches your requirements.</p>
     </div>
 
     <div layout="row" class="demo-dialog-button">
-        <md-button md-autofocus flex class="md-primary" ng-click="unitTestFormDialog.copyUnitTestFormUrl(unitTestFormDialog.testFormUrl)">
+        <md-button class="md-primary" ng-click="unitTestFormDialog.copyUnitTestFormUrl(unitTestFormDialog.testFormUrl)">
             Copy URL to clipboard
         </md-button>
-        <md-button md-autofocus flex class="md-primary" ng-click="unitTestFormDialog.closePanel()">
+        <md-button md-autofocus class="md-primary" ng-click="unitTestFormDialog.closePanel()">
             Cancel
         </md-button>
     </div>
