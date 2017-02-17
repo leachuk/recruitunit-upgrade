@@ -103,7 +103,7 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
       if (result.success) {
         recruitUnitUtil.Util.persistUserAuth(result.token, this.user.email);
         this.initApp();
-        globals.user.password = "";
+        this.user.password = "";
         this.submitmessage = "";
 
         recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + this.user.email);
