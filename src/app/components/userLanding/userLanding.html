@@ -59,10 +59,10 @@
                                  md-svg-icon="{{item.testResult.isPass || item.testResult.isPartialPass ? 'action:done' : 'content:clear'}}"
                                  ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
-                            <button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.document.id, item.testResult.isPass, item.testResult.isPartialPass)">
+                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.document.id, item.testResult.isPass, item.testResult.isPartialPass)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.document.jobDescription | limitTo:70}}<span ng-if="item.document.jobDescription.length > 70">...</span></p>
                                 <p hide-gt-sm class="job-description text-sm">{{item.document.jobDescription | limitTo:70}}<span ng-if="item.document.jobDescription.length > 70">...</span></p>
-                            </button>
+                            </md-button>
                             <p hide show-gt-xs ng-if="item.document.roleType == 'Contract'"><i>{{item.document.payBracketLower}}</i> to <i>{{item.document.payBracketUpper}}</i> per day</p>
                             <p hide show-gt-xs ng-if="item.document.roleType == 'Permanent'"><i>{{item.document.payBracketLower}}</i> to <i>{{item.document.payBracketUpper}}</i> per year</p>
                         </div>
@@ -94,7 +94,7 @@
                         <md-icon hide-gt-xs layout="column" ng-if="!item.document.displayDevEmail"
                                  class="result-icon"
                                  md-svg-icon="content:remove_circle"></md-icon>
-                        <div layout="column" class="" flex="10" layout-align="center center">
+                        <div layout="column" flex="10" layout-align="center center">
                             <md-menu>
                                 <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
                                     <md-icon md-menu-origin md-svg-icon="navigation:more_vert"></md-icon>
@@ -112,14 +112,6 @@
                                         </md-button>
                                         <md-button ng-if="!item.document.displayDevEmail" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
                                             Enable Contact
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item hide-gt-xs ng-if="!userLanding.isDeveloper">
-                                        <md-button ng-if="item.document.displayDevEmail" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
-                                            I'm Interested
-                                        </md-button>
-                                        <md-button ng-if="!item.document.displayDevEmail" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
-                                            No Response
                                         </md-button>
                                     </md-menu-item>
                                 </md-menu-content>
