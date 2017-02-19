@@ -53,17 +53,13 @@
                 <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items</md-subheader>
                 <md-list-item class="md-2-line" ng-repeat="item in userLanding.myContentListArray">
                     <div layout="row" flex>
-                        <md-icon layout="column"
+                        <md-icon flex="5"
+                                 layout="column"
                                  class="result-icon"
                                  md-svg-icon="{{item.testResult.isPass || item.testResult.isPartialPass ? 'action:done' : 'content:clear'}}"
                                  ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
-                        <md-button ng-if="item.document.displayDevEmail" aria-label="user contact options dialog" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
-                            <md-icon layout="column"
-                                     class="result-icon"
-                                     md-svg-icon="{{item.document.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
-                        </md-button>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
-                            <button class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.document.id, item.testResult.isPass, item.testResult.isPartialPass)">
+                            <button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.document.id, item.testResult.isPass, item.testResult.isPartialPass)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.document.jobDescription | limitTo:70}}<span ng-if="item.document.jobDescription.length > 70">...</span></p>
                                 <p hide-gt-sm class="job-description text-sm">{{item.document.jobDescription | limitTo:70}}<span ng-if="item.document.jobDescription.length > 70">...</span></p>
                             </button>
@@ -74,7 +70,7 @@
                             <p hide show-gt-sm>Submitted <i>{{userLanding.formatUnixDateToNow(item.document.createdDate)}}</i></p>
                             <p hide-gt-sm class="text-sm">Submitted <i>{{userLanding.formatUnixDateToNow(item.document.createdDate)}}</i></p>
                         </div>
-                        <div hide show-gt-xs ng-if="userLanding.isDeveloper"  layout="column" flex="20" layout-align="center center">
+                        <div hide show-gt-xs ng-if="userLanding.isDeveloper"  layout="column" flex="15" layout-align="center center">
                             <md-button ng-if="item.document.displayDevEmail" class="md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
                                 <span class="md-caption">Disable Contact</span>
                             </md-button>
@@ -90,6 +86,14 @@
                                 <span class="md-caption">No Response</span>
                             </md-button>
                         </div>
+                        <md-button hide-gt-xs ng-if="item.document.displayDevEmail" aria-label="user contact options dialog" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
+                          <md-icon layout="column"
+                                   class="result-icon"
+                                   md-svg-icon="{{item.document.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
+                        </md-button>
+                        <md-icon hide-gt-xs layout="column" ng-if="!item.document.displayDevEmail"
+                                 class="result-icon"
+                                 md-svg-icon="content:remove_circle"></md-icon>
                         <div layout="column" class="" flex="10" layout-align="center center">
                             <md-menu>
                                 <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
