@@ -46,5 +46,25 @@ class HomeController {
 export default {
   controller: HomeController,
   controllerAs: 'home',
-  template: template
+  template: template,
+  $canActivate: function(recruitUnitUtil, jwtHelper) {
+    "ngInject";
+    var userObj = recruitUnitUtil.Util.getLocalUser();
+
+    if (userObj != "undefined" && userObj.token != null) {
+      var token = jwtHelper.decodeToken(userObj.token);
+      var tokenUsername = token.username;
+
+      return recruitUnitUtil.Util.isUserAuthenticated(tokenUsername, recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (result) {
+        if (result.success) {
+          let email = recruitUnitUtil.Util.getLocalUser().email;
+          recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + email);
+        } else {
+          return true;
+        }
+      }));
+    } else {
+      return true;
+    }
+  }
 }
