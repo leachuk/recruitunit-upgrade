@@ -18,10 +18,10 @@ class ComparisonRuleController {
         "disabled": false,
         "rule": "assertStringContains"
       },
-      "payBracketLower": {
+      "payBracketUpper": {
         "value": 0,
         "disabled": false,
-        "rule": "assertGreaterThan"
+        "rule": "assertLessThan"
       },
       "skills": {
         "value": [],
@@ -90,8 +90,8 @@ class ComparisonRuleController {
     this.article.roleType.disabled = !this.article.roleType.disabled;
   }
 
-  disablePayBracketLower(){
-    this.article.payBracketLower.disabled = !this.article.payBracketLower.disabled;
+  disablePayBracketUpper(){
+    this.article.payBracketUpper.disabled = !this.article.payBracketUpper.disabled;
   }
 
   disableSkills(){
