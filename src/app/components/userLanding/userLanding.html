@@ -1,19 +1,6 @@
 <div layout-align="center start" layout="row">
 
     <md-card class="md-whiteframe-z4 buttondemoBasicUsage recruitunit" flex-gt-sm="66" flex="100">
-        <div ng-if="userLanding.isDeveloper" class="cardheading-fab">
-            <md-button class="md-fab md-scale md-fab-top-right" aria-label="Get URL for unit test form" style="right:100px;" ng-click="userLanding.toggleUnitTestFormDialog($event, userLanding.userFormUrl)">
-                <md-icon md-svg-icon="content:add"></md-icon>
-                <md-tooltip md-direction="bottom">
-                    Get URL for unit test form
-                </md-tooltip>
-            </md-button>
-        </div>
-        <md-card-title ng-class="{'card-xs':userLanding.$mdMedia('xs'), 'card-md':userLanding.$mdMedia('sm')}">
-            <md-card-title-text ng-class="{'text-sm':userLanding.$mdMedia('sm'), 'text-md':userLanding.$mdMedia('md')}">
-                <img src="/assets/homepage-header-background.png" alt="image caption">
-            </md-card-title-text>
-        </md-card-title>
         <md-card-content>
             <div hide show-gt-sm layout="row" class="totals-table totals-table-padding totals-font-lg" flex>
                 <div layout="row" class="total row" flex="33">
