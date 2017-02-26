@@ -26,8 +26,6 @@ form.recruitunit-login md-input-container {
 /*Signup Background*/
 .blue-grey-background {
   background-color: #B0C3CF;
-  background-image: url(/assets/signup-background-colour.png);
-  background-repeat: round;
 }
 
 .recruitunit-homepage div.row-label {
@@ -363,4 +361,8 @@ fieldset.standard {
 
 fieldset md-chips {
   width: 100%;
+}
+
+md-icon svg {
+  fill: inherit;
 }

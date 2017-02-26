@@ -17,7 +17,7 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <md-button class="md-icon-button" aria-label="Settings">
-      <md-icon ng-click="app.toggleSideNav()" md-svg-icon="navigation:menu"></md-icon>
+      <md-icon ng-click="app.toggleSideNav()" style="fill:white" md-svg-icon="navigation:menu"></md-icon>
     </md-button>
 
     <div ng-if="app.user.isLoggedIn" ng-cloak layout="row" layout-align="end center" flex>{{app.user.email}}<md-button ng-click="app.signOutUser()">Logout</md-button></div>

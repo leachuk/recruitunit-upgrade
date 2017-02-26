@@ -39,7 +39,7 @@ angular.module('recruitUnitApp', [
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
 .controller('AppController', ['$mdComponentRegistry', '$mdPanel', '$mdDialog', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', AppController])//'recruitUnitUtil',
-.config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
+.config(['$locationProvider', '$httpProvider', '$mdIconProvider', '$mdThemingProvider',  function($locationProvider, $httpProvider, $mdIconProvider, $mdThemingProvider){
 
   $locationProvider.html5Mode(true);
 
@@ -50,6 +50,18 @@ angular.module('recruitUnitApp', [
     .iconSet('navigation', './assets/svg/navigation-icons.svg', 24)
     .iconSet('social', './assets/svg/social-icons.svg', 24)
     .defaultIconSet('./assets/svg/action-icons.svg');
+
+  var black = $mdThemingProvider.extendPalette('grey', {
+      '500': '#191919',
+      'contrastDefaultColor': 'dark'
+  });
+
+  // Register the new color palette map with the name <code>neonRed</code>
+  $mdThemingProvider.definePalette('grey', black);
+
+  $mdThemingProvider.theme('default')
+      .primaryPalette('grey')
+      .dark();
 }]);
 
 function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals) {
