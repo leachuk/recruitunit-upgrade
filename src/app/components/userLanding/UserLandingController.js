@@ -2,7 +2,6 @@ import template from './userLanding.html';
 import formReadDialogTemplate from '../formRead/formReadDialog.html';
 import comparisonFormTemplate from './requireComparisonFormDialog.html';
 import enableContactMeTemplate from './enableContactMeDialog.html';
-import unitTestFormTemplate from './unitTestFormDialog.html';
 
 class UserLandingController {
   constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper, globals) {
@@ -21,12 +20,13 @@ class UserLandingController {
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = globals.isDeveloper;
-    this.userFormUrl = globals.userFormUrl;
+    //this.userFormUrl = globals.userFormUrl;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
     this.closeTo = 'button';
 
+    this.foo = "bar";
     //check if the user has a comparison test form and is a developer. Show alert dialog if not
     //todo: might need to move this to the canActivate?
     if (this.recruitUnitUtil.Util.getLocalUser().token !== null) {
@@ -180,41 +180,6 @@ class UserLandingController {
       position: panelPosition,
       animation: panelAnimation,
       template: enableContactMeTemplate,
-      hasBackdrop: true,
-      panelClass: 'generic-dialog',
-      zIndex: 150,
-      clickOutsideToClose: true,
-      escapeToClose: true,
-      focusOnOpen: true
-    }
-
-    this._mdPanel.open(config);
-  }
-
-  toggleUnitTestFormDialog($event, unitTestFormUrl){
-    console.log("in toggleUnitTestFormDialog");
-    console.log($event);
-    console.log(unitTestFormUrl);
-
-    var panelPosition = this._mdPanel.newPanelPosition()
-      .absolute()
-      .center();
-    var panelAnimation = this._mdPanel.newPanelAnimation();
-    panelAnimation.openFrom({top: 0, left: 0});
-    panelAnimation.closeTo({top: document.documentElement.clientHeight, left: 0});
-    panelAnimation.withAnimation(this._mdPanel.animation.SCALE);
-
-    var config = {
-      attachTo: angular.element(document.body),
-      controller: 'genericDialogController',
-      controllerAs: 'unitTestFormDialog',
-      locals: {
-        'testFormUrl': unitTestFormUrl
-      },
-      bindToController: true,
-      position: panelPosition,
-      animation: panelAnimation,
-      template: unitTestFormTemplate,
       hasBackdrop: true,
       panelClass: 'generic-dialog',
       zIndex: 150,

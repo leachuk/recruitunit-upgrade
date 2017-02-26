@@ -15,6 +15,7 @@ import Services from './services/services';
 
 import Components from './components/components';
 import RootComponent from './root.component';
+import unitTestFormTemplate from './unitTestFormDialog.html';
 
 import '../css/global.css';
 
@@ -37,7 +38,7 @@ angular.module('recruitUnitApp', [
 ])
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
-.controller('AppController', ['$mdComponentRegistry', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', AppController])//'recruitUnitUtil',
+.controller('AppController', ['$mdComponentRegistry', '$mdPanel', '$mdDialog', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', AppController])//'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', function($locationProvider, $httpProvider, $mdIconProvider){
 
   $locationProvider.html5Mode(true);
@@ -51,7 +52,7 @@ angular.module('recruitUnitApp', [
     .defaultIconSet('./assets/svg/action-icons.svg');
 }]);
 
-function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil, globals) {
+function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals) {
   var sideNav;
 
   this.user = {
@@ -61,6 +62,11 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
 
   this.submitmessage = "";
 
+  this._mdPanel = $mdPanel;
+  this.$mdDialog = $mdDialog;
+
+  var serverUrl = recruitUnitUtil.Constants.APP_PROTOCOL + recruitUnitUtil.Constants.APP_HOST + ":" + recruitUnitUtil.Constants.APP_PORT;
+
   console.log("In AppController");
 
   //should fail
@@ -69,11 +75,12 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   
   $mdComponentRegistry.when('sidenav-main').then(function(mainSideNav){
     sideNav = mainSideNav;
-
   });
 
 
   AppController.prototype.initApp = function() {
+    console.log("initApp");
+
     this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
     this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;
     if (this.user.isLoggedIn){
@@ -82,7 +89,7 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
   }
 
   AppController.prototype.test = function() {
-    console.log("test");
+    console.log("app test");
   }
 
   AppController.prototype.toggleSideNav = function() {
@@ -117,6 +124,45 @@ function AppController($mdComponentRegistry, loomApi, jwtHelper, recruitUnitUtil
     console.log("in signOutUser");
     recruitUnitUtil.Util.deleteUserAuth();
     recruitUnitUtil.Util.redirectUserToPath("/home");
+  }
+
+  AppController.prototype.toggleUnitTestFormDialog =function($event){
+      console.log("in toggleUnitTestFormDialog");
+
+      var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
+      if (typeof token.userGuid != 'undefined') {
+          var unitTestFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + token.userGuid + "/form";
+      }
+      console.log(unitTestFormUrl);
+
+      var panelPosition = this._mdPanel.newPanelPosition()
+          .absolute()
+          .center();
+      var panelAnimation = this._mdPanel.newPanelAnimation();
+      panelAnimation.openFrom({top: 0, left: 0});
+      panelAnimation.closeTo({top: document.documentElement.clientHeight, left: 0});
+      panelAnimation.withAnimation(this._mdPanel.animation.SCALE);
+
+      var config = {
+          attachTo: angular.element(document.body),
+          controller: 'genericDialogController',
+          controllerAs: 'unitTestFormDialog',
+          locals: {
+              'testFormUrl': unitTestFormUrl
+          },
+          bindToController: true,
+          position: panelPosition,
+          animation: panelAnimation,
+          template: unitTestFormTemplate,
+          hasBackdrop: true,
+          panelClass: 'generic-dialog',
+          zIndex: 150,
+          clickOutsideToClose: true,
+          escapeToClose: true,
+          focusOnOpen: true
+      }
+
+      this._mdPanel.open(config);
   }
 
 }
