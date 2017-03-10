@@ -66,7 +66,7 @@
                             </md-button>
                         </div>
                         <div hide show-gt-xs ng-if="!userLanding.isDeveloper" layout="column" flex="15" layout-align="center center">
-                            <md-button ng-if="item.document.displayDevEmail" layout-fill class="md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
+                            <md-button ng-if="item.document.displayDevEmail" layout-fill class="interest-button md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">
                                 <span class="md-caption">I'm Interested</span>
                             </md-button>
                             <md-button ng-if="!item.document.displayDevEmail" layout-fill ng-disabled="true" class="md-raised" ng-click="userLanding.toggleContactMeDialog($event, item.document.id, item.document.displayDevEmail, this)">

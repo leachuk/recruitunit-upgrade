@@ -243,7 +243,6 @@ md-card.recruitunit div.cardheading-fab{
 
 .totals-list p.job-description{
   line-height: 1.10em !important;
-  color: #464646 !important;
 }
 .totals-list .text-sm {
   font-size: 0.7em !important;
@@ -365,4 +364,8 @@ fieldset md-chips {
 
 md-icon svg {
   fill: inherit;
+}
+
+.interest-button {
+  background-color: #f9eff0 !important;
 }
