@@ -13,7 +13,7 @@ form.recruitunit-login md-input-container {
 
 /*Heading Banner*/
 .heading {
-  background-color: #8CACCE;
+  background-color: #ffffff;
   color: #282450;
 }
 .heading .md-display-3 {
@@ -27,6 +27,9 @@ form.recruitunit-login md-input-container {
 .blue-grey-background {
   background-color: #B0C3CF;
 }
+.light-grey-background {
+  background-color: #ececec;
+}
 
 .recruitunit-homepage div.row-label {
   margin-bottom: 1em;
@@ -35,8 +38,8 @@ form.recruitunit-login md-input-container {
 
 /* Feature Banner*/
 .features-banner {
-  background-color: #dcecf7;
-  color: #344884;
+  background-color: #424242;
+  color: #ECECEC;
 }
 .features-banner .md-display-3 {
   line-height: 5px;
@@ -54,6 +57,7 @@ form.recruitunit-login md-input-container {
   padding: 5px;
 }
 .blue { background: #baddfe;}
+.tile-background { background: #ffffff; color: #424242; }
 
 .background-rotated-y { /* flip all elements in the y axis */
   -moz-transform: scaleY(-1);
@@ -83,6 +87,9 @@ form.recruitunit-login md-input-container {
 }
 
 .generic-dialog .md-button.md-default-theme.md-primary, .generic-dialog .md-button.md-primary {
+  color: white;
+}
+.totals-list .md-button.md-primary.md-raised, .comparisonrules .md-button.md-primary.md-raised {
   color: white;
 }
 
