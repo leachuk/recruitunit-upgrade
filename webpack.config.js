@@ -11,7 +11,8 @@ module.exports = {
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
        { test: /\.html$/, loader: 'raw' },
        { test: /\.less$/, loader: 'style!css!less' },
-       { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') }
+       { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') },
+       { test: /\.(jpe?g|gif|png)$/, loader: 'file-loader' }
     ]
   },
   plugins: [

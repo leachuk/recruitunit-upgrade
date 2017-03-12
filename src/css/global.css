@@ -17,7 +17,8 @@ form.recruitunit-login md-input-container {
   color: #282450;
 }
 .heading .md-display-3 {
-  line-height: 5px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 .heading .md-body-1 {
   padding-left: 2px;
@@ -59,22 +60,22 @@ form.recruitunit-login md-input-container {
 .blue { background: #baddfe;}
 .tile-background { background: #ffffff; color: #424242; }
 
-.background-rotated-y { /* flip all elements in the y axis */
-  -moz-transform: scaleY(-1);
-  -o-transform: scaleY(-1);
-  -webkit-transform: scaleY(-1);
-  transform: scaleY(-1);
-  filter: FlipV;
-  -ms-filter: "FlipV";
-}
-.background-rotated-y p { /* flip p element back again so text is no longer reversed */
-  -moz-transform: scaleY(-1);
-  -o-transform: scaleY(-1);
-  -webkit-transform: scaleY(-1);
-  transform: scaleY(-1);
-  filter: FlipV;
-  -ms-filter: "FlipV";
-}
+/*.background-rotated-y { !* flip all elements in the y axis *!*/
+  /*-moz-transform: scaleY(-1);*/
+  /*-o-transform: scaleY(-1);*/
+  /*-webkit-transform: scaleY(-1);*/
+  /*transform: scaleY(-1);*/
+  /*filter: FlipV;*/
+  /*-ms-filter: "FlipV";*/
+/*}*/
+/*.background-rotated-y p { !* flip p element back again so text is no longer reversed *!*/
+  /*-moz-transform: scaleY(-1);*/
+  /*-o-transform: scaleY(-1);*/
+  /*-webkit-transform: scaleY(-1);*/
+  /*transform: scaleY(-1);*/
+  /*filter: FlipV;*/
+  /*-ms-filter: "FlipV";*/
+/*}*/
 
 /* Custom Dialogs */
 .generic-dialog {
@@ -391,4 +392,45 @@ md-sidenav md-icon svg, md-dialog md-icon svg {
 
 md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
   color: white;
+}
+
+md-grid-list p {
+  font-weight: 500;
+}
+
+md-grid-list .job-list-backgroundimage{
+  background: url("../assets/job-list-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+md-grid-list .responsive-list-backgroundimage{
+  background: url("../assets/responsive-list-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+md-grid-list .form-details-backgroundimage{
+  background: url("../assets/form-details-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+md-grid-list .configure-test-backgroundimage{
+  background: url("../assets/configure-test-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+md-grid-list .control-contact-backgroundimage{
+  background: url("../assets/control-contact-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+md-grid-list .secure-backgroundimage{
+  background: url("../assets/secure-homepage.png");
+  background-color: hsla(0,0%,100%,0.60);
+  background-blend-mode: overlay;
+  background-size: cover;
 }
