@@ -109,6 +109,8 @@ class UserLandingController {
   }
 
   navigateToUserRules(useremail){
+    console.log("navigateToUserRules [" + useremail + "]");
+    console.log("redirect to path [" + this.recruitUnitUtil.Constants.PATH_USER + useremail + this.recruitUnitUtil.Constants.PATH_COMPARISONRULESFORM + "]");
     this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + useremail + this.recruitUnitUtil.Constants.PATH_COMPARISONRULESFORM);
   }
 
@@ -137,7 +139,7 @@ class UserLandingController {
       controller: 'genericDialogController',
       controllerAs: 'requireComparisonFormDialog',
       locals: {
-        'useremail': this.useremail,
+        'useremail': this.recruitUnitUtil.Util.getLocalUser().email,
         'navigateToUserRules': this.navigateToUserRules
       },
       position: panelPosition,
