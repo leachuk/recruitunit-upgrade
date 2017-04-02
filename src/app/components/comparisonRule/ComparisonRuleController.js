@@ -130,7 +130,7 @@ class ComparisonRuleController {
                 if (updateUserResult.success){
                   this.recruitUnitUtil.Util.deleteUserAuth();
                   this.recruitUnitUtil.Util.persistUserAuth(updateUserResult.token, authEmail);
-                  this.recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + authEmail);
+                  this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + authEmail);
                 }
               }))
           )
