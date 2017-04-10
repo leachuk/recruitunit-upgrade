@@ -7,7 +7,6 @@ RUN apk update && apk upgrade && \
 # Provides cached layer for node_modules
 ADD package.json /tmp/
 ENV NODE_PATH /app
-# RUN cd /tmp && npm install --production
 RUN cd /tmp && npm install
 
 RUN mkdir -p /app/src && cp -a /tmp/node_modules /app/
@@ -18,6 +17,6 @@ ADD package.json gulpfile.babel.js webpack.config.js webpack.dist.config.js /app
 WORKDIR /app
 ADD src /app/src
 RUN npm install -g gulp-cli
-RUN npm run build
+#RUN npm run build
 
-#CMD ["npm", "run", "start-prod"]
+CMD ["npm", "run", "build"]
