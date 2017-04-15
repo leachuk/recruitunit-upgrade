@@ -1,5 +1,21 @@
+<div ng-if="userLanding.myContentListArray.length == 0 && userLanding.isDeveloper" layout-align="center start" layout="row">
+    <md-card flex-gt-sm="66" flex="100">
+        <md-card-header>
+            <md-card-avatar>
+                <md-icon md-svg-icon="action:info"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-title">Info</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <p>Your page looks bare at the moment. But don't worry. Simply pass this URL onto recruiters who come your way and your job list will start to fill up.</p>
+            <p style="font-weight:bold;">{{userLanding.unitTestFormUrl}}</p>
+            <p>This will allow them to submit job details to you</p>
+        </md-card-content>
+    </md-card>
+</div>
 <div layout-align="center start" layout="row">
-
     <md-card class="md-whiteframe-z4 recruitunit" flex-gt-sm="66" flex="100">
         <md-card-content>
             <div hide show-gt-sm layout="row" class="totals-table totals-table-padding totals-font-lg" flex>

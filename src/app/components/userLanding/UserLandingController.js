@@ -26,7 +26,12 @@ class UserLandingController {
     this.openFrom = 'button';
     this.closeTo = 'button';
 
-    this.foo = "bar";
+    var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
+    if (typeof token.userGuid != 'undefined') {
+        var serverUrl = recruitUnitUtil.Constants.APP_PROTOCOL + recruitUnitUtil.Constants.APP_HOST + ":" + recruitUnitUtil.Constants.APP_PORT;
+        this.unitTestFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + token.userGuid + "/form";
+    }
+
     //check if the user has a comparison test form and is a developer. Show alert dialog if not
     //todo: might need to move this to the canActivate?
     if (this.recruitUnitUtil.Util.getLocalUser().token !== null) {
