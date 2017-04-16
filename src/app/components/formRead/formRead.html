@@ -76,7 +76,7 @@
                         <md-input-container flex>
                             <label>Country code</label>
                             <md-select ng-disabled="true" ng-model="formRead.article.currency">
-                                <md-option ng-repeat="option in formSubmit.currencylist" ng-value="option.id">
+                                <md-option ng-repeat="option in formRead.currencylist" ng-value="option.id">
                                     {{option.id}} | {{option.description}}
                                 </md-option>
                             </md-select>
