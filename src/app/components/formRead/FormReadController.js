@@ -15,11 +15,9 @@ class Controller{
       {id: "Permanent", value: "annual salary"},
       {id: "Contract", value: "daily rate"}
     ];
-
-    var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-    var model = "server/models/RecruitUnit.Job.All.js";
+    
     var token = window.localStorage.getItem("writeon.authtoken");//handle no token
-    this.loomApi.Article.getArticle(this.jobDetailFormId, modelId, model, token).then(angular.bind(this, function(result){
+    this.loomApi.Article.getArticle(this.jobDetailFormId, token).then(angular.bind(this, function(result){
       console.log("get article:");
       console.log(result);
       this.article = result;
