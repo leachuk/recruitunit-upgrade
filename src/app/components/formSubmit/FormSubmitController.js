@@ -33,9 +33,6 @@ class FormSubmitController {
     };
 
     this.currencylist = recruitUnitUtil.Currency;
-    console.log(this.currencylist);
-		console.log(recruitUnitUtil);
-
   }
 
   $routerOnActivate(next, previous){
