@@ -44,3 +44,6 @@ jspm_packages
 
 dist
 target
+
+#generated config at build time
+src/app/recruitunit.config.js

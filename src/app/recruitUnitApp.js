@@ -16,6 +16,7 @@ import Services from './services/services';
 import Components from './components/components';
 import RootComponent from './root.component';
 import unitTestFormTemplate from './unitTestFormDialog.html';
+import './recruitunit.config';
 
 import '../css/global.css';
 
@@ -28,6 +29,7 @@ angular.module('recruitUnitApp', [
   'ngLodash',
   'angularMoment',
   'angular-jwt',
+	'recruitunit.config',
   Components.name,
   Services.name
   // 'app.user.userLandingController',
@@ -38,7 +40,7 @@ angular.module('recruitUnitApp', [
 ])
 .value('$routerRootComponent', 'app')
 .component('app', RootComponent)
-.controller('AppController', ['$mdComponentRegistry', '$mdPanel', '$mdDialog', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', AppController])//'recruitUnitUtil',
+.controller('AppController', ['$mdComponentRegistry', '$mdPanel', '$mdDialog', 'loomApi', 'jwtHelper', 'recruitUnitUtil', 'globals', 'recruitUnitConfig', AppController])//'recruitUnitUtil',
 .config(['$locationProvider', '$httpProvider', '$mdIconProvider', '$mdThemingProvider',  function($locationProvider, $httpProvider, $mdIconProvider, $mdThemingProvider){
 
   $locationProvider.html5Mode(true);

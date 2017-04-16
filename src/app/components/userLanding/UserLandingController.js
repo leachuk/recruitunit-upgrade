@@ -4,7 +4,7 @@ import comparisonFormTemplate from './requireComparisonFormDialog.html';
 import enableContactMeTemplate from './enableContactMeDialog.html';
 
 class UserLandingController {
-  constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper, globals) {
+  constructor($location, $mdDialog, $mdPanel, loomApi, lodash, moment, recruitUnitUtil, jwtHelper, globals, recruitUnitConfig) {
     "ngInject";
     console.log("in UserLandingController");
     this.moment = moment;
@@ -20,16 +20,21 @@ class UserLandingController {
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = globals.isDeveloper;
-    //this.userFormUrl = globals.userFormUrl;
 
     this._mdPanel = $mdPanel;
     this.openFrom = 'button';
     this.closeTo = 'button';
 
     var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
+    //console.log(recruitUnitConfig);
     if (typeof token.userGuid != 'undefined') {
-        var serverUrl = recruitUnitUtil.Constants.APP_PROTOCOL + recruitUnitUtil.Constants.APP_HOST + ":" + recruitUnitUtil.Constants.APP_PORT;
-        this.unitTestFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + token.userGuid + "/form";
+      if (recruitUnitConfig.APP_ENV != 'prod') {
+				var serverUrl = recruitUnitConfig.APP_PROTOCOL + recruitUnitConfig.APP_HOST + ":" + recruitUnitConfig.APP_PORT;
+				this.unitTestFormUrl = serverUrl + recruitUnitConfig.PATH_USER + token.userGuid + "/form";
+			} else {
+				var serverUrl = recruitUnitConfig.APP_PROTOCOL + recruitUnitConfig.APP_HOST;
+				this.unitTestFormUrl = serverUrl + recruitUnitConfig.PATH_USER + token.userGuid + "/form";
+      }
     }
 
     //check if the user has a comparison test form and is a developer. Show alert dialog if not
@@ -203,9 +208,10 @@ export default {
   controller: UserLandingController,
   controllerAs: 'userLanding',
   template: template,
-  $canActivate: function($nextInstruction, recruitUnitUtil, jwtHelper, loomApi, globals, lodash){
+  $canActivate: function($nextInstruction, recruitUnitUtil, jwtHelper, loomApi, globals, lodash, recruitUnitConfig){
     "ngInject";
     console.log("in UserLandingController canActivate");
+    //console.log(recruitUnitConfig);
 
     if (recruitUnitUtil.Util.isLocalUserAvailable()) {
       var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token);
