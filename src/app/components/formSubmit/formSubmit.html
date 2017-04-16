@@ -1,7 +1,4 @@
-<h1>Submit Form</h1>
-<div ng-if="!formSubmit.isDeveloper">
-    <p>Users name: {{formSubmit.user.data.displayName}}</p>
-</div>
+<h1>Submit Form to {{formSubmit.user.data.displayName}}</h1>
 <div ng-if="formSubmit.isDeveloper">
     <p>Note. Only a recruiter is authorised to submit this form.</p>
 </div>
@@ -26,7 +23,7 @@
             </div>
 
             <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="center center">
+                <div hide show-gt-xs flex="10" layout="row" layout-align="start center">
                     <span>Role Type</span>
                 </div>
                 <div flex="90">
@@ -46,8 +43,8 @@
                 <div flex>
                     <section layout="row">
                         <md-input-container flex>
-                            <label>Pay as per</label>
-                            <md-select ng-disabled="true" ng-model="formSubmit.article.roleType" ng-model-options="{trackBy: '$value'}">
+                            <label>Pay calculated as</label>
+                            <md-select ng-model="formSubmit.article.roleType" ng-model-options="{trackBy: '$value'}">
                                 <md-option ng-repeat="option in formSubmit.payFrequencyOptions track by option.id" ng-value="option.id">
                                     {{option.value}}
                                 </md-option>
@@ -68,6 +65,24 @@
                         <md-input-container flex>
                             <label>Upper bound</label>
                             <input ng-model="formSubmit.article.payBracketUpper" type="number">
+                        </md-input-container>
+                    </section>
+                </div>
+            </div>
+
+            <div layout="row">
+                <div hide show-gt-xs flex="10" layout="row" layout-align="start center">
+                    <span>Currency</span>
+                </div>
+                <div flex="90">
+                    <section layout="row">
+                        <md-input-container flex>
+                            <label>Country code</label>
+                            <md-select ng-model="formSubmit.article.currency">
+                                <md-option ng-repeat="option in formSubmit.currencylist" ng-value="option.id">
+                                    {{option.id}} | {{option.description}}
+                                </md-option>
+                            </md-select>
                         </md-input-container>
                     </section>
                 </div>
@@ -108,7 +123,7 @@
                 <div flex="10" layout="row" layout-align="center center"></div>
                 <div flex="90">
                     <section layout="row" layout-align="start center">
-                        <md-button class="md-raised md-primary"
+                        <md-button class="md-raised md-primary md-accent"
                                    ng-disabled="formSubmit.isDeveloper"
                                    ng-click="formSubmit.submitJobToCandidate()">Submit</md-button>
                     </section>

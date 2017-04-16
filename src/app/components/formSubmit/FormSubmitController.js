@@ -21,6 +21,7 @@ class FormSubmitController {
     ];
     this.article = {
       "jobDescription" : "",
+      "currency": "",
       "roleType": "",
       "payBracketLower": null,
       "payBracketUpper": null,
@@ -31,6 +32,9 @@ class FormSubmitController {
       "published" : true
     };
 
+    this.currencylist = recruitUnitUtil.Currency;
+    console.log(this.currencylist);
+		console.log(recruitUnitUtil);
 
   }
 
