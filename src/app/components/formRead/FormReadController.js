@@ -1,7 +1,7 @@
 import template from "./formRead.html";
 
 class Controller{
-  constructor($cookies, $mdDialog, loomApi){
+  constructor($cookies, $mdDialog, loomApi, recruitUnitUtil){
     "ngInject";
     this.$cookies = $cookies;
     this.$mdDialog = $mdDialog;
@@ -15,7 +15,8 @@ class Controller{
       {id: "Permanent", value: "annual salary"},
       {id: "Contract", value: "daily rate"}
     ];
-    
+		this.currencylist = recruitUnitUtil.Currency;
+
     var token = window.localStorage.getItem("writeon.authtoken");//handle no token
     this.loomApi.Article.getArticle(this.jobDetailFormId, token).then(angular.bind(this, function(result){
       console.log("get article:");

@@ -68,7 +68,7 @@
                             <div flex>
                                 <section layout="row">
                                     <md-input-container flex>
-                                        <label>Pay as per</label>
+                                        <label>Pay calculated as</label>
                                         <md-select ng-disabled="true" ng-model="formRead.article.roleType" ng-model-options="{trackBy: '$value'}">
                                             <md-option ng-repeat="option in formRead.payFrequencyOptions track by option.id" ng-value="option.id">
                                                 {{option.value}}
@@ -90,6 +90,24 @@
                                     <md-input-container flex>
                                         <label>Upper bound</label>
                                         <input ng-model="formRead.article.payBracketUpper" type="number" ng-readonly="true">
+                                    </md-input-container>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div layout="row">
+                            <div hide show-gt-xs flex="20" layout="row" layout-align="start center">
+                                <span>Currency</span>
+                            </div>
+                            <div flex>
+                                <section layout="row">
+                                    <md-input-container flex>
+                                        <label>Country code</label>
+                                        <md-select ng-disabled="true" ng-model="formRead.article.currency">
+                                            <md-option ng-repeat="option in formRead.currencylist" ng-value="option.id">
+                                                {{option.id}} | {{option.description}}
+                                            </md-option>
+                                        </md-select>
                                     </md-input-container>
                                 </section>
                             </div>
