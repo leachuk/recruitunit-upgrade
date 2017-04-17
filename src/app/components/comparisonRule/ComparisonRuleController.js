@@ -45,8 +45,8 @@ class ComparisonRuleController {
     var isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
     var requestedUsername = next.params.email;
 
-    var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-    var model = "server/models/RecruitUnit.ComparisonTest.js";
+    var controllerId = "/services/recruitunit/articles/recruitUnitContentService.controller.js";
+    var model = "/models/RecruitUnit.ComparisonTest.js";
     var searchJson = {};
     searchJson.authorEmail = requestedUsername;
 
@@ -110,8 +110,8 @@ class ComparisonRuleController {
 
       var authToken = this.recruitUnitUtil.Util.getLocalUser().token;
       var authEmail = this.recruitUnitUtil.Util.getLocalUser().email;
-      var modelId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-      var modelType = "server/models/RecruitUnit.ComparisonTest.js";
+      var modelId = "/services/recruitunit/articles/recruitUnitContentService.controller.js";
+      var modelType = "/models/RecruitUnit.ComparisonTest.js";
       if (this.article.hasOwnProperty("id")){//there is an existing comparisontest form, so update.
         delete this.article._rev;
         this.loomApi.Article.updateArticle(this.article.id, modelId, modelType, this.article, authToken).then(angular.bind(this, function (result) {

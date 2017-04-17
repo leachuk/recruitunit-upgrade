@@ -80,8 +80,8 @@ class UserLandingController {
   deleteItem(docId, index){
     console.log("delete id:" + docId + ",index:" + index);
     //todo: ensure the update can only change the users own document
-    var controllerId = "server/services/recruitunit/articles/recruitUnitContentService.controller.js";
-    var jobItemModel = "server/models/RecruitUnit.Job.All.js";
+    var controllerId = "/services/recruitunit/articles/recruitUnitContentService.controller.js";
+    var jobItemModel = "/models/RecruitUnit.Job.All.js";
     var localToken = this.recruitUnitUtil.Util.getLocalUser().token;
     this.loomApi.Article.updateArticle(docId, controllerId, jobItemModel, {"published": false}, localToken).then(angular.bind(this, function (result) {
       console.log("Delete result:");
