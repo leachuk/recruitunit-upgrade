@@ -14,7 +14,15 @@ npm run serve
 
 Run local distribution build via webpack. Outputs to `dist` directory
 
-##Docker
+#Remote Deployment
+
+From project root
+
+```
+git push prod-deploy master
+```
+
+#Docker
 *WIP. May find a better way of doing the build-latest-and-serve-from-Nginx*
 *For Example, may be better generating the webpack output from the docker build step*
  
