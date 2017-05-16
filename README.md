@@ -5,7 +5,7 @@ RecruitUnit Site
 - Serve and package with Webpack via gulp/npm
 - Leverages loom rest server via the angular loom-api
 
-#Local Development
+#Local Development 
 
 Run local development server via gulp
 ```
