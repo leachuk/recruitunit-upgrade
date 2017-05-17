@@ -7,7 +7,7 @@ RUN apk update && apk upgrade && \
 # Provides cached layer for node_modules
 ADD package.json /tmp/
 ENV NODE_PATH /app
-RUN cd /tmp && npm install --production
+RUN cd /tmp && npm install
 
 RUN mkdir -p /app/src && cp -a /tmp/node_modules /app/
 #copy package.json to app so npm run-script can be called
