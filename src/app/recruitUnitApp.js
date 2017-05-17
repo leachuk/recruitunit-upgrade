@@ -16,6 +16,7 @@ import Services from './services/services';
 import Components from './components/components';
 import RootComponent from './root.component';
 import unitTestFormTemplate from './unitTestFormDialog.html';
+import './recruitunit.config';
 
 import '../css/global.css';
 
