@@ -66,7 +66,7 @@ angular.module('recruitUnitApp', [
       .dark();
 }]);
 
-function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals) {
+function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals, recruitUnitConfig) {
   var sideNav;
 
   this.user = {
@@ -94,6 +94,11 @@ function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHe
 
   AppController.prototype.initApp = function() {
     console.log("initApp");
+
+    loomApi.init({
+      "hostname": recruitUnitConfig.BARDLY_API_HOSTNAME,
+      "port": recruitUnitConfig.BARDLY_API_PORT
+    });
 
     this.user.isLoggedIn = recruitUnitUtil.Util.isLocalUserLoggedIn();
     this.user.isDeveloper = recruitUnitUtil.Util.getUserRoles().indexOf(recruitUnitUtil.Constants.DEVELOPER_ROLE) != -1;

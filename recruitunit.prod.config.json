@@ -8,6 +8,8 @@
     "RECRUITER_ROLE": "recruiter",
     "PATH_HOME": "/home",
     "PATH_USER": "/user/",
-    "PATH_COMPARISONRULESFORM": "/comparisonrules"
+    "PATH_COMPARISONRULESFORM": "/comparisonrules",
+    "BARDLY_API_HOSTNAME": "10.138.112.197",
+    "BARDLY_API_PORT": "9000"
   }
 }
