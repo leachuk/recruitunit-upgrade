@@ -22,6 +22,14 @@ From project root
 git push prod-deploy master
 ```
 
+To deploy the locally built `dist` files to remote project `target` directory 
+
+```
+rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress \
+/Users/stewartleach/projects/programming/recruitunit/dist/ \
+appadmin@138.68.54.93:/home/appadmin/projects/recruitunit/target
+```
+
 #Docker
 *WIP. May find a better way of doing the build-latest-and-serve-from-Nginx*
 *For Example, may be better generating the webpack output from the docker build step*
