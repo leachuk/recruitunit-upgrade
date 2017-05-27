@@ -57,5 +57,5 @@ docker build -t recruitunit-nginx -f Dockerfile-nginx .
 
 Run with
 ```
-docker run -d --name recruitunit-nginx-test -p 80:80 recruitunit-nginx
+docker run -d --name recruitunit-nginx -p 80:80 recruitunit-nginx
 ```
