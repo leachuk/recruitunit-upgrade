@@ -26,7 +26,7 @@ To deploy the locally built `dist` files to remote project `target` directory
 
 ```
 rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress \
-/Users/stewartleach/projects/programming/recruitunit/dist/ \
+dist/ \
 appadmin@138.68.54.93:/home/appadmin/projects/recruitunit/target
 ```
 
