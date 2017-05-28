@@ -385,6 +385,9 @@ md-sidenav md-icon svg, md-dialog md-icon svg {
 .interest-button {
   background-color: #f9eff0 !important;
 }
+.interest-button .md-caption {
+  color: dimgray;
+}
 
 .md-toolbar-tools h1, .md-toolbar-tools h2, .md-toolbar-tools h3{
   color: #f9eff0;
