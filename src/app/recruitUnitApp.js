@@ -79,7 +79,11 @@ function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHe
   this._mdPanel = $mdPanel;
   this.$mdDialog = $mdDialog;
 
-  var serverUrl = recruitUnitUtil.Constants.APP_PROTOCOL + recruitUnitUtil.Constants.APP_HOST + ":" + recruitUnitUtil.Constants.APP_PORT;
+  if (recruitUnitConfig.APP_PORT != 80) {
+		var serverUrl = recruitUnitConfig.APP_PROTOCOL + recruitUnitConfig.APP_HOST + ":" + recruitUnitConfig.APP_PORT;
+  } else {
+		var serverUrl = recruitUnitConfig.APP_PROTOCOL + recruitUnitConfig.APP_HOST;
+  }
 
   console.log("In AppController");
 
