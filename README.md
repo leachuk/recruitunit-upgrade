@@ -38,6 +38,13 @@ Currently there is no docker image to serve the RecruitUnit site as this is inte
 
 The site can also be served easily using the above local commands.
 
+##Local Webpack Build
+Outputs built files to /dist
+
+```
+npm run build
+```
+
 ##Docker Webpack Build
 Build image
 ```
@@ -46,11 +53,11 @@ docker build -t recruitunit .
 
 Output built sources via webpack. Locate in local `target` volume dir
 ```
-docker run -d --name recruitunit-build -v $(pwd)/target:/app/dist recruitunit
+docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit
 ```
 
 ##Docker Nginx
-The `target` directory is then copied to the Recruitunit Nginx container with
+The `dist` directory is then copied to the Recruitunit Nginx container with
 ```
 docker build -t recruitunit-nginx -f Dockerfile-nginx .
 ```
