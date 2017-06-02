@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#108.61.251.93 = vultr AU bardly host
+#104.207.151.30 = vultr US bardly host
+
+#create developer users
+curl 'http://104.207.151.30:9000/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"developer1@gmail.com","password":"12345678","displayName":"developer1","jobRole":"developer","key":"123456789"}' --compressed
+curl 'http://104.207.151.30:9000/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"developer2@gmail.com","password":"12345678","displayName":"developer2","jobRole":"developer","key":"123456789"}' --compressed
+
+#create recruiter users
+curl 'http://104.207.151.30:9000/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"recruiter1@gmail.com","password":"12345678","displayName":"recruiter1","jobRole":"recruiter","key":"123456789"}' --compressed
+curl 'http://104.207.151.30:9000/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"recruiter2@gmail.com","password":"12345678","displayName":"recruiter2","jobRole":"recruiter","key":"123456789"}' --compressed
+
+#signin users (get auth token for jwt)
+curl 'http://104.207.151.30:9000/api/recruitunit/users/signin?password=12345678&username=recruiter1@gmail.com' -H 'Content-Type: application/json' --data-binary '{"username":"recruiter1@gmail.com","password":"12345678"}' --compressed
+
+#developer1 create comparison form (update Auth token for new users)
+curl 'http://104.207.151.30:9000/api/articles/createArticle?modelId=%2Fservices%2Frecruitunit%2Farticles%2FrecruitUnitContentService.controller.js&modelType=%2Fmodels%2FRecruitUnit.ComparisonTest.js' -X PUT -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRldmVsb3BlcjFAZ21haWwuY29tIiwiY29va2llIjoiQXV0aFNlc3Npb249WkdWMlpXeHZjR1Z5TVVCbmJXRnBiQzVqYjIwNk5Ua3pNVFl4TWpBNjltTDJ4YlBJQ0Q0VEpQUkFHSFRPeEl6QXZfYzsgVmVyc2lvbj0xOyBQYXRoPS87IEh0dHBPbmx5Iiwib2siOnRydWUsInJvbGVzIjpbImVkaXRvciIsImRldmVsb3BlciJdLCJpc0NvbXBhcmlzb25Gb3JtRW5hYmxlZCI6ZmFsc2UsInVzZXJHdWlkIjoiU2t3dkFBMC1iIiwiaXAiOiI6OmZmZmY6MTM5LjIxNi41Ny4xMTYiLCJpYXQiOjE0OTY0MDgzNTIsImV4cCI6MTQ5OTAwMDM1Mn0.gC3RpNsnT4j5FcX_hMWTEnldhtKVSvr0UwCbUUkX2q8' -H 'Content-Type: application/json' --data-binary '{"roleType":{"value":["contract"],"disabled":false,"rule":"assertStringContains"},"payBracketLower":{"value":130,"disabled":false,"rule":"assertRangeGreaterThan"},"skills":{"value":["java","html","node","AWS","AEM"],"disabled":false,"rule":"assertArrayContains"},"authorEmail":"developer1@gmail.com","createdDate":1496408355967,"locationDescription":{"value":["Melbourne"],"disabled":false,"rule":"assertStringContains"},"published":true}' --compressed
+
+#recruiter1 create job for developer1
+curl 'http://104.207.151.30:9000/api/recruitunit/articles/createjobsubmission' -X PUT -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InJlY3J1aXRlcjFAZ21haWwuY29tIiwiY29va2llIjoiQXV0aFNlc3Npb249Y21WamNuVnBkR1Z5TVVCbmJXRnBiQzVqYjIwNk5Ua3pNVFl5UWpNNi0zZ21NR3hlbW1iaEx0V1B1RlEtdzRqdmZIbzsgVmVyc2lvbj0xOyBQYXRoPS87IEh0dHBPbmx5Iiwib2siOnRydWUsInJvbGVzIjpbImVkaXRvciIsInJlY3J1aXRlciJdLCJ1c2VyR3VpZCI6IkJKeF9kQUMtVyIsImlwIjoiOjpmZmZmOjEzOS4yMTYuNTcuMTE2IiwiaWF0IjoxNDk2NDA4NzU1LCJleHAiOjE0OTkwMDA3NTV9.ePJvOYRb_0IRZLhsKXnCaTykbieHRB_RUFlDB62FNfo' --data-binary '{"jobDescription":"Pass test for job recruiter1 with Melbourne contract job","currency":"AUD","roleType":"Contract","payBracketLower":130,"payBracketUpper":150,"locationDescription":"Great location in the heart of the Melbourne CBD","skills":["java","aem","aws","foo","bar"],"submitTo":"SkwvAA0-b","authorEmail":"recruiter1@gmail.com","published":true}' --compressed
