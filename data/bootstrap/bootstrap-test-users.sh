@@ -9,9 +9,6 @@ USER_PASSWORD="12345678"
 DEV_USER="developer1@gmail.com"
 DEV_USER_PASSWORD="12345678"
 
-echo "JWT token:"
-echo "$JWT_TOKEN"
-
 ##create developer users
 curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"'"$DEV_USER"'","password":"12345678","displayName":"developer1","jobRole":"developer","key":"123456789"}' --compressed
 #curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/signup?modelId=%2Fservices%2Frecruitunit%2Fusers%2FrecruitUnitUserService.controller.js' -H 'Content-Type: application/json' --data-binary '{"email":"developer2@gmail.com","password":"12345678","displayName":"developer2","jobRole":"developer","key":"123456789"}' --compressed
@@ -23,6 +20,8 @@ curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/signup?modelId=%2Fservi
 ##signin users (get auth token for jwt)
 JWT_TOKEN=$(curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/recruitunit/users/signin' -H 'Content-Type: application/json' --data-binary '{"username":"'"$USER"'","password":"'"$USER_PASSWORD"'"}' | jq -r '.token')
 DEV_JWT_TOKEN=$(curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/recruitunit/users/signin' -H 'Content-Type: application/json' --data-binary '{"username":"'"$DEV_USER"'","password":"'"$DEV_USER_PASSWORD"'"}' | jq -r '.token')
+echo "JWT token:"
+echo "$JWT_TOKEN"
 #
 ##get dev user details (i.e. userGUID to add to /createjobsubmission)
 #curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/getuser/developer1@gmail.com' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRldmVsb3BlcjFAZ21haWwuY29tIiwiY29va2llIjoiQXV0aFNlc3Npb249WkdWMlpXeHZjR1Z5TVVCbmJXRnBiQzVqYjIwNk5Ua3pNMFk0UmtVNjhhY2dTM2dvRExOclV1clRLTzJLc0pDOURHNDsgVmVyc2lvbj0xOyBQYXRoPS87IEh0dHBPbmx5Iiwib2siOnRydWUsInJvbGVzIjpbImVkaXRvciIsImRldmVsb3BlciJdLCJpc0NvbXBhcmlzb25Gb3JtRW5hYmxlZCI6dHJ1ZSwidXNlckd1aWQiOiJCeVF5YkprZi0iLCJpcCI6Ijo6ZmZmZjoxMzkuMjE2LjU3LjExNiIsImlhdCI6MTQ5NjU3ODMwMiwiZXhwIjoxNDk5MTcwMzAyfQ.0svfaSH0C8vWrmb4L5cOi33n1gyS7wKNNDV-ywzB5fU'
