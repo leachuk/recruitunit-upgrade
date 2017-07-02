@@ -6,7 +6,7 @@ BARDLY_HOST="104.207.151.30"
 BARDLY_PORT="9000"
 USER="recruiter1@gmail.com"
 USER_PASSWORD="12345678"
-DEV_USER="developer1@gmail.com"
+DEV_USER="john.smith@example.com"
 DEV_USER_PASSWORD="12345678"
 
 ##create developer users
@@ -27,10 +27,10 @@ echo "$JWT_TOKEN"
 #curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/getuser/developer1@gmail.com' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRldmVsb3BlcjFAZ21haWwuY29tIiwiY29va2llIjoiQXV0aFNlc3Npb249WkdWMlpXeHZjR1Z5TVVCbmJXRnBiQzVqYjIwNk5Ua3pNMFk0UmtVNjhhY2dTM2dvRExOclV1clRLTzJLc0pDOURHNDsgVmVyc2lvbj0xOyBQYXRoPS87IEh0dHBPbmx5Iiwib2siOnRydWUsInJvbGVzIjpbImVkaXRvciIsImRldmVsb3BlciJdLCJpc0NvbXBhcmlzb25Gb3JtRW5hYmxlZCI6dHJ1ZSwidXNlckd1aWQiOiJCeVF5YkprZi0iLCJpcCI6Ijo6ZmZmZjoxMzkuMjE2LjU3LjExNiIsImlhdCI6MTQ5NjU3ODMwMiwiZXhwIjoxNDk5MTcwMzAyfQ.0svfaSH0C8vWrmb4L5cOi33n1gyS7wKNNDV-ywzB5fU'
 DEV_USERGUID=$(curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/users/getuser/'"$DEV_USER"'' -H 'Authorization: Bearer '"$DEV_JWT_TOKEN"'' | jq -r '.data.userGuid')
 #
-##developer1 create comparison form (update Auth token for new users)
+##developer create comparison form (update Auth token for new users)
 curl -X PUT 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/articles/createArticle?modelId=%2Fservices%2Frecruitunit%2Farticles%2FrecruitUnitContentService.controller.js&modelType=%2Fmodels%2FRecruitUnit.ComparisonTest.js' -H 'Authorization: Bearer '"$JWT_TOKEN"'' -H 'Content-Type: application/json' --data-binary '{"roleType":{"value":["contract"],"disabled":false,"rule":"assertStringContains"},"payBracketLower":{"value":130,"disabled":false,"rule":"assertRangeGreaterThan"},"skills":{"value":["java","html","node","AWS","AEM"],"disabled":false,"rule":"assertArrayContains"},"authorEmail":"'"$DEV_USER"'","createdDate":1496408355967,"locationDescription":{"value":["Melbourne"],"disabled":false,"rule":"assertStringContains"},"published":true}' --compressed
 #
-##recruiter1 create job content for developer1
+##recruiter create job content for developer
 curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/recruitunit/articles/createjobsubmission' -X PUT -H 'Content-Type: application/json' -H 'Authorization: Bearer '"$JWT_TOKEN"'' --data-binary '{"jobDescription":"Auto 3. Pass test for job recruiter1 with Melbourne contract job","currency":"AUD","roleType":"Contract","payBracketLower":130,"payBracketUpper":150,"locationDescription":"Great location in the heart of the Melbourne CBD","skills":["java","aem","aws","foo","bar"],"submitTo":"'"$DEV_USERGUID"'","authorEmail":"'"$USER"'","published":true}' --compressed
 curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/recruitunit/articles/createjobsubmission' -X PUT -H 'Content-Type: application/json' -H 'Authorization: Bearer '"$JWT_TOKEN"'' --data-binary '{"jobDescription":"Auto 4. recruiter1 sydney test job","currency":"AUD","roleType":"Contract","payBracketLower":140,"payBracketUpper":160,"locationDescription":"Great Sydney location","skills":["java","aem","aws","foo","bar"],"submitTo":"'"$DEV_USERGUID"'","authorEmail":"'"$USER"'","published":true}' --compressed
 curl 'http://'"$BARDLY_HOST"':'"$BARDLY_PORT"'/api/recruitunit/articles/createjobsubmission' -X PUT -H 'Content-Type: application/json' -H 'Authorization: Bearer '"$JWT_TOKEN"'' --data-binary '{"jobDescription":"recruiter1 akajhf askjhfsa sakdjfhskfjh","currency":"AUD","roleType":"Contract","payBracketLower":140,"payBracketUpper":160,"locationDescription":"Great Sydney location","skills":["javascript","go","aws","asaf","basFar","sdfsf", "swefqwf", "wwfj"],"submitTo":"'"$DEV_USERGUID"'","authorEmail":"'"$USER"'","published":true}' --compressed
