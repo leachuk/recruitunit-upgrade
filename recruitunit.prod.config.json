@@ -9,7 +9,7 @@
     "PATH_HOME": "/home",
     "PATH_USER": "/user/",
     "PATH_COMPARISONRULESFORM": "/comparisonrules",
-    "BARDLY_API_HOSTNAME": "104.207.151.30",
+    "BARDLY_API_HOSTNAME": "www.bardly.net",
     "BARDLY_API_PORT": "9000"
   }
 }
