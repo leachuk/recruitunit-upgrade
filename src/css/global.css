@@ -27,6 +27,7 @@ form.recruitunit-login md-input-container {
 }
 .light-grey-background {
   background-color: #ececec;
+  padding-bottom: 50px;
 }
 
 .recruitunit-homepage div.row-label {
@@ -435,4 +436,16 @@ md-grid-list .secure-backgroundimage{
   background-color: hsla(0,0%,100%,0.60);
   background-blend-mode: overlay;
   background-size: cover;
+}
+
+/* Footer */
+.footer {
+  background-color: rgb(48,48,48);
+  color: #8c8c8c;
+  height: 74px;
+  padding: 20px;
+}
+
+.footer .social a {
+  padding: 10px;
 }
