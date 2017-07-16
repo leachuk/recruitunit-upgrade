@@ -45,8 +45,7 @@ form.recruitunit-login md-input-container {
 }
 
 .banner .md-display-3, .banner .md-display-2, .banner .md-display-1 {
-  padding-top: 5px;
-  line-height: 5px;
+  line-height: 40px;
 }
 
 /*Feature Background and Tiles*/
