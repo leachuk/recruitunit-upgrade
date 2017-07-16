@@ -1,7 +1,7 @@
 import template from './home.html';
 
 class HomeController {
-  constructor(loomApi, recruitUnitUtil, globals) {
+  constructor(loomApi, recruitUnitUtil, globals, $mdMedia) {
     "ngInject";
     console.log("in HomeController");
     this.loomApi = loomApi;
@@ -9,6 +9,7 @@ class HomeController {
     this.globals = globals;
     this.roles = ['developer', 'recruiter'];
     this.user = {};
+    this.$mdMedia = $mdMedia;
 
     this.recruitUnitUtil.Util.setTitle("Home");
   }
