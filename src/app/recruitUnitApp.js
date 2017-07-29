@@ -68,7 +68,7 @@ angular.module('recruitUnitApp', [
       .dark();
 }]);
 
-function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals, recruitUnitConfig, ngMessages) {
+function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals, recruitUnitConfig) {
   var sideNav;
 
   this.user = {
