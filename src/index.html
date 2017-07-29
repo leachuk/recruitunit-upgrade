@@ -26,15 +26,21 @@
         <div>
           <md-input-container flex>
             <label>Email</label>
-            <input ng-model="app.user.email"
-                   type="text">
+            <input ng-model="app.user.email" type="email">
+            <div ng-messages="app.user.email.$error">
+              <div ng-message="app.user.email.$invalid">
+                Enter a valid email.
+              </div>
+            </div>
           </md-input-container>
         </div>
         <div>
           <md-input-container flex>
             <label>Password</label>
-            <input ng-model="app.user.password"
-                   type="password">
+            <input ng-model="app.user.password" type="password" minlength="8">
+            <div ng-messages="app.user.password.$error">
+              <div ng-message="minlength">password must be more than 8 characters.</div>
+            </div>
           </md-input-container>
         </div>
         <div>
