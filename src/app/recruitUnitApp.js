@@ -9,6 +9,7 @@ import 'ng-lodash';
 import 'angular-moment';
 import 'angular-resource';
 import 'angular-cookies';
+import 'angular-messages';
 
 import 'loom-api-angular';
 import Services from './services/services';
@@ -25,6 +26,7 @@ angular.module('recruitUnitApp', [
   'ngMaterial',
   'ngResource',
   'ngCookies',
+  'ngMessages',
   'loom.api',
   'ngLodash',
   'angularMoment',
@@ -66,7 +68,7 @@ angular.module('recruitUnitApp', [
       .dark();
 }]);
 
-function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals, recruitUnitConfig) {
+function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHelper, recruitUnitUtil, globals, recruitUnitConfig, ngMessages) {
   var sideNav;
 
   this.user = {

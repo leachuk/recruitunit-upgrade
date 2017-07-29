@@ -68,7 +68,12 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>name</label>
-                                <input ng-model="home.user.displayName">
+                                <input ng-model="home.user.displayName" type="text" required>
+                                <div ng-messages="home.user.displayName.$error">
+                                    <div ng-message="required">
+                                        You name is required.
+                                    </div>
+                                </div>
                             </md-input-container>
                         </section>
                     </div>
@@ -81,8 +86,12 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>email</label>
-                                <input ng-model="home.user.email"
-                                       type="email">
+                                <input ng-model="home.user.email" type="email">
+                                <div ng-messages="home.user.email.$error" ng-if="home.user.email.$dirty">
+                                    <div ng-message="home.user.email.$invalid">
+                                        Enter a valid email.
+                                    </div>
+                                </div>
                             </md-input-container>
                         </section>
                     </div>
@@ -109,8 +118,10 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>password</label>
-                                <input ng-model="home.user.password"
-                                       type="password">
+                                <input ng-model="home.user.password" type="password" required>
+                                <div ng-messages="home.user.password.$error">
+                                    <div ng-message="minlength">Password must be more than 8 characters.</div>
+                                </div>
                             </md-input-container>
                         </section>
                     </div>
