@@ -37,14 +37,14 @@
         <div>
           <md-input-container flex>
             <label>Password</label>
-            <input ng-model="app.user.password" type="password" minlength="8">
-            <div ng-messages="app.user.password.$error">
+            <input ng-model="app.user.password" name="password" type="password" minlength="8">
+            <div ng-messages="toolbarSignin.password.$error">
               <div ng-message="minlength">Password must be more than 8 characters.</div>
             </div>
           </md-input-container>
         </div>
         <div>
-          <md-button type="submit">Login</md-button>
+          <md-button type="submit" ng-disabled="toolbarSignin.$invalid">Login</md-button>
         </div>
       </form>
     </div>

@@ -59,7 +59,7 @@
 <div class="light-grey-background"  layout-align="center start" layout="row">
     <md-card class="md-whiteframe-z4 recruitunit-homepage" flex-gt-sm="50" flex-sm="66" flex="100">
         <md-card-content>
-            <form name="createUser">
+            <form name="createUser" novalidate>
                 <div layout="row">
                     <div flex="30" layout="row" layout-align="left center" class="row-label">
                         <span>User Name</span>
@@ -68,8 +68,8 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>name</label>
-                                <input ng-model="home.user.displayName" type="text" required>
-                                <div ng-messages="home.user.displayName.$error">
+                                <input ng-model="home.user.displayName" type="text" name="displayName" required>
+                                <div ng-messages="createUser.displayName.$error">
                                     <div ng-message="required">
                                         You name is required.
                                     </div>
@@ -86,9 +86,9 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>email</label>
-                                <input ng-model="home.user.email" type="email">
-                                <div ng-messages="home.user.email.$error" ng-if="home.user.email.$dirty">
-                                    <div ng-message="home.user.email.$invalid">
+                                <input ng-model="home.user.email" type="email" name="email" required>
+                                <div ng-messages="createUser.email.$error">
+                                    <div ng-message="email">
                                         Enter a valid email.
                                     </div>
                                 </div>
@@ -118,8 +118,8 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>password</label>
-                                <input ng-model="home.user.password" type="password" required>
-                                <div ng-messages="home.user.password.$error">
+                                <input ng-model="home.user.password" type="password" name="password" minlength="8" required>
+                                <div ng-messages="createUser.password.$error">
                                     <div ng-message="minlength">Password must be more than 8 characters.</div>
                                 </div>
                             </md-input-container>
@@ -129,7 +129,7 @@
                 <div layout="row">
                     <div flex="30" layout-align="left center">
                         <section layout="row">
-                            <md-button class="md-raised md-accent" ng-click="home.createNewUser()">Sign me up</md-button>
+                            <md-button class="md-raised md-accent" ng-click="home.createNewUser()" ng-disabled="createUser.$invalid">Sign me up</md-button>
                         </section>
                     </div>
                 </div>
