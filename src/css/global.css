@@ -11,6 +11,10 @@ form.recruitunit-login md-input-container {
   margin-top: 35px;
 }
 
+form.recruitunit-login md-input-container input {
+  background-color: #424242;
+}
+
 /*Heading Banner*/
 .heading {
   background-color: #ffffff;
