@@ -25,9 +25,9 @@ git push prod-deploy master
 To deploy the locally built `dist` files to remote project `target` directory 
 
 ```
-rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress \
-dist/ \
-appadmin@138.68.54.93:/home/appadmin/projects/recruitunit/target
+npm run build
+
+rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ./dist/ appadmin@45.63.84.90:/home/appadmin/projects/recruitunit/target
 ```
 
 #Docker
