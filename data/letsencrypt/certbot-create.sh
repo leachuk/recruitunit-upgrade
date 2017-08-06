@@ -1,6 +1,6 @@
 #!/bin/sh
 
-docker pull palobo/certbot
+docker pull pierreprinetti/certbot:latest
 
 GetCert() {
         docker run \
