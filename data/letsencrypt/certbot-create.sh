@@ -18,7 +18,7 @@ GetCert
 
 echo "Rebuilding frontend docker with certs..."
 CONTAINERID="$(docker stop recruitunit-nginx)"
-docker rm CONTAINERID
+docker rm ${CONTAINERID}
 docker build -t recruitunit-nginx -f Dockerfile-nginx .
 docker run -d --name recruitunit-nginx -v $(pwd)/data/letsencrypt/nginx-certs:/etc/nginx/certs:ro -p 80:80 -p 443:443 recruitunit-nginx
 
