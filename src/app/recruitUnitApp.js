@@ -102,6 +102,7 @@ function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHe
     console.log("initApp");
 
     loomApi.init({
+      "protocol": recruitUnitConfig.BARDLY_API_PROTOCOL,
       "hostname": recruitUnitConfig.BARDLY_API_HOSTNAME,
       "port": recruitUnitConfig.BARDLY_API_PORT
     });
