@@ -66,3 +66,7 @@ Run with
 ```
 docker run -d --name recruitunit-nginx -p 80:80 recruitunit-nginx
 ```
+Or when passing in letsencrypt cert
+```
+docker run -d --name recruitunit-nginx -v $(pwd)/data/letsencrypt/nginx-certs:/etc/nginx/certs:ro -p 80:80 -p 443:443 recruitunit-nginx
+```
