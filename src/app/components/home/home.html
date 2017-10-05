@@ -69,10 +69,10 @@
                         <section layout="row">
                             <md-input-container flex>
                                 <label>name</label>
-                                <input ng-model="home.user.displayName" type="text" name="displayName" required>
+                                <input ng-model="home.user.displayName" type="text" name="displayName" pattern="^[a-zA-Z0-9 ]+$" required>
                                 <div ng-messages="createUser.displayName.$error">
-                                    <div ng-message="required">
-                                        You name is required.
+                                    <div ng-message="required, pattern">
+                                        Name is required. Letters or numbers only.
                                     </div>
                                 </div>
                             </md-input-container>
