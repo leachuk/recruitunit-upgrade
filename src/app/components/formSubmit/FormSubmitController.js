@@ -1,7 +1,8 @@
 import template from './formSubmit.html';
+import loginModalTemplate from './enableContactMeDialog.html';
 
 class FormSubmitController {
-  constructor($location, loomApi, recruitUnitUtil, jwtHelper, globals){
+  constructor($location, loomApi, recruitUnitUtil, jwtHelper, globals, $mdPanel){
     "ngInject";
     console.log("FormSubmitController instantiated");
 
@@ -10,6 +11,7 @@ class FormSubmitController {
     this.recruitUnitUtil = recruitUnitUtil;
     this.jwtHelper = jwtHelper;
     this.globals = globals;
+    this._mdPanel = $mdPanel;
 
     this.recruitUnitUtil.Util.setTitle("Submit Form Page");
 
@@ -39,16 +41,22 @@ class FormSubmitController {
     this.submitTo = next.params.guid;
 
     this.authToken = this.recruitUnitUtil.Util.getLocalUser().token;
-    this.token = this.jwtHelper.decodeToken(this.authToken);
-    this.tokenUsername = this.token.username;
-    this.tokenRoles = this.token.roles;
-    this.isDeveloper = this.tokenRoles.indexOf(this.recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
+    if (this.authToken !== null){
+      this.token = this.jwtHelper.decodeToken(this.authToken);
+      this.tokenUsername = this.token.username;
+      this.tokenRoles = this.token.roles;
+      this.isDeveloper = this.tokenRoles.indexOf(this.recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
 
-    if(!this.isDeveloper) {
-      this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
-        this.user = result;
-      }));
+      if(!this.isDeveloper) {
+        this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
+          this.user = result;
+        }));
+      }
+    } else {
+      console.log("do not pass go!");
+      this.showLoginModal();
     }
+
   }
 
   submitJobToCandidate(){
@@ -69,6 +77,38 @@ class FormSubmitController {
       }));
     }
   }
+
+  showLoginModal(){
+    console.log("in showPanel");
+    var panelPosition = this._mdPanel.newPanelPosition()
+      .absolute()
+      .center();
+    var panelAnimation = this._mdPanel.newPanelAnimation();
+    panelAnimation.openFrom({top: 0, left: 0});
+    panelAnimation.closeTo({top: document.documentElement.clientHeight, left: 0});
+    panelAnimation.withAnimation(this._mdPanel.animation.SCALE);
+
+    var config = {
+      attachTo: angular.element(document.body),
+      controller: 'genericDialogController',
+      controllerAs: 'requireComparisonFormDialog',
+      locals: {
+        'useremail': this.recruitUnitUtil.Util.getLocalUser().email,
+        'navigateToUserRules': this.navigateToUserRules
+      },
+      position: panelPosition,
+      animation: panelAnimation,
+      template: loginModalTemplate,
+      hasBackdrop: true,
+      panelClass: 'generic-dialog',
+      zIndex: 150,
+      clickOutsideToClose: true,
+      escapeToClose: true,
+      focusOnOpen: true
+    }
+
+    this._mdPanel.open(config);
+  }
 }
 
 export default{
@@ -77,17 +117,24 @@ export default{
   template: template,
   $canActivate: function(recruitUnitUtil, jwtHelper, globals) {
     "ngInject";
-    var token = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token); //todo: handle no token
-    var userRoles = token.roles;
-    var tokenUsername = token.username;
+    var token = recruitUnitUtil.Util.getLocalUser().token;
 
-    return recruitUnitUtil.Util.isUserAuthenticated(tokenUsername, recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this,function(result) {
-      if (result == false) {
-        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
-      } else if (result.success) {
-        globals.userName = tokenUsername;
-        return true;
-      }
-    }));
+    if (token !== null) {
+      var decodedToken = jwtHelper.decodeToken(recruitUnitUtil.Util.getLocalUser().token); //todo: handle no token
+      var userRoles = decodedToken.roles;
+      var tokenUsername = decodedToken.username;
+
+      return recruitUnitUtil.Util.isUserAuthenticated(tokenUsername, recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (result) {
+        if (result == false) {
+          recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
+        } else if (result.success) {
+          globals.userName = tokenUsername;
+          return true;
+        }
+      }));
+    } else {
+      console.log("shiiiiiiit, you ain't loged in");
+      return true;
+    }
   }
 }
