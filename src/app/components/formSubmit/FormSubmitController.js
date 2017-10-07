@@ -1,5 +1,5 @@
 import template from './formSubmit.html';
-import loginModalTemplate from './enableContactMeDialog.html';
+import loginModalTemplate from './loginModalTemplate.html';
 
 class FormSubmitController {
   constructor($location, loomApi, recruitUnitUtil, jwtHelper, globals, $mdPanel){
@@ -90,11 +90,11 @@ class FormSubmitController {
 
     var config = {
       attachTo: angular.element(document.body),
-      controller: 'genericDialogController',
-      controllerAs: 'requireComparisonFormDialog',
+      controller: 'loginModalDialogController',
+      controllerAs: 'loginModalDialog',
       locals: {
-        'useremail': this.recruitUnitUtil.Util.getLocalUser().email,
-        'navigateToUserRules': this.navigateToUserRules
+        'email': "",
+        'password': ""
       },
       position: panelPosition,
       animation: panelAnimation,
