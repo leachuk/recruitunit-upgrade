@@ -75,6 +75,10 @@
               <md-icon md-svg-icon="action:settings"></md-icon>
               Job Requirements Form URL
             </md-button>
+            <md-button ng-if="!app.user.isDeveloper" ng-href="/user/{{app.user.email}}/createjobspec" ng-click="app.toggleSideNav();app.toggleUnitTestFormDialog($event, app.userFormUrl);" class="md-primary">
+              <md-icon md-svg-icon="action:settings"></md-icon>
+              Create Job Spec
+            </md-button>
           </md-list>
         </section>
       </md-content>
