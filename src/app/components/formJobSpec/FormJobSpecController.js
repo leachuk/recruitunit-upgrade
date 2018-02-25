@@ -46,12 +46,6 @@ class FormJobSpecController {
       this.tokenUsername = this.token.username;
       this.tokenRoles = this.token.roles;
       this.isDeveloper = this.tokenRoles.indexOf(this.recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
-
-      if(!this.isDeveloper) {
-				this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
-					this.user = result;
-				}));
-			}
     } else {
       console.log("do not pass go!");
       this.showLoginModal();
