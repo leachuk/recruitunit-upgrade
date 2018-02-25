@@ -241,17 +241,20 @@ export default {
               "authorEmail": tokenUsername
             };
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
-            return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
-              console.log("getUserTestResults:");
-              console.log(listMyTestContentResult);
-              if (typeof listMyTestContentResult !== 'undefined') {
-                globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
-                globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
-                globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
-                return true; //return canActivate state once results are available
-              }
-            }));
+            // No longer require user test results as we'll be returning list from search results.
+            // return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
+            //   console.log("getUserTestResults:");
+            //   console.log(listMyTestContentResult);
+            //   if (typeof listMyTestContentResult !== 'undefined') {
+            //     globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+            //     globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
+            //     globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
+						//
+            //     return true; //return canActivate state once results are available
+            //   }
+            // }));
+            return true;
           } else if (tokenRoles.indexOf("developer") != -1){
             globals.isDeveloper = true;
             var searchJson = {

@@ -1,5 +1,5 @@
-<h1>Submit Form to {{formSubmit.user.data.displayName}}</h1>
-<div ng-if="formSubmit.isDeveloper">
+<h1>Create Job Specification</h1>
+<div ng-if="formJobSpec.isDeveloper">
     <p>Note. Only a recruiter is authorised to submit this form.</p>
 </div>
 
@@ -15,7 +15,7 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Job Description</label>
-                            <input ng-model="formSubmit.article.jobDescription" name="jobDescription" type="text" required>
+                            <input ng-model="formJobSpec.article.jobDescription" name="jobDescription" type="text" required>
                             <div ng-messages="submitJobFromRecruiter.jobDescription.$error">
                                 <div ng-message="required">
                                     Job description is required.
@@ -32,7 +32,7 @@
                 </div>
                 <div flex="90">
                     <section layout="column" layout-sm="column" layout-align="center start">
-                        <md-radio-group ng-model="formSubmit.article.roleType" name="roleType" required>
+                        <md-radio-group ng-model="formJobSpec.article.roleType" name="roleType" required>
                             <md-radio-button value="Permanent" class="md-primary">Permanent</md-radio-button>
                             <md-radio-button value="Contract"> Contract </md-radio-button>
                             <div ng-messages="submitJobFromRecruiter.roleType.$error">
@@ -53,8 +53,8 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Pay calculated as</label>
-                            <md-select ng-model="formSubmit.article.roleType" ng-model-options="{trackBy: '$value'}" name="payCalculated">
-                                <md-option ng-repeat="option in formSubmit.payFrequencyOptions track by option.id" ng-value="option.id">
+                            <md-select ng-model="formJobSpec.article.roleType" ng-model-options="{trackBy: '$value'}" name="payCalculated">
+                                <md-option ng-repeat="option in formJobSpec.payFrequencyOptions track by option.id" ng-value="option.id">
                                     {{option.value}}
                                 </md-option>
                             </md-select>
@@ -65,7 +65,7 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Lower bound</label>
-                            <input ng-model="formSubmit.article.payBracketLower" name="payBracketLower" type="number" required>
+                            <input ng-model="formJobSpec.article.payBracketLower" name="payBracketLower" type="number" required>
                             <div ng-messages="submitJobFromRecruiter.payBracketLower.$error">
                                 <div ng-message="required">
                                     Lower bound is required.
@@ -78,7 +78,7 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Upper bound</label>
-                            <input ng-model="formSubmit.article.payBracketUpper" name="payBracketUpper" type="number" required>
+                            <input ng-model="formJobSpec.article.payBracketUpper" name="payBracketUpper" type="number" required>
                             <div ng-messages="submitJobFromRecruiter.payBracketUpper.$error">
                                 <div ng-message="required">
                                     Upper bound is required.
@@ -97,8 +97,8 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Country currency code</label>
-                            <md-select ng-model="formSubmit.article.currency">
-                                <md-option ng-repeat="option in formSubmit.currencylist" ng-value="option.id" name="currencylist" required>
+                            <md-select ng-model="formJobSpec.article.currency">
+                                <md-option ng-repeat="option in formJobSpec.currencylist" ng-value="option.id" name="currencylist" required>
                                     {{option.id}} | {{option.description}}
                                 </md-option>
                             </md-select>
@@ -120,7 +120,7 @@
                     <section layout="row">
                         <md-input-container flex>
                             <label>Location</label>
-                            <input ng-model="formSubmit.article.locationDescription" name="locationDescription" type="text" required>
+                            <input ng-model="formJobSpec.article.locationDescription" name="locationDescription" type="text" required>
                             <div ng-messages="submitJobFromRecruiter.locationDescription.$error">
                                 <div ng-message="required">
                                     Location description is required.
@@ -138,7 +138,7 @@
                 <div flex="90">
                     <section layout="column">
                         <md-chips
-                                ng-model="formSubmit.article.skills"
+                                ng-model="formJobSpec.article.skills"
                                 name="skills"
                                 placeholder="Enter a tag"
                                 delete-button-label="Remove Tag"
@@ -154,13 +154,13 @@
                 <div flex="90">
                     <section layout="row" layout-align="start center">
                         <md-button class="md-raised md-primary md-accent"
-                                   ng-disabled="formSubmit.isDeveloper || submitJobFromRecruiter.$invalid"
-                                   ng-click="formSubmit.submitJobToCandidate()">Submit</md-button>
+                                   ng-disabled="formJobSpec.isDeveloper || submitJobFromRecruiter.$invalid"
+                                   ng-click="formJobSpec.submitJobSpecForm()">Submit</md-button>
                     </section>
                 </div>
             </div>
-            <div class="messages" ng-if="formSubmit.submitmessage" ng-cloak>
-                {{formSubmit.submitmessage}}
+            <div class="messages" ng-if="formJobSpec.submitmessage" ng-cloak>
+                {{formJobSpec.submitmessage}}
             </div>
         </form>
     </div>

@@ -48,10 +48,10 @@ class FormJobSpecController {
       this.isDeveloper = this.tokenRoles.indexOf(this.recruitUnitUtil.Constants.RECRUITER_ROLE) == -1;
 
       if(!this.isDeveloper) {
-        this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
-          this.user = result;
-        }));
-      }
+				this.loomApi.User.getUserFromGuid(this.submitTo, this.authToken).then(angular.bind(this, function (result) {
+					this.user = result;
+				}));
+			}
     } else {
       console.log("do not pass go!");
       this.showLoginModal();
@@ -59,8 +59,8 @@ class FormJobSpecController {
 
   }
 
-  submitJobToCandidate(){
-    console.log("in submitJobToCandidate");
+	submitJobSpecForm(){
+    console.log("in submitJobSpecForm");
     this.authToken = this.recruitUnitUtil.Util.getLocalUser().token;
 
     if(submitJobFromRecruiter.checkValidity() && typeof this.authToken != 'undefined'){ //submitJobFromRecruiter is form name
