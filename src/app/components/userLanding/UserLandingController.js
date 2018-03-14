@@ -17,6 +17,7 @@ class UserLandingController {
     this.roles = globals.roles;
     this.id = globals.id;
     this.myContentListArray = globals.myContentListArray;
+		this.recruiterJobItemDocsArray = globals.recruiterJobItemDocsArray;
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = globals.isDeveloper;
@@ -202,6 +203,7 @@ class UserLandingController {
 
     this._mdPanel.open(config);
   }
+
 }
 
 export default {
@@ -242,7 +244,22 @@ export default {
             };
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
 
-            // No longer require user test results as we'll be returning list from search results.
+            var selector = {
+							"selector": {
+								"model": "RecruitUnitJobItem"
+							}
+						};
+						return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (result) {
+							  console.log("find results:");
+							  console.log(result.docs);
+                if (typeof result.docs !== 'undefined') {
+                      globals.recruiterJobItemDocsArray = lodash.sortBy(result.docs, 'createdDate').reverse();
+
+                      return true; //return canActivate state once results are available
+                    }
+            }));
+
+						// No longer require user test results as we'll be returning list from search results.
             // return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
             //   console.log("getUserTestResults:");
             //   console.log(listMyTestContentResult);
@@ -281,3 +298,4 @@ export default {
     }
   }
 }
+
