@@ -3,159 +3,100 @@
     <p>Note. Only a recruiter is authorised to submit this form.</p>
 </div>
 
-<md-content layout="row" class="md-padding comparisonrules">
+<md-content layout="row" class="md-padding formJobSpecs">
     <div flex="10"></div>
-    <div flex>
-        <form name="submitJobFromRecruiter" class="submitjobfromrecruiter">
-            <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="center center">
-                    <span>Job Description</span>
-                </div>
-                <div flex="90">
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Job Description</label>
-                            <input ng-model="formJobSpec.article.jobDescription" name="jobDescription" type="text" required>
-                            <div ng-messages="submitJobFromRecruiter.jobDescription.$error">
-                                <div ng-message="required">
-                                    Job description is required.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </section>
-                </div>
-            </div>
-
-            <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="start center">
-                    <span>Role Type</span>
-                </div>
-                <div flex="90">
+    <div layout="row" layout-align="center center" flex="80">
+        <form name="submitJobFromRecruiter" flex>
+            <fieldset class="standard">
+                <legend>
+                    <md-checkbox ng-click="formJobSpec.disableRoleType()"
+                                 ng-checked="!formJobSpec.article.roleType.disabled">
+                    </md-checkbox>
+                    <span ng-class="formJobSpec.article.roleType.disabled ? 'disabled' : ''">Role Type Test</span>
+                </legend>
+                <div layout="row" layout-align="start center" flex>
                     <section layout="column" layout-sm="column" layout-align="center start">
-                        <md-radio-group ng-model="formJobSpec.article.roleType" name="roleType" required>
-                            <md-radio-button value="Permanent" class="md-primary">Permanent</md-radio-button>
-                            <md-radio-button value="Contract"> Contract </md-radio-button>
-                            <div ng-messages="submitJobFromRecruiter.roleType.$error">
-                                <div ng-message="required">
-                                    Role type is required.
-                                </div>
-                            </div>
-                        </md-radio-group>
+                        <md-checkbox ng-click="formJobSpec.toggleRoleType('permanent')"
+                                     ng-checked="formJobSpec.existsRoleType('permanent')"
+                                     ng-disabled="formJobSpec.article.roleType.disabled">
+                            Permanent
+                        </md-checkbox>
+                        <md-checkbox ng-click="formJobSpec.toggleRoleType('contract')"
+                                     ng-checked="formJobSpec.existsRoleType('contract')"
+                                     ng-disabled="formJobSpec.article.roleType.disabled">
+                            Contract
+                        </md-checkbox>
+                        </md-checkbox>
                     </section>
                 </div>
-            </div>
+            </fieldset>
+
+            <fieldset class="standard">
+                <legend>
+                    <md-checkbox ng-click="formJobSpec.disablePayBracketLower()"
+                                 ng-checked="!formJobSpec.article.payBracketLower.disabled">
+                        <span ng-class="formJobSpec.article.payBracketLower.disabled ? 'disabled' : ''">Pay Greater Than Amount</span>
+                    </md-checkbox>
+                </legend>
+                <section layout="row">
+                    <md-input-container flex>
+                        <label>Lowest acceptable amount</label>
+                        <input ng-model="formJobSpec.article.payBracketLower.value"
+                               ng-disabled="formJobSpec.article.payBracketLower.disabled"
+                               type="number">
+                    </md-input-container>
+                </section>
+            </fieldset>
+
+            <fieldset class="standard">
+                <legend>
+                    <md-checkbox ng-click="formJobSpec.disableLocationDescription()"
+                                 ng-checked="!formJobSpec.article.locationDescription.disabled">
+                        Location Contains Test
+                    </md-checkbox>
+                </legend>
+                <section layout="row">
+                    <md-chips
+                        ng-model="formJobSpec.article.locationDescription.value"
+                        ng-class="formJobSpec.article.locationDescription.disabled ? 'chipsDisabled' : '' "
+                        readonly="formJobSpec.article.locationDescription.disabled"
+                        ng-disabled="true"
+                        placeholder="Add Locations to match against"
+                        delete-button-label="Remove Tag"
+                        delete-hint="Press delete to remove tag"
+                        secondary-placeholder="+ City">
+                    </md-chips>
+                </section>
+            </fieldset>
+
+            <fieldset class="standard">
+                <legend>
+                    <md-checkbox ng-click="formJobSpec.disableSkills()"
+                                 ng-checked="!formJobSpec.article.skills.disabled">
+                        Required Skills Test
+                    </md-checkbox>
+                </legend>
+                <section layout="row">
+                    <md-chips
+                        ng-model="formJobSpec.article.skills.value"
+                        ng-class="formJobSpec.article.skills.disabled ? 'chipsDisabled' : '' "
+                        readonly="formJobSpec.article.skills.disabled"
+                        placeholder="Enter a tag"
+                        delete-button-label="Remove Tag"
+                        delete-hint="Press delete to remove tag"
+                        secondary-placeholder="+ Skill">
+                    </md-chips>
+                </section>
+            </fieldset>
 
             <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="center center">
-                    <span>Pay Bracket Between</span>
-                </div>
-                <div flex>
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Pay calculated as</label>
-                            <md-select ng-model="formJobSpec.article.roleType" ng-model-options="{trackBy: '$value'}" name="payCalculated">
-                                <md-option ng-repeat="option in formJobSpec.payFrequencyOptions track by option.id" ng-value="option.id">
-                                    {{option.value}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                    </section>
-                </div>
-                <div flex="35">
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Lower bound</label>
-                            <input ng-model="formJobSpec.article.payBracketLower" name="payBracketLower" type="number" required>
-                            <div ng-messages="submitJobFromRecruiter.payBracketLower.$error">
-                                <div ng-message="required">
-                                    Lower bound is required.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </section>
-                </div>
-                <div flex="35">
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Upper bound</label>
-                            <input ng-model="formJobSpec.article.payBracketUpper" name="payBracketUpper" type="number" required>
-                            <div ng-messages="submitJobFromRecruiter.payBracketUpper.$error">
-                                <div ng-message="required">
-                                    Upper bound is required.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </section>
-                </div>
-            </div>
-
-            <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="start center">
-                    <span>Currency</span>
-                </div>
-                <div flex="90">
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Country currency code</label>
-                            <md-select ng-model="formJobSpec.article.currency">
-                                <md-option ng-repeat="option in formJobSpec.currencylist" ng-value="option.id" name="currencylist" required>
-                                    {{option.id}} | {{option.description}}
-                                </md-option>
-                            </md-select>
-                            <div ng-messages="submitJobFromRecruiter.currencylist.$error">
-                                <div ng-message="required">
-                                    Currency list is required.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </section>
-                </div>
-            </div>
-
-            <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="center center">
-                    <span>Location Description</span>
-                </div>
-                <div flex="90">
-                    <section layout="row">
-                        <md-input-container flex>
-                            <label>Location</label>
-                            <input ng-model="formJobSpec.article.locationDescription" name="locationDescription" type="text" required>
-                            <div ng-messages="submitJobFromRecruiter.locationDescription.$error">
-                                <div ng-message="required">
-                                    Location description is required.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </section>
-                </div>
-            </div>
-
-            <div layout="row">
-                <div hide show-gt-xs flex="10" layout="row" layout-align="center center">
-                    <span>Required Skills Description</span>
-                </div>
-                <div flex="90">
-                    <section layout="column">
-                        <md-chips
-                                ng-model="formJobSpec.article.skills"
-                                name="skills"
-                                placeholder="Enter a tag"
-                                delete-button-label="Remove Tag"
-                                delete-hint="Press delete to remove tag"
-                                secondary-placeholder="+Tag">
-                        </md-chips>
-                    </section>
-                </div>
-            </div>
-
-            <div layout="row">
-                <div flex="10" layout="row" layout-align="center center"></div>
+                <div flex="10" layout="row" layout-align="left center"></div>
                 <div flex="90">
                     <section layout="row" layout-align="start center">
                         <md-button class="md-raised md-primary md-accent"
-                                   ng-disabled="formJobSpec.isDeveloper || submitJobFromRecruiter.$invalid"
-                                   ng-click="formJobSpec.submitJobSpecForm()">Submit</md-button>
+                                   ng-click="formJobSpec.submitFormJobSpecDocument()">Submit</md-button>
+                        <md-button class="md-raised md-primary"
+                                   ng-click="formJobSpec.cancelFormJobSpecDocument()">Cancel</md-button>
                     </section>
                 </div>
             </div>
@@ -164,5 +105,5 @@
             </div>
         </form>
     </div>
-    <div flex="10"></div>
 </md-content>
+

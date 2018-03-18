@@ -246,7 +246,7 @@ export default {
 
             var selector = {
 							"selector": {
-								"model": "RecruitUnitJobItem"
+								"model": "RecruitUnitJobDescription"
 							}
 						};
 						return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (result) {
