@@ -53,7 +53,7 @@
                 </div>
             </div>
             <md-list class="totals-list">
-                <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items</md-subheader>
+                <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items matching &lt;insert job description document here&gt;</md-subheader>
                 <md-list-item class="md-2-line" ng-repeat="item in userLanding.myContentListArray">
                     <div layout="row" flex>
                         <md-icon flex="5"
@@ -133,7 +133,7 @@
                                  md-svg-icon="{{item.testResult.isPass || item.testResult.isPartialPass ? 'action:done' : 'content:clear'}}"
                                  ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
-                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
+                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.jobDescription | limitTo:70}}<span ng-if="item.jobDescription.length > 70">...</span></p>
                                 <p hide-gt-sm class="job-description text-sm">{{item.jobDescription | limitTo:70}}<span ng-if="item.jobDescription.length > 70">...</span></p>
                             </md-button>
