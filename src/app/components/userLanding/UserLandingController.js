@@ -17,7 +17,7 @@ class UserLandingController {
     this.roles = globals.roles;
     this.id = globals.id;
     this.myContentListArray = globals.myContentListArray;
-		this.recruiterJobItemDocsArray = globals.recruiterJobItemDocsArray;
+		this.jobItemDocsArray = globals.jobItemDocsArray;
     this.myContentListPassCount = globals.myContentListPassCount;
     this.myContentListFailCount = globals.myContentListFailCount;
     this.isDeveloper = globals.isDeveloper;
@@ -267,7 +267,7 @@ export default {
 							  console.log("find results:");
 							  console.log(result.docs);
                 if (typeof result.docs !== 'undefined' && result.docs.length > 0) {
-                      globals.recruiterJobItemDocsArray = lodash.sortBy(result.docs, 'createdDate').reverse();
+                      globals.jobItemDocsArray = lodash.sortBy(result.docs, 'createdDate').reverse();
 
                       //parse recruiter JobDescription results and find matching developer JobItems
                       return result.docs.length; //return canActivate state once results are available
@@ -309,13 +309,13 @@ export default {
               "submitTo": globals.userGuid
             };
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
-            return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
+            return loomApi.Article.getUserComparisonTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
               console.log("getUserTestResults:");
               console.log(listMyTestContentResult);
               if (typeof listMyTestContentResult !== 'undefined') {
-                globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
-                globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
-                globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
+								globals.jobItemDocsArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+                //globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
+                //globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
                 return true; //return canActivate state once results are available
               }

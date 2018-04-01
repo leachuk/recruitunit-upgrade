@@ -12,6 +12,11 @@ Run local development server via gulp
 npm run serve
 ```
 
+Pull latest loom-api-angular when updated in git
+```
+npm install loom-api-angular
+```
+
 Run local distribution build via webpack. Outputs to `dist` directory
 
 #Remote Deployment
