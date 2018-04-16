@@ -308,6 +308,12 @@ export default {
             var searchJson = {
               "submitTo": globals.userGuid
             };
+						var selector = {
+							"selector": {
+								"model": "RecruitUnitComparisonTest",
+								"authorEmail": tokenUsername
+							}
+						};
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
             return loomApi.Article.getUserComparisonTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
               console.log("getUserTestResults:");
@@ -319,7 +325,22 @@ export default {
 
                 return true; //return canActivate state once results are available
               }
-            }));
+            })).then(angular.bind(this, function (result) {
+							if (result > 0) {
+								return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (result) {
+								  //todo: continue fixing up below to fit new find
+									console.log("getUserTestResults:");
+									if (typeof listMyTestContentResult !== 'undefined') {
+										globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+										//globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
+										//globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
+
+										return true; //return canActivate state once results are available
+									}
+								}));
+							}
+							return result;
+						}));
           }
         }
 

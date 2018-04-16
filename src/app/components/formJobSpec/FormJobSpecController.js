@@ -38,6 +38,10 @@ class FormJobSpecController {
     // };
 
 		this.article = { //initialise comparison rules article model
+			"jobDescription": { //jobDescription not tested against. For information purposes only.
+				"value": "",
+				"disabled": false
+			},
 			"roleType": {
 				"value": ["contract", "permanent"],
 				"disabled": false,
@@ -84,7 +88,7 @@ class FormJobSpecController {
 	$routerOnActivate(next, previous){
 		var decodedToken = this.jwtHelper.decodeToken(this.recruitUnitUtil.Util.getLocalUser().token);
 		var tokenUsername = decodedToken.username;
-		var isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
+		//var isComparisonFormEnabled = decodedToken.isComparisonFormEnabled;
 		var requestedUsername = next.params.email;
 
 		var controllerId = "/services/recruitunit/articles/recruitUnitContentService.controller.js";
@@ -99,15 +103,15 @@ class FormJobSpecController {
 			} else if (tokenUsername != requestedUsername) {
 				this.recruitUnitUtil.Util.redirectUserToPath(this.recruitUnitUtil.Constants.PATH_USER + tokenUsername);
 			} else if (result.success) {
-				if (isComparisonFormEnabled) { //update the default form if it exists
-					this.loomApi.Article.search(controllerId, model, searchJson, this.recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (searchResult) {
-						console.log("get search:");
-						console.log(searchResult);
-						if (searchResult.length > 0) {
-							this.article = searchResult[0];
-						}
-					}));
-				}
+				// if (isComparisonFormEnabled) { //update the default form if it exists
+				// 	this.loomApi.Article.search(controllerId, model, searchJson, this.recruitUnitUtil.Util.getLocalUser().token).then(angular.bind(this, function (searchResult) {
+				// 		console.log("get search:");
+				// 		console.log(searchResult);
+				// 		if (searchResult.length > 0) {
+				// 			this.article = searchResult[0];
+				// 		}
+				// 	}));
+				// }
 			}
 		}));
 	}
