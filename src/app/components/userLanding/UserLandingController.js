@@ -323,11 +323,11 @@ export default {
                 //globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
                 //globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
-                return true; //return canActivate state once results are available
+                return listMyTestContentResult.length;
               }
             })).then(angular.bind(this, function (result) {
 							if (result > 0) {
-								return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (result) {
+								return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (listMyTestContentResult) {
 								  //todo: continue fixing up below to fit new find
 									console.log("getUserTestResults:");
 									if (typeof listMyTestContentResult !== 'undefined') {
