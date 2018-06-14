@@ -310,8 +310,7 @@ export default {
             };
 						var selector = {
 							"selector": {
-								"model": "RecruitUnitComparisonTest",
-								"authorEmail": tokenUsername
+								"model": "RecruitUnitJobDescription"
 							}
 						};
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
@@ -326,12 +325,14 @@ export default {
                 return listMyTestContentResult.length;
               }
             })).then(angular.bind(this, function (result) {
+              console.log(result);
 							if (result > 0) {
 								return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (listMyTestContentResult) {
 								  //todo: continue fixing up below to fit new find
-									console.log("getUserTestResults:");
+									console.log("getUserTestResults listMyTestContentResult:");
+									console.log(listMyTestContentResult);
 									if (typeof listMyTestContentResult !== 'undefined') {
-										globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+										globals.myContentListArray = lodash.sortBy(listMyTestContentResult.docs, 'document.createdDate').reverse();
 										//globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
 										//globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
