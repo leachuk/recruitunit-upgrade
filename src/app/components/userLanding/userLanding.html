@@ -63,7 +63,7 @@
                                  ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
                             <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.document.id, item.testResult.isPass, item.testResult.isPartialPass)">
-                                <p hide show-gt-sm class="job-description text-lg">{{item._id | limitTo:70}}<span ng-if="item.document.jobDescription.value.length > 70">...</span></p>
+                                <p hide show-gt-sm class="job-description text-lg">{{item.jobDescription.value | limitTo:70}}<span ng-if="item.document.jobDescription.value.length > 70">...</span></p>
                                 <p hide-gt-sm class="job-description text-sm">{{item.jobDescription.value | limitTo:70}}<span ng-if="item.document.jobDescription.value.length > 70">...</span></p>
                             </md-button>
                             <p hide show-gt-xs ng-if="item.document.roleType == 'Contract'"><i>{{item.document.payBracketLower}}</i> to <i>{{item.document.payBracketUpper}}</i> per day</p>

@@ -305,20 +305,17 @@ export default {
             return true;
           } else if (tokenRoles.indexOf("developer") != -1){
             globals.isDeveloper = true;
+
             var searchJson = {
               "submitTo": globals.userGuid
             };
-						var selector = {
-							"selector": {
-								"model": "RecruitUnitJobDescription"
-							}
-						};
+
             var localToken = recruitUnitUtil.Util.getLocalUser().token;
             return loomApi.Article.getUserComparisonTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
-              console.log("getUserTestResults:");
+              console.log("getUserComparisonTestResults:");
               console.log(listMyTestContentResult);
               if (typeof listMyTestContentResult !== 'undefined') {
-								globals.jobItemDocsArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
+								globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
                 //globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
                 //globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
@@ -327,12 +324,11 @@ export default {
             })).then(angular.bind(this, function (result) {
               console.log(result);
 							if (result > 0) {
-								return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (listMyTestContentResult) {
-								  //todo: continue fixing up below to fit new find
-									console.log("getUserTestResults listMyTestContentResult:");
-									console.log(listMyTestContentResult);
-									if (typeof listMyTestContentResult !== 'undefined') {
-										globals.myContentListArray = lodash.sortBy(listMyTestContentResult.docs, 'document.createdDate').reverse();
+								return loomApi.Article.getUserComparisonTestDocs(localToken).then(angular.bind(this, function (listMyJobComparisonTestResult) {
+									console.log("getUserComparisonTestDocs:");
+									console.log(listMyJobComparisonTestResult);
+									if (typeof listMyJobComparisonTestResult !== 'undefined') {
+										globals.jobItemDocsArray = lodash.sortBy(listMyJobComparisonTestResult, 'document.createdDate').reverse();
 										//globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
 										//globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
 
