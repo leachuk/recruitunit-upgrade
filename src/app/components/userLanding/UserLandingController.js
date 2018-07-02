@@ -106,7 +106,7 @@ class UserLandingController {
   }
 
   formatUnixDateToNow(unixTime){
-    return this.moment.unix(unixTime).from();
+    return this.moment.unix(unixTime/1000).from();
   }
 
   viewItem(id){
