@@ -335,8 +335,9 @@ export default {
 										return true; //return canActivate state once results are available
 									}
 								}));
+							} else { //no comparison test results
+								return true;
 							}
-							return result;
 						}));
           }
         }
