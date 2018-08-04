@@ -1,9 +1,21 @@
-<h2>Job Comparison Rules</h2>
+<h2>Job Matching Rules</h2>
 
 <md-content layout="row" class="md-padding comparisonrules">
     <div flex="10"></div>
     <div layout="row" layout-align="center center" flex="80">
         <form name="comparisonRuleForm" flex>
+            <fieldset class="standard">
+                <legend>
+                    <span>Description</span>
+                </legend>
+                <section layout="row">
+                    <md-input-container flex>
+                        <label>Description of your job requirements</label>
+                        <input ng-model="comparisonRule.article.description"
+                               type="text">
+                    </md-input-container>
+                </section>
+            </fieldset>
             <fieldset class="standard">
                 <legend>
                     <md-checkbox ng-click="comparisonRule.disableRoleType()"
@@ -27,7 +39,6 @@
                     </section>
                 </div>
             </fieldset>
-
             <fieldset class="standard">
                 <legend>
                     <md-checkbox ng-click="comparisonRule.disablePayBracketLower()"
@@ -44,7 +55,6 @@
                     </md-input-container>
                 </section>
             </fieldset>
-
             <fieldset class="standard">
                 <legend>
                     <md-checkbox ng-click="comparisonRule.disableLocationDescription()"
@@ -65,7 +75,6 @@
                     </md-chips>
                 </section>
             </fieldset>
-
             <fieldset class="standard">
                 <legend>
                     <md-checkbox ng-click="comparisonRule.disableSkills()"
@@ -85,7 +94,6 @@
                     </md-chips>
                 </section>
             </fieldset>
-
             <div layout="row">
                 <div flex="10" layout="row" layout-align="left center"></div>
                 <div flex="90">
