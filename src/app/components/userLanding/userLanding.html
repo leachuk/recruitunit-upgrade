@@ -19,48 +19,26 @@
     <md-card class="md-whiteframe-z4 recruitunit" flex-gt-sm="66" flex="100">
         <md-card-content>
             <div hide show-gt-sm layout="row" class="totals-table totals-table-padding totals-font-lg" flex>
-                <div layout="row" class="total row" flex="33">
-                    <div layout="column" layout-align="center center" class="totals-heading">Total</div>
-                    <div layout="column" layout-align="center center" class="totals-result" flex>{{userLanding.myContentListArray.length}}</div>
-                </div>
-                <div layout="column" flex>
-                    <div layout="row" class="pass row" flex>
-                        <md-icon layout="column" class="result-icon" md-svg-icon="action:done"></md-icon>
-                        <div layout="column" class="totals-heading" flex>Pass</div>
-                        <div layout="column" flex="70" class="totals-result">{{userLanding.myContentListPassCount}}</div>
-                    </div>
-                    <div layout="row" class="fail row" flex>
-                        <md-icon layout="column" class="result-icon" md-svg-icon="content:clear"></md-icon>
-                        <div layout="column" class="totals-heading" flex>Fail</div>
-                        <div layout="column" flex="70" class="totals-result">{{userLanding.myContentListFailCount}}</div>
-                    </div>
+                <div layout="row" class="total row" flex>
+                    <div layout="column" layout-align="center left" class="totals-heading" flex="20">Total:{{userLanding.myContentListArray.length}}</div>
                 </div>
             </div>
             <div hide-gt-sm layout="row" class="totals-table totals-font-sm" flex>
                 <div layout="column" flex>
                     <div layout="row" class="total-sm row" flex="20">
-                        <div layout="column" class="totals-heading" flex>Total</div>
-                        <div layout="column" flex="70" class="totals-result">{{userLanding.myContentListArray.length}}</div>
-                    </div>
-                    <div layout="row" class="pass row" flex>
-                        <div layout="column" class="totals-heading" flex>Pass</div>
-                        <div layout="column" flex="70" class="totals-result">{{userLanding.myContentListPassCount}}</div>
-                    </div>
-                    <div layout="row" class="fail row" flex>
-                        <div layout="column" class="totals-heading" flex>Fail</div>
-                        <div layout="column" flex="70" class="totals-result">{{userLanding.myContentListFailCount}}</div>
+                        <div layout="column" class="totals-heading" flex>Total:{{userLanding.myContentListArray.length}}</div>
                     </div>
                 </div>
             </div>
             <md-list class="totals-list">
-                <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items matching &lt;insert job description document here&gt;</md-subheader>
+                <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items matching for your job criteria: {{userLanding.jobItemDocsArray[0].description}}</md-subheader>
                 <md-list-item class="md-2-line" ng-repeat="item in userLanding.myContentListArray">
                     <div layout="row" flex>
                         <md-icon flex="5"
                                  layout="column"
                                  class="result-icon"
-                                 md-svg-icon="{{item.testResult.isPass || item.testResult.isPartialPass ? 'action:done' : 'content:clear'}}"
-                                 ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
+                                 md-svg-icon="action:done"
+                                 ng-class="'icon-pass'"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
                             <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.jobDescription.value | limitTo:70}}<span ng-if="item.jobDescription.value.length > 70">...</span></p>
@@ -124,14 +102,9 @@
                 </md-list-item>
             </md-list>
             <md-list class="totals-list">
-                <md-subheader class="md-no-sticky">{{userLanding.recruiterJobItemDocsArray.length}} Job Item Documents</md-subheader>
+                <md-subheader class="md-no-sticky">{{userLanding.recruiterJobItemDocsArray.length}} Job Criteria Documents</md-subheader>
                 <md-list-item class="md-2-line" ng-repeat="item in userLanding.jobItemDocsArray">
                     <div layout="row" flex>
-                        <md-icon flex="5"
-                                 layout="column"
-                                 class="result-icon"
-                                 md-svg-icon="{{item.testResult.isPass || item.testResult.isPartialPass ? 'action:done' : 'content:clear'}}"
-                                 ng-class="{'icon-pass':item.testResult.isPass, 'icon-fail':!item.testResult.isPass, 'partial-pass':item.testResult.isPartialPass}"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
                             <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.description | limitTo:70}}<span ng-if="item.description.length > 70">...</span></p>
