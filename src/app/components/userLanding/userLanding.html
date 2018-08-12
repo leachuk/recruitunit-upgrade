@@ -41,8 +41,8 @@
                                  ng-class="'icon-pass'"></md-icon>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
                             <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
-                                <p hide show-gt-sm class="job-description text-lg">{{item.jobDescription.value | limitTo:70}}<span ng-if="item.jobDescription.value.length > 70">...</span></p>
-                                <p hide-gt-sm class="job-description text-sm">{{item.jobDescription.value | limitTo:70}}<span ng-if="item.jobDescription.value.length > 70">...</span></p>
+                                <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                                <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
                             </md-button>
                             <p hide show-gt-xs ng-if="item.roleType == 'Contract'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per day</p>
                             <p hide show-gt-xs ng-if="item.roleType == 'Permanent'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per year</p>
@@ -106,8 +106,12 @@
                 <md-list-item class="md-2-line" ng-repeat="item in userLanding.jobItemDocsArray">
                     <div layout="row" flex>
                         <div layout="column" class="md-list-item-text" layout-fill flex="50">
-                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item)">
+                            <md-button ng-if="userLanding.isDeveloper" flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item)">
                                 <p hide show-gt-sm class="job-description text-lg">{{item.description | limitTo:70}}<span ng-if="item.description.length > 70">...</span></p>
+                                <p hide-gt-sm class="job-description text-sm">{{item.description | limitTo:70}}<span ng-if="item.description.length > 70">...</span></p>
+                            </md-button>
+                            <md-button ng-if="!userLanding.isDeveloper" flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item)">
+                                <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
                                 <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
                             </md-button>
                             <p hide show-gt-xs ng-if="item.roleType == 'Contract'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per day</p>
