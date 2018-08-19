@@ -7,6 +7,7 @@ let rootComponent = {
   $routeConfig: [
     { path: '/home', component: 'home', name: 'Home', useAsDefault: true },
     { path: '/user/:email', component: 'userLanding', name: 'UserLanding'},
+		{ path: '/recruiter/:email', component: 'recruiterLanding', name: 'RecruiterLanding'},
     { path: '/user/:email/comparisonrules', component: 'comparisonRule', name: 'ComparisonRule' },
 		{ path: '/user/:email/createjobspec', component: 'formJobSpec', name: 'FormJobSpec' },
     { path: '/user/:guid/form', component: 'formSubmit', name: 'FormSubmit' },

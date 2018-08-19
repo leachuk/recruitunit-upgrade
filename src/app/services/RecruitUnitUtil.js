@@ -104,6 +104,7 @@ RecruitUnitUtil.consts = Object.freeze({
 	'RECRUITER_ROLE': 'recruiter',
 	'PATH_HOME': '/home',
 	'PATH_USER': '/user/',
+	'PATH_RECRUITER': '/recruiter/',
 	'PATH_COMPARISONRULESFORM': '/comparisonrules'
 });
 

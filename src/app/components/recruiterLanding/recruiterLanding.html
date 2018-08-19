@@ -1,0 +1,176 @@
+<div ng-if="recruiterLanding.myContentListArray.length == 0 && recruiterLanding.isDeveloper" layout-align="center start" layout="row">
+    <md-card flex-gt-sm="66" flex="100">
+        <md-card-header>
+            <md-card-avatar>
+                <md-icon md-svg-icon="action:info"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-title">Info</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <p>Your page looks bare at the moment. But don't worry. Simply pass this URL onto recruiters who come your way and your job list will start to fill up.</p>
+            <p style="font-weight:bold;">{{recruiterLanding.unitTestFormUrl}}</p>
+            <p>This will allow them to submit job details to you</p>
+        </md-card-content>
+    </md-card>
+</div>
+<div layout-align="center start" layout="row">
+    <md-card class="md-whiteframe-z4 recruitunit" flex-gt-sm="66" flex="100">
+        <md-card-content>
+            <div hide show-gt-sm layout="row" class="totals-table totals-table-padding totals-font-lg" flex>
+                <div layout="row" class="total row" flex>
+                    <div layout="column" layout-align="center left" class="totals-heading" flex="20">Total:{{recruiterLanding.myContentListArray.length}}</div>
+                </div>
+            </div>
+            <div hide-gt-sm layout="row" class="totals-table totals-font-sm" flex>
+                <div layout="column" flex>
+                    <div layout="row" class="total-sm row" flex="20">
+                        <div layout="column" class="totals-heading" flex>Total:{{recruiterLanding.myContentListArray.length}}</div>
+                    </div>
+                </div>
+            </div>
+            <md-list class="totals-list">
+                <md-subheader class="md-no-sticky">{{recruiterLanding.myContentListArray.length}} items matching for your job criteria: {{recruiterLanding.jobItemDocsArray[0].description}}</md-subheader>
+                <md-list-item class="md-2-line" ng-repeat="item in recruiterLanding.myContentListArray">
+                    <div layout="row" flex>
+                        <md-icon flex="5"
+                                 layout="column"
+                                 class="result-icon"
+                                 md-svg-icon="action:done"
+                                 ng-class="'icon-pass'"></md-icon>
+                        <div layout="column" class="md-list-item-text" layout-fill flex="50">
+                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="recruiterLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
+                                <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                                <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                            </md-button>
+                            <p hide show-gt-xs ng-if="item.roleType == 'Contract'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per day</p>
+                            <p hide show-gt-xs ng-if="item.roleType == 'Permanent'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per year</p>
+                        </div>
+                        <div layout="column" class="md-list-item-text" layout-fill flex="15">
+                            <p hide show-gt-sm>Submitted <i>{{recruiterLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                            <p hide-gt-sm class="text-sm">Submitted <i>{{recruiterLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                        </div>
+                        <div hide show-gt-xs ng-if="recruiterLanding.isDeveloper"  layout="column" flex="15" layout-align="center center">
+                            <md-button ng-if="item.displayDevEmail" class="md-raised md-primary" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">Disable Contact</span>
+                            </md-button>
+                            <md-button ng-if="!item.displayDevEmail" class="md-raised" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">Enable Contact</span>
+                            </md-button>
+                        </div>
+                        <div hide show-gt-xs ng-if="!recruiterLanding.isDeveloper" layout="column" flex="15" layout-align="center center">
+                            <md-button ng-if="item.displayDevEmail" layout-fill class="interest-button md-raised md-primary" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">I'm Interested</span>
+                            </md-button>
+                            <md-button ng-if="!item.displayDevEmail" layout-fill ng-disabled="true" class="md-raised" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">No Response</span>
+                            </md-button>
+                        </div>
+                        <md-button hide-gt-xs ng-if="item.displayDevEmail" aria-label="user contact options dialog" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                          <md-icon layout="column"
+                                   class="result-icon"
+                                   md-svg-icon="{{item.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
+                        </md-button>
+                        <md-icon hide-gt-xs layout="column" ng-if="!item.displayDevEmail"
+                                 class="result-icon"
+                                 md-svg-icon="content:remove_circle"></md-icon>
+                        <div layout="column" flex="10" layout-align="center center">
+                            <md-menu>
+                                <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                    <md-icon md-menu-origin md-svg-icon="navigation:more_vert"></md-icon>
+                                </md-button>
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button aria-label="actions" ng-click="recruiterLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)"> View </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button aria-label="actions" ng-click="recruiterLanding.deleteItem(item.id, $index)"> Delete </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item hide-gt-xs ng-if="recruiterLanding.isDeveloper">
+                                        <md-button ng-if="item.displayDevEmail"ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                            Disable Contact
+                                        </md-button>
+                                        <md-button ng-if="!item.displayDevEmail" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                            Enable Contact
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                    </div>
+                </md-list-item>
+            </md-list>
+            <md-list class="totals-list">
+                <md-subheader class="md-no-sticky">{{recruiterLanding.jobItemDocsArray.length}} Job Criteria Documents</md-subheader>
+                <md-list-item class="md-2-line" ng-repeat="item in recruiterLanding.jobItemDocsArray">
+                    <div layout="row" flex>
+                        <div layout="column" class="md-list-item-text" layout-fill flex="50">
+                            <md-button ng-if="recruiterLanding.isDeveloper" flex="50" class="md-no-style md-button" type="button" ng-click="recruiterLanding.showFormDetailDialog($event, item)">
+                                <p hide show-gt-sm class="job-description text-lg">{{item.description | limitTo:70}}<span ng-if="item.description.length > 70">...</span></p>
+                                <p hide-gt-sm class="job-description text-sm">{{item.description | limitTo:70}}<span ng-if="item.description.length > 70">...</span></p>
+                            </md-button>
+                            <md-button ng-if="!recruiterLanding.isDeveloper" flex="50" class="md-no-style md-button" type="button" ng-click="recruiterLanding.showFormDetailDialog($event, item)">
+                                <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                                <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                            </md-button>
+                            <p hide show-gt-xs ng-if="item.roleType == 'Contract'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per day</p>
+                            <p hide show-gt-xs ng-if="item.roleType == 'Permanent'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per year</p>
+                        </div>
+                        <div layout="column" class="md-list-item-text" layout-fill flex="15">
+                            <p hide show-gt-sm>Submitted <i>{{recruiterLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                            <p hide-gt-sm class="text-sm">Submitted <i>{{recruiterLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                        </div>
+                        <div hide show-gt-xs ng-if="recruiterLanding.isDeveloper"  layout="column" flex="15" layout-align="center center">
+                            <md-button ng-if="item.displayDevEmail" class="md-raised md-primary" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">Disable Contact</span>
+                            </md-button>
+                            <md-button ng-if="!item.displayDevEmail" class="md-raised" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">Enable Contact</span>
+                            </md-button>
+                        </div>
+                        <div hide show-gt-xs ng-if="!recruiterLanding.isDeveloper" layout="column" flex="15" layout-align="center center">
+                            <md-button ng-if="item.displayDevEmail" layout-fill class="interest-button md-raised md-primary" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">I'm Interested</span>
+                            </md-button>
+                            <md-button ng-if="!item.displayDevEmail" layout-fill ng-disabled="true" class="md-raised" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                <span class="md-caption">No Response</span>
+                            </md-button>
+                        </div>
+                        <md-button hide-gt-xs ng-if="item.displayDevEmail" aria-label="user contact options dialog" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                            <md-icon layout="column"
+                                     class="result-icon"
+                                     md-svg-icon="{{item.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
+                        </md-button>
+                        <md-icon hide-gt-xs layout="column" ng-if="!item.displayDevEmail"
+                                 class="result-icon"
+                                 md-svg-icon="content:remove_circle"></md-icon>
+                        <div layout="column" flex="10" layout-align="center center">
+                            <md-menu>
+                                <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                    <md-icon md-menu-origin md-svg-icon="navigation:more_vert"></md-icon>
+                                </md-button>
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button aria-label="actions" ng-click="recruiterLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)"> View </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button aria-label="actions" ng-click="recruiterLanding.deleteItem(item.id, $index)"> Delete </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item hide-gt-xs ng-if="recruiterLanding.isDeveloper">
+                                        <md-button ng-if="item.displayDevEmail"ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                            Disable Contact
+                                        </md-button>
+                                        <md-button ng-if="!item.displayDevEmail" ng-click="recruiterLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                            Enable Contact
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+</div>

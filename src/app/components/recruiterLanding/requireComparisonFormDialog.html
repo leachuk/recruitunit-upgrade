@@ -1,0 +1,22 @@
+<div role="dialog" aria-label="Notification" layout="column" layout-align="center center">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Notification</h2>
+        </div>
+    </md-toolbar>
+
+    <div class="app-dialog-content">
+        <p>
+            You haven't yet setup your job requirements form, so you can't get any results from possible job applications.
+        </p>
+        <p>
+            <a href="#" class="cta-link" ng-click="requireComparisonFormDialog.navigateToUserRules(requireComparisonFormDialog.useremail)">Setup the form now</a>
+        </p>
+    </div>
+
+    <div layout="row" class="demo-dialog-button">
+        <md-button md-autofocus flex class="md-primary" ng-click="requireComparisonFormDialog.closePanel()">
+            Close
+        </md-button>
+    </div>
+</div>

@@ -139,7 +139,14 @@ function AppController($mdComponentRegistry, $mdPanel, $mdDialog, loomApi, jwtHe
         this.user.password = "";
         this.submitmessage = "";
 
-        recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + this.user.email);
+        if (this.user.isDeveloper) {
+          console.log("is Dev");
+					recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_USER + this.user.email);
+        } else {
+					console.log("is Recruiter");
+					recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_RECRUITER + this.user.email);
+        }
+
       } else {
         recruitUnitUtil.Util.redirectUserToPath(recruitUnitUtil.Constants.PATH_HOME);
       }
