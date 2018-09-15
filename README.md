@@ -6,6 +6,7 @@ RecruitUnit Site
 - Leverages loom rest server via the angular loom-api
 
 #Local Development 
+Requires node 7.7.3: `nvm use 7.7.3`
 
 Run local development server via gulp
 ```

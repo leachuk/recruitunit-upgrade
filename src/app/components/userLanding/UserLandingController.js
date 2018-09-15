@@ -249,61 +249,7 @@ export default {
           globals.userGuid = result.data.userGuid;
           globals.userFormUrl = serverUrl + recruitUnitUtil.Constants.PATH_USER + globals.userGuid + "/form";
 
-          if (tokenRoles.indexOf("recruiter") != -1){
-            globals.isDeveloper = false;
-            // var searchJson = {
-            //   "authorEmail": tokenUsername
-            // };
-            var localToken = recruitUnitUtil.Util.getLocalUser().token;
-
-            var selector = {
-							"selector": {
-								"model": "RecruitUnitJobDescription",
-								"authorEmail": tokenUsername
-							}
-						};
-            //ToDo: these 2 api calls can be consolidated into a single call
-						return loomApi.Article.find(selector, localToken).then(angular.bind(this, function (result) {
-							  console.log("find results:");
-							  console.log(result.docs);
-                if (typeof result.docs !== 'undefined' && result.docs.length > 0) {
-                      globals.jobItemDocsArray = lodash.sortBy(result.docs, 'createdDate').reverse();
-
-                      //parse recruiter JobDescription results and find matching developer JobItems
-                      return result.docs.length; //return canActivate state once results are available
-                } else {
-                  return true;
-                }
-            })).then(angular.bind(this, function (result) {
-              if (result > 0) {
-								return loomApi.Article.getUserTestResults(null, localToken).then(angular.bind(this, function (listMyTestContentResult) {
-									console.log("getUserTestResults:");
-									if (typeof listMyTestContentResult !== 'undefined') {
-										globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
-										//globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
-										//globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
-
-										return true; //return canActivate state once results are available
-									}
-								}));
-							}
-              return result;
-            }));
-
-						// No longer require user test results as we'll be returning list from search results.
-            // return loomApi.Article.getUserTestResults(searchJson, localToken).then(angular.bind(this, function (listMyTestContentResult) {
-            //   console.log("getUserTestResults:");
-            //   console.log(listMyTestContentResult);
-            //   if (typeof listMyTestContentResult !== 'undefined') {
-            //     globals.myContentListArray = lodash.sortBy(listMyTestContentResult, 'document.createdDate').reverse();
-            //     globals.myContentListPassCount = lodash.filter(listMyTestContentResult, {'testResult': {'isPass': true}}).length + lodash.filter(listMyTestContentResult, {'testResult': {'isPartialPass': true}}).length;
-            //     globals.myContentListFailCount = listMyTestContentResult.length - globals.myContentListPassCount;
-						//
-            //     return true; //return canActivate state once results are available
-            //   }
-            // }));
-            return true;
-          } else if (tokenRoles.indexOf("developer") != -1){
+          if (tokenRoles.indexOf("developer") != -1){
             globals.isDeveloper = true;
 
             var searchJson = {
