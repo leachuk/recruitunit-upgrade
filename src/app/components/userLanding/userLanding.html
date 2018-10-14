@@ -31,74 +31,71 @@
                 </div>
             </div>
             <md-list class="totals-list">
-                <md-subheader class="md-no-sticky">{{userLanding.myContentListArray.length}} items matching for your job criteria: {{userLanding.jobItemDocsArray[0].description}}</md-subheader>
-                <md-list-item class="md-2-line" ng-repeat="item in userLanding.myContentListArray">
-                    <div layout="row" flex>
-                        <md-icon flex="5"
-                                 layout="column"
-                                 class="result-icon"
-                                 md-svg-icon="action:done"
-                                 ng-class="'icon-pass'"></md-icon>
-                        <div layout="column" class="md-list-item-text" layout-fill flex="50">
-                            <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
-                                <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
-                                <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
-                            </md-button>
-                            <p hide show-gt-xs ng-if="item.roleType == 'Contract'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per day</p>
-                            <p hide show-gt-xs ng-if="item.roleType == 'Permanent'"><i>{{item.payBracketLower}}</i> to <i>{{item.payBracketUpper}}</i> per year</p>
-                        </div>
-                        <div layout="column" class="md-list-item-text" layout-fill flex="15">
-                            <p hide show-gt-sm>Submitted <i>{{userLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
-                            <p hide-gt-sm class="text-sm">Submitted <i>{{userLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
-                        </div>
-                        <div hide show-gt-xs ng-if="userLanding.isDeveloper"  layout="column" flex="15" layout-align="center center">
-                            <md-button ng-if="item.displayDevEmail" class="md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                <span class="md-caption">Disable Contact</span>
-                            </md-button>
-                            <md-button ng-if="!item.displayDevEmail" class="md-raised" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                <span class="md-caption">Enable Contact</span>
-                            </md-button>
-                        </div>
-                        <div hide show-gt-xs ng-if="!userLanding.isDeveloper" layout="column" flex="15" layout-align="center center">
-                            <md-button ng-if="item.displayDevEmail" layout-fill class="interest-button md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                <span class="md-caption">I'm Interested</span>
-                            </md-button>
-                            <md-button ng-if="!item.displayDevEmail" layout-fill ng-disabled="true" class="md-raised" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                <span class="md-caption">No Response</span>
-                            </md-button>
-                        </div>
-                        <md-button hide-gt-xs ng-if="item.displayDevEmail" aria-label="user contact options dialog" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                          <md-icon layout="column"
-                                   class="result-icon"
-                                   md-svg-icon="{{item.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
-                        </md-button>
-                        <md-icon hide-gt-xs layout="column" ng-if="!item.displayDevEmail"
-                                 class="result-icon"
-                                 md-svg-icon="content:remove_circle"></md-icon>
-                        <div layout="column" flex="10" layout-align="center center">
-                            <md-menu>
-                                <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                                    <md-icon md-menu-origin md-svg-icon="navigation:more_vert"></md-icon>
+                <md-list-item class="md-2-line" ng-repeat="jobItem in userLanding.myContentListArray">
+                    <md-list style="width:100%">
+                        <md-subheader class="md-no-sticky">{{jobItem.searchResult.length}} items matching your job criteria: {{userLanding.jobItemDocsArray[$index].description}}</md-subheader>
+
+                        <md-list-item ng-repeat="item in jobItem.searchResult">
+                            <div layout="row" flex>
+                                <md-icon flex="5"
+                                         layout="column"
+                                         class="result-icon"
+                                         md-svg-icon="action:done"
+                                         ng-class="'icon-pass'"></md-icon>
+                                <div layout="column" class="md-list-item-text" layout-fill flex="50">
+                                    <md-button flex="50" class="md-no-style md-button" type="button" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)">
+                                        <p hide show-gt-sm class="job-description text-lg">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                                        <p hide-gt-sm class="job-description text-sm">{{item.description.value | limitTo:70}}<span ng-if="item.description.value.length > 70">...</span></p>
+                                    </md-button>
+                                    <p hide show-gt-xs ng-if="item.roleType.value == 'Contract'"><i>{{item.payBracketLower.value}}</i> to <i>{{item.payBracketUpper.value}}</i> per day</p>
+                                    <p hide show-gt-xs ng-if="item.roleType.value == 'Permanent'"><i>{{item.payBracketLower.value}}</i> to <i>{{item.payBracketUpper.value}}</i> per year</p>
+                                </div>
+                                <div layout="column" class="md-list-item-text" layout-fill flex="15">
+                                    <p hide show-gt-sm>Submitted <i>{{userLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                                    <p hide-gt-sm class="text-sm">Submitted <i>{{userLanding.formatUnixDateToNow(item.createdDate)}}</i></p>
+                                </div>
+                                <div hide show-gt-xs ng-if="!userLanding.isDeveloper" layout="column" flex="15" layout-align="center center">
+                                    <md-button ng-if="item.displayDevEmail" layout-fill class="interest-button md-raised md-primary" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                        <span class="md-caption">I'm Interested</span>
+                                    </md-button>
+                                    <md-button ng-if="!item.displayDevEmail" layout-fill ng-disabled="true" class="md-raised" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                        <span class="md-caption">No Response</span>
+                                    </md-button>
+                                </div>
+                                <md-button hide-gt-xs ng-if="item.displayDevEmail" aria-label="user contact options dialog" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                    <md-icon layout="column"
+                                             class="result-icon"
+                                             md-svg-icon="{{item.displayDevEmail ? 'social:person_add' : ''}}"></md-icon>
                                 </md-button>
-                                <md-menu-content width="2">
-                                    <md-menu-item>
-                                        <md-button aria-label="actions" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)"> View </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button aria-label="actions" ng-click="userLanding.deleteItem(item.id, $index)"> Delete </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item hide-gt-xs ng-if="userLanding.isDeveloper">
-                                        <md-button ng-if="item.displayDevEmail"ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                            Disable Contact
+                                <md-icon hide-gt-xs layout="column" ng-if="!item.displayDevEmail"
+                                         class="result-icon"
+                                         md-svg-icon="content:remove_circle"></md-icon>
+                                <div layout="column" flex="10" layout-align="center center">
+                                    <md-menu>
+                                        <md-button aria-label="actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                            <md-icon md-menu-origin md-svg-icon="navigation:more_vert"></md-icon>
                                         </md-button>
-                                        <md-button ng-if="!item.displayDevEmail" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
-                                            Enable Contact
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-                        </div>
-                    </div>
+                                        <md-menu-content width="2">
+                                            <md-menu-item>
+                                                <md-button aria-label="actions" ng-click="userLanding.showFormDetailDialog($event, item.id, item.testResult.isPass, item.testResult.isPartialPass)"> View </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="actions" ng-click="userLanding.deleteItem(item.id, $index)"> Delete </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item hide-gt-xs ng-if="userLanding.isDeveloper">
+                                                <md-button ng-if="item.displayDevEmail"ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                                    Disable Contact
+                                                </md-button>
+                                                <md-button ng-if="!item.displayDevEmail" ng-click="userLanding.toggleContactMeDialog($event, item.id, item.displayDevEmail, this)">
+                                                    Enable Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </div>
+                            </div>
+                        </md-list-item>
+                    </md-list>
                 </md-list-item>
             </md-list>
             <md-list class="totals-list">
