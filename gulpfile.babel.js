@@ -40,7 +40,7 @@ let paths = {
 };
 
 // use webpack.config.js to build modules
-gulp.task('webpack', (cb) => {
+gulp.task('webpack', gulp.series((cb) => {
 	const config = require('./webpack.dist.config');
 	config.entry.app = paths.entry;
 
@@ -63,9 +63,9 @@ gulp.task('webpack', (cb) => {
 		cb();
 	});
 
-});
+}));
 
-gulp.task('serve', () => {
+gulp.task('serve', gulp.series(() => {
 	const config = require('./webpack.dev.config');
 	config.entry.app = [
 		// this modules required to make HRM working
@@ -103,8 +103,8 @@ gulp.task('serve', () => {
 			webpachHotMiddelware(compiler)
 		]
 	});
-});
+}));
 
-gulp.task('watch', ['serve']);
+gulp.task('watch', gulp.series('serve'));
 
-gulp.task('default', ['serve']);
+gulp.task('default', gulp.series('serve'));
