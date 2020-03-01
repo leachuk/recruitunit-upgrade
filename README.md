@@ -5,7 +5,7 @@ RecruitUnit Site
 - Serve and package with Webpack via gulp/npm
 - Leverages loom rest server via the angular loom-api
 
-#Local Development 
+# Local Development 
 Requires node 7.7.3: `nvm use 7.7.3`
 
 Run local development server via gulp
@@ -20,7 +20,7 @@ npm install loom-api-angular
 
 Run local distribution build via webpack. Outputs to `dist` directory
 
-#Remote Deployment
+# Remote Deployment
 
 From project root
 
@@ -36,7 +36,7 @@ npm run build
 rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ./dist/ appadmin@45.63.84.90:/home/appadmin/projects/recruitunit/target
 ```
 
-#Docker
+# Docker
 *WIP. May find a better way of doing the build-latest-and-serve-from-Nginx*
 *For Example, may be better generating the webpack output from the docker build step*
  
@@ -44,14 +44,14 @@ Currently there is no docker image to serve the RecruitUnit site as this is inte
 
 The site can also be served easily using the above local commands.
 
-##Local Webpack Build
+## Local Webpack Build
 Outputs built files to /dist
 
 ```
 npm run build
 ```
 
-##Docker Webpack Build
+## Docker Webpack Build
 Build image
 ```
 docker build -t recruitunit .
@@ -62,7 +62,7 @@ Output built sources via webpack. Locate in local `target` volume dir
 docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit
 ```
 
-##Docker Nginx
+## Docker Nginx
 The `dist` directory is then copied to the Recruitunit Nginx container with
 ```
 docker build -t recruitunit-nginx -f Dockerfile-nginx .
