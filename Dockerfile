@@ -11,7 +11,7 @@ RUN cd /tmp && npm install
 
 RUN mkdir -p /app/src && cp -a /tmp/node_modules /app/
 #copy package.json to app so npm run-script can be called
-ADD package.json gulpfile.babel.js webpack.config.js webpack.dist.config.js /app/
+ADD package.json gulpfile.babel.js webpack.config.js webpack.dist.config.js recruitunit.prod.config.json /app/
 
 # Define working directory and build src
 WORKDIR /app

@@ -54,12 +54,12 @@ npm run build
 ## Docker Webpack Build
 Build image
 ```
-docker build -t recruitunit .
+docker build -t recruitunit:latest .
 ```
 
 Output built sources via webpack. Locate in local `target` volume dir
 ```
-docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit
+docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
 ```
 
 ## Docker Nginx
