@@ -65,12 +65,12 @@ docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:late
 ## Docker Nginx
 The `dist` directory is then copied to the Recruitunit Nginx container with
 ```
-docker build -t recruitunit-nginx -f Dockerfile-nginx .
+docker build -t recruitunit-nginx:latest -f Dockerfile-nginx .
 ```
 
 Run with
 ```
-docker run -d --name recruitunit-nginx -p 80:80 recruitunit-nginx
+docker run -d --name recruitunit-nginx -p 80:80 recruitunit-nginx:latest
 ```
 Or when passing in letsencrypt cert
 ```
