@@ -3,7 +3,7 @@ RecruitUnit Site
 
 - Built with Angular and Angular Material using ES6 syntax (mostly)
 - Serve and package with Webpack via gulp/npm
-- Leverages loom rest server via the angular loom-api
+- Leverages loom rest server via the angular loom-api 
 
 # Local Development 
 Requires node 7.7.3: `nvm use 7.7.3`
