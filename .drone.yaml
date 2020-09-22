@@ -9,6 +9,7 @@ steps:
       registry: 'harbor-bitnami.default'
       username: stewart
       password: stJ0hnstuHARBOR #todo: replace with secret
+      dockerfile: ./Dockerfile
       repo: 'harbor-bitnami.default/homelab/recruitunit'
       debug: true
       launch_debug: true
