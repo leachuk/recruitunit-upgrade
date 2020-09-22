@@ -1,0 +1,17 @@
+kind: pipeline
+type: kubernetes
+name: Build recruitunit
+
+steps:
+  - name: build recruitunit
+    image: docker:dind
+    volumes:
+      - name: temp-mount
+        path: /dist
+    commands:
+      - docker build -t recruitunit:latest .
+      - docker ps -a
+
+volumes:
+  - name: temp-mount
+    temp: {}
