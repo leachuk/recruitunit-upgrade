@@ -18,8 +18,16 @@ steps:
       - name: temp-mount
         path: /dist
     commands:
-      - docker build -t recruitunit:latest .
+      - sleep 5 # give docker enough time to start
       - docker ps -a
+
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: temp-mount
+        path: /dist
 
 volumes:
   - name: temp-mount
