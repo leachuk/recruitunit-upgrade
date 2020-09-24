@@ -19,7 +19,7 @@ steps:
       - name: temp-mount
         path: /dist
     commands:
-      - sleep 5 # give docker enough time to start
+      - sleep 15 # give docker enough time to start
       - docker ps -a
 
 services:
