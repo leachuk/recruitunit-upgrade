@@ -5,15 +5,16 @@ name: Build recruitunit
 steps:
   - name: build recruitunit
     image: docker:dind
-    settings:
-      registry: 'harbor-bitnami.default'
-      username: stewart
-      password: stJ0hnstuHARBOR #todo: replace with secret
-      dockerfile: ./Dockerfile
-      repo: 'harbor-bitnami.default/homelab/recruitunit'
-      debug: true
-      launch_debug: true
-      insecure: true
+    privileged: true
+#    settings:
+#      registry: 'harbor-bitnami.default'
+#      username: stewart
+#      password: stJ0hnstuHARBOR #todo: replace with secret
+#      dockerfile: ./Dockerfile
+#      repo: 'harbor-bitnami.default/homelab/recruitunit'
+#      debug: true
+#      launch_debug: true
+#      insecure: true
     volumes:
       - name: temp-mount
         path: /dist
