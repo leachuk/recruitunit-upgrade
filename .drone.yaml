@@ -3,21 +3,11 @@ type: kubernetes
 name: Build recruitunit
 
 steps:
-  - name: build recruitunit
+  - name: test
     image: docker:dind
-    privileged: true
     volumes:
       - name: dockersock
-        path: /var/run/docker.sock
-#    settings:
-#      registry: 'harbor-bitnami.default'
-#      username: stewart
-#      password: stJ0hnstuHARBOR #todo: replace with secret
-#      dockerfile: ./Dockerfile
-#      repo: 'harbor-bitnami.default/homelab/recruitunit'
-#      debug: true
-#      launch_debug: true
-#      insecure: true
+        path: /var/run
     commands:
       - sleep 5 # give docker enough time to start
       - docker ps -a
@@ -28,15 +18,8 @@ services:
     privileged: true
     volumes:
       - name: dockersock
-        path: /var/run/docker.sock
-#services:
-#  - name: docker
-#    image: docker:dind
-#    privileged: true
-#    volumes:
-#      - name: temp-mount
-#        path: /dist
+        path: /var/run
 
 volumes:
-  - name: temp-mount
+  - name: dockersock
     temp: {}
