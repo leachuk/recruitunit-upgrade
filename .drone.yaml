@@ -16,8 +16,8 @@ steps:
 #      launch_debug: true
 #      insecure: true
     volumes:
-      - name: temp-mount
-        path: /dist
+      - name: dockersock
+        path: /var/run/docker.sock
     commands:
       - sleep 5 # give docker enough time to start
       - docker ps -a
@@ -33,3 +33,6 @@ steps:
 volumes:
   - name: temp-mount
     temp: {}
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
