@@ -8,10 +8,15 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+      - name: buildtarget
+        path: /dist
     commands:
       - sleep 10 # give docker enough time to start
       - docker ps -a
       - docker build -t recruitunit:latest .
+      - docker run -d --name recruitunit-build -v /dist:/app/dist recruitunit:latest
+      - docker ps -a
+      - ls -la /dist
 
 services:
   - name: docker
@@ -23,4 +28,6 @@ services:
 
 volumes:
   - name: dockersock
+    temp: {}
+  - name: buildtarget
     temp: {}
