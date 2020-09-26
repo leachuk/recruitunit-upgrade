@@ -15,6 +15,7 @@ steps:
       - docker ps -a
       - docker build -t recruitunit:latest .
       - docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
+      - docker build -t recruitunit-frontend:latest -f Dockerfile-nginx .
       - docker ps -a
       - ls -la
       - echo "list items in pwd[$(pwd)]:"
