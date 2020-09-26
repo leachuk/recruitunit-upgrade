@@ -16,7 +16,7 @@ steps:
       - docker build -t recruitunit:latest .
       - docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
       - docker ps -a
-      - ls -la /dist
+      - ls -la $(pwd)/dist
 
 services:
   - name: docker
