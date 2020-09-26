@@ -61,6 +61,10 @@ Output built sources via webpack. Locate in local `target` volume dir
 ```
 docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
 ```
+Or if running via a pipeline, this will run in the foreground and then auto-delete
+```
+docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
+```
 
 ## Docker Nginx
 The `dist` directory is then copied to the Recruitunit Nginx container with
