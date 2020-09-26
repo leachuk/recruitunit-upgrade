@@ -10,8 +10,10 @@ ENV NODE_PATH /app
 RUN cd /tmp && npm install
 
 RUN mkdir -p /app/src && cp -a /tmp/node_modules /app/
+#copy and rename dev config to prod as it will be run via nginx via npm build in package.json
+COPY recruitunit.dev.config.json /app/recruitunit.prod.config.json
 #copy package.json to app so npm run-script can be called
-ADD package.json gulpfile.babel.js webpack.config.js webpack.dist.config.js recruitunit.dev.config.json /app/
+ADD package.json gulpfile.babel.js webpack.config.js webpack.dist.config.js /app/
 
 # Define working directory and build src
 WORKDIR /app
