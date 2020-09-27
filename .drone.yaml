@@ -15,12 +15,6 @@ steps:
       - docker ps -a
       - docker build -t recruitunit:latest .
       - docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
-      - docker build -t recruitunit-frontend:latest -f Dockerfile-nginx .
-      - docker ps -a
-      - docker images
-      - ls -la
-      - echo "list items in pwd[$(pwd)]:"
-      - ls -la $(pwd)/dist
 
   - name: deploy recruitunit to harbor
     image: plugins/docker
