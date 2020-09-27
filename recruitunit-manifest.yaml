@@ -20,7 +20,7 @@ spec:
       containers:
         - image: 192.168.0.199:32443/homelab/recruitunit-frontend:latest
           name: recruitunit-frontend
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources: {}
           ports:
             - containerPort: 80

@@ -57,11 +57,7 @@ Build image
 docker build -t recruitunit:latest .
 ```
 
-Output built sources via webpack. Locate in local `target` volume dir
-```
-docker run -d --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
-```
-Or if running via a pipeline, this will run in the foreground and then auto-delete
+Output built sources via webpack. Locate in local `target` volume dir. This will run in the foreground and then auto-delete
 ```
 docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
 ```
@@ -69,12 +65,12 @@ docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:la
 ## Docker Nginx
 The `dist` directory is then copied to the Recruitunit Nginx container with
 ```
-docker build -t recruitunit-nginx:latest -f Dockerfile-nginx .
+docker build -t recruitunit-frontend:latest -f Dockerfile-nginx .
 ```
 
 Run with
 ```
-docker run -d --name recruitunit-nginx -p 80:80 recruitunit-nginx:latest
+docker run -d --name recruitunit-frontend -p 80:80 recruitunit-frontend:latest
 ```
 Or when passing in letsencrypt cert
 ```
