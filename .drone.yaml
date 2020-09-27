@@ -35,6 +35,32 @@ steps:
       insecure: true
       use_cache: false
 
+  - name: configure bardly namespace
+    image: sinlead/drone-kubectl
+    failure: ignore
+    settings:
+      kubernetes_server:
+        from_secret: drone_k8s_server
+      kubernetes_cert:
+        from_secret: drone_k8s_cert
+      kubernetes_token:
+        from_secret: drone_k8s_token
+    commands:
+      - kubectl create namespace bardly
+      - kubectl get secret harbor-registry-credentials --namespace=default -oyaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=bardly -f -
+
+  - name: deploy recruitunit to kubernetes
+    image: sinlead/drone-kubectl
+    settings:
+      kubernetes_server:
+        from_secret: drone_k8s_server
+      kubernetes_cert:
+        from_secret: drone_k8s_cert
+      kubernetes_token:
+        from_secret: drone_k8s_token
+    commands:
+      - kubectl apply -f recruitunit-manifest.yaml --namespace=bardly
+
 services:
   - name: docker
     image: docker:dind
