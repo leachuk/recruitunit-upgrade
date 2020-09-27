@@ -52,7 +52,7 @@ steps:
       kubernetes_token:
         from_secret: drone_k8s_token
     commands:
-      - kubectl apply -f recruitunit-manifest.yaml --namespace=bardly
+      - kubectl replace -f recruitunit-manifest.yaml --namespace=bardly --force
 
 services:
   - name: docker
