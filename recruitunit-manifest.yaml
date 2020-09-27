@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: recruitunit
+  name: recruitunit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recruitunit
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: recruitunit
+    spec:
+      containers:
+        - image: 192.168.0.199:32443/homelab/recruitunit-frontend:latest
+          name: recruitunit-frontend
+          imagePullPolicy: IfNotPresent
+          resources: {}
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: harbor-registry-credentials
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recruitunit
+  labels:
+    app: recruitunit
+spec:
+  # comment or delete the following line if you want to use a LoadBalancer
+  type: NodePort
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  #type: LoadBalancer
+  ports:
+    - port: 80
+      #targetPort: 9001
+  selector:
+    app: recruitunit
