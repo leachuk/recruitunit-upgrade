@@ -31,7 +31,7 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: recruitunit
+  name: recruitunit-frontend
   labels:
     app: recruitunit
 spec:
