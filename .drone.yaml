@@ -10,9 +10,11 @@ steps:
         from_secret: username
       PASSWORD:
         from_secret: password
+      foo: bar
     commands:
       - echo $USERNAME
       - echo $PASSWORD
+      - echo $foo
 #  - name: build recruitunit
 #    image: docker:dind
 #    volumes:
