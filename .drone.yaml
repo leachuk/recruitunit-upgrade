@@ -11,10 +11,13 @@ steps:
       PASSWORD:
         from_secret: password
       foo: bar
+      TESTFOO:
+        from_secret: test-foo
     commands:
       - echo $USERNAME
       - echo $PASSWORD
       - echo $foo
+      - echo $TESTFOO
 #  - name: build recruitunit
 #    image: docker:dind
 #    volumes:
@@ -82,6 +85,7 @@ volumes:
 
 ---
 kind: secret
+
 external_data:
   username:
     path: secret-stewart-harbor
@@ -89,3 +93,4 @@ external_data:
   password:
     path: secret-stewart-harbor
     name: password
+  test-foo: asdlkj
