@@ -3,70 +3,71 @@ type: kubernetes
 name: Build recruitunit
 
 steps:
-  - name: pre-check
-    image: docker
-    environment:
-      USERNAME:
-        from_secret: username
-      PASSWORD:
-        from_secret: password
-      foo: bar
-      TESTFOO:
-        from_secret: test-foo
+#  - name: pre-check
+#    image: docker
+#    environment:
+#      USERNAME:
+#        from_secret: username
+#      PASSWORD:
+#        from_secret: password
+#      foo: bar
+#    commands:
+#      - echo $USERNAME
+#      - echo $PASSWORD
+#      - echo $foo
+
+  - name: build recruitunit
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: buildtarget
+        path: /dist
     commands:
-      - echo $USERNAME
-      - echo $PASSWORD
-      - echo $foo
-#  - name: build recruitunit
-#    image: docker:dind
-#    volumes:
-#      - name: dockersock
-#        path: /var/run
-#      - name: buildtarget
-#        path: /dist
-#    commands:
-#      - sleep 10 # give docker enough time to start
-#      - docker build -t recruitunit:latest .
-#      - docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
-#
-#  - name: deploy recruitunit to harbor
-#    image: plugins/docker
-#    settings:
-#      registry: 'harbor-bitnami.default'
-#      repo: 'harbor-bitnami.default/homelab/recruitunit-frontend'
-#      username: stewart
-#      password: stJ0hnstuHARBOR #todo: replace with secret
-#      dockerfile: ./Dockerfile-nginx
-#      debug: true
-#      launch_debug: true
-#      insecure: true
-#      use_cache: false
-#
-#  - name: configure bardly namespace
-#    image: sinlead/drone-kubectl
-#    failure: ignore
-#    settings:
-#      kubernetes_server:
-#        from_secret: drone_k8s_server
-#      kubernetes_cert:
-#        from_secret: drone_k8s_cert
-#      kubernetes_token:
-#        from_secret: drone_k8s_token
-#    commands:
-#      - kubectl create namespace bardly
-#      - kubectl get secret harbor-registry-credentials --namespace=default -oyaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=bardly -f -
-#
-#  - name: deploy recruitunit to kubernetes
-#    image: sinlead/drone-kubectl
-#    settings:
-#      kubernetes_server:
-#        from_secret: drone_k8s_server
-#      kubernetes_cert:
-#        from_secret: drone_k8s_cert
-#      kubernetes_token:
-#        from_secret: drone_k8s_token
-#    commands:
-#      - kubectl replace -f recruitunit-manifest.yaml --namespace=bardly --force
+      - sleep 10 # give docker enough time to start
+      - docker build -t recruitunit:latest .
+      - docker run --rm --name recruitunit-build -v $(pwd)/dist:/app/dist recruitunit:latest
+
+  - name: deploy recruitunit to harbor
+    image: plugins/docker
+    settings:
+      registry: 'harbor-bitnami.default'
+      repo: 'harbor-bitnami.default/homelab/recruitunit-frontend'
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+      dockerfile: ./Dockerfile-nginx
+      debug: true
+      launch_debug: true
+      insecure: true
+      use_cache: false
+
+  - name: configure bardly namespace
+    image: sinlead/drone-kubectl
+    failure: ignore
+    settings:
+      kubernetes_server:
+        from_secret: drone_k8s_server
+      kubernetes_cert:
+        from_secret: drone_k8s_cert
+      kubernetes_token:
+        from_secret: drone_k8s_token
+    commands:
+      - kubectl create namespace bardly
+      - kubectl get secret harbor-registry-credentials --namespace=default -oyaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=bardly -f -
+
+  - name: deploy recruitunit to kubernetes
+    image: sinlead/drone-kubectl
+    settings:
+      kubernetes_server:
+        from_secret: drone_k8s_server
+      kubernetes_cert:
+        from_secret: drone_k8s_cert
+      kubernetes_token:
+        from_secret: drone_k8s_token
+    commands:
+      - kubectl replace -f recruitunit-manifest.yaml --namespace=bardly --force
 
 services:
   - name: docker

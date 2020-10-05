@@ -46,3 +46,13 @@ spec:
       #targetPort: 9001
   selector:
     app: recruitunit
+
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+data:
+  username: c3Rld2FydA==
+  password: c3RKMGhuc3R1SEFSQk9S
+metadata:
+  name: secret-stewart-harbor
